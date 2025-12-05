@@ -1,6 +1,6 @@
-# diffused-rays
+# torch
 
-Wolfenstein-style raycaster with real-time Stable Diffusion stylization.
+Wolfenstein-style raycaster with real-time Stable Diffusion stylization. Features flickering wall torches and dynamic firelight.
 
 ## Requirements
 
@@ -22,6 +22,8 @@ python main.py
 ## Controls
 
 - **WASD / Arrows** - Move and turn
-- **Space** - Toggle SD processing (first press loads model)
+- **Space** - Toggle SD view mode (stylizes full frame)
+- **T** - Toggle SD texture mode (animates wall textures)
 - **[ ]** - Cycle visual styles
+- **- / =** - Adjust SD blend (0% = raw, 100% = full effect)
 - **Esc** - Quit
