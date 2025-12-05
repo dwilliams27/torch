@@ -40,7 +40,7 @@ CEILING_COLOR = (20, 20, 30)
 # Stable Diffusion settings
 # Using SD Turbo (non-XL) for better MPS compatibility and faster inference
 SD_MODEL = "stabilityai/sd-turbo"
-SD_PROMPT = "ancient fantasy dungeon, glowing crystals, magical torchlight, stone brick walls, mysterious atmosphere, detailed textures, dramatic lighting"
+SD_PROMPT = "dark medieval dungeon, burning torches on walls, flickering firelight, warm orange glow, ancient stone corridors, shadows dancing, atmospheric"
 SD_NEGATIVE_PROMPT = ""
 SD_NUM_STEPS = 2  # 2 steps for img2img, 1 step requires strength=1.0
 SD_STRENGTH = 0.5  # How much to transform (0.3-0.6 for img2img)

@@ -36,7 +36,7 @@ def main():
 
     # Visual styles to cycle through
     sd_styles = [
-        ("Dungeon", "dark fantasy dungeon, stone walls, torchlight, mysterious"),
+        ("Torch", "dark medieval dungeon, burning torches on walls, flickering firelight, warm orange glow, ancient stone corridors, shadows dancing, atmospheric"),
         ("Cyberpunk", "neon cyberpunk corridor, glowing lights, sci-fi, futuristic"),
         ("Underwater", "underwater ancient ruins, blue green tint, mystical, fish"),
         ("Hellscape", "hellscape corridor, fire and lava, demonic, red orange glow"),
