@@ -15,28 +15,32 @@ TURN_SPEED = 2.0  # radians per second
 FOV = math.radians(60)  # 60 degrees field of view
 
 # Raycaster settings
-MAX_DEPTH = 20.0  # maximum ray distance
+MAX_DEPTH = 25.0  # maximum ray distance (increased for larger map)
 
-# Wall colors (RGB) - base colors before distance shading
+# Wall colors (RGB) - vibrant base colors before distance shading
 WALL_COLORS = {
-    1: (180, 0, 0),      # Red walls
-    2: (0, 180, 0),      # Green walls
-    3: (0, 0, 180),      # Blue walls
-    4: (180, 180, 0),    # Yellow walls
+    1: (140, 130, 120),  # Stone - warm gray
+    2: (190, 80, 60),    # Brick - terracotta red
+    3: (60, 160, 80),    # Moss stone - forest green
+    4: (100, 200, 220),  # Ice/crystal - cyan
+    5: (220, 180, 50),   # Gold/treasure - rich yellow
+    6: (120, 60, 160),   # Obsidian - deep purple
+    7: (140, 40, 50),    # Blood stone - dark crimson
+    8: (70, 100, 180),   # Ancient - mystic blue
 }
-DEFAULT_WALL_COLOR = (128, 128, 128)  # Gray for undefined wall types
+DEFAULT_WALL_COLOR = (100, 100, 100)  # Gray for undefined wall types
 
 # N/S vs E/W wall shading (multiply factor for E/W walls to distinguish them)
 EW_SHADE_FACTOR = 0.7
 
-# Floor and ceiling colors
-FLOOR_COLOR = (50, 50, 50)
-CEILING_COLOR = (30, 30, 40)
+# Floor and ceiling colors - darker for dungeon atmosphere
+FLOOR_COLOR = (40, 35, 30)
+CEILING_COLOR = (20, 20, 30)
 
-# Stable Diffusion settings (for later milestones)
+# Stable Diffusion settings
 # Using SD Turbo (non-XL) for better MPS compatibility and faster inference
 SD_MODEL = "stabilityai/sd-turbo"
-SD_PROMPT = "dark dungeon corridor, stone walls, torchlight, fantasy art"
+SD_PROMPT = "ancient fantasy dungeon, glowing crystals, magical torchlight, stone brick walls, mysterious atmosphere, detailed textures, dramatic lighting"
 SD_NEGATIVE_PROMPT = ""
 SD_NUM_STEPS = 2  # 2 steps for img2img, 1 step requires strength=1.0
 SD_STRENGTH = 0.5  # How much to transform (0.3-0.6 for img2img)
