@@ -34,6 +34,19 @@ def main():
     sd_frame_count = 0
     sd_last_time = time.time()
 
+    # Visual styles to cycle through
+    sd_styles = [
+        ("Dungeon", "dark fantasy dungeon, stone walls, torchlight, mysterious"),
+        ("Cyberpunk", "neon cyberpunk corridor, glowing lights, sci-fi, futuristic"),
+        ("Underwater", "underwater ancient ruins, blue green tint, mystical, fish"),
+        ("Hellscape", "hellscape corridor, fire and lava, demonic, red orange glow"),
+        ("Ice Cave", "frozen ice cave, blue crystals, cold, magical winter"),
+        ("Overgrown", "overgrown temple ruins, vines and moss, nature, sunbeams"),
+        ("Oil Paint", "oil painting, impressionist brush strokes, artistic, colorful"),
+        ("Anime", "anime style dungeon, cel shaded, vibrant colors, japanese animation"),
+    ]
+    sd_style_index = 0
+
     # Show loading message
     def show_message(text):
         screen.fill((0, 0, 0))
@@ -75,6 +88,12 @@ def main():
                         if sd_enabled:
                             sd_last_time = time.time()
                             sd_frame_count = 0
+                elif event.key == pygame.K_LEFTBRACKET:
+                    # Previous style
+                    sd_style_index = (sd_style_index - 1) % len(sd_styles)
+                elif event.key == pygame.K_RIGHTBRACKET:
+                    # Next style
+                    sd_style_index = (sd_style_index + 1) % len(sd_styles)
 
         # Handle continuous key input
         keys = pygame.key.get_pressed()
@@ -100,8 +119,9 @@ def main():
 
         # SD processing (async)
         if sd_enabled and async_stylizer is not None:
-            # Submit current frame for processing
-            async_stylizer.submit_frame(raw_frame.copy())
+            # Submit current frame for processing with current style prompt
+            _, prompt = sd_styles[sd_style_index]
+            async_stylizer.submit_frame(raw_frame.copy(), prompt=prompt)
 
             # Get latest stylized result (or use raw if none ready)
             display_frame = async_stylizer.get_latest(raw_frame)
@@ -141,9 +161,14 @@ def main():
             sd_fps_text = font.render(f"SD: {sd_fps:.1f} FPS", True, (0, 255, 0))
             screen.blit(sd_fps_text, (10, 40))
 
+            # Draw current style
+            style_name, _ = sd_styles[sd_style_index]
+            style_text = font.render(f"Style: {style_name}", True, (255, 200, 100))
+            screen.blit(style_text, (10, 70))
+
         # Draw SD status
         if sd_enabled:
-            sd_status = "SD: ON [SPACE off]"
+            sd_status = "SD: ON [SPACE off] | [ ] change style"
             sd_color = (0, 255, 0)
         elif async_stylizer is not None:
             sd_status = "SD: OFF [SPACE on]"
@@ -153,7 +178,7 @@ def main():
             sd_color = (200, 200, 200)
 
         sd_text = small_font.render(sd_status, True, sd_color)
-        screen.blit(sd_text, (10, 75))
+        screen.blit(sd_text, (10, 105))
 
         # Draw controls help
         controls = small_font.render("WASD/Arrows: Move | ESC: Quit", True, (200, 200, 200))

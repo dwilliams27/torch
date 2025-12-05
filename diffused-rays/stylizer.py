@@ -165,14 +165,14 @@ class AsyncStylizer:
 
         while self.running:
             try:
-                # Wait for input frame
-                frame = self.input_queue.get(timeout=0.1)
+                # Wait for input (frame, prompt) tuple
+                frame, prompt = self.input_queue.get(timeout=0.1)
             except Empty:
                 continue
 
             try:
-                # Process the frame
-                output = stylize_frame(frame)
+                # Process the frame with specified prompt
+                output = stylize_frame(frame, prompt=prompt)
 
                 # Put result in output queue (replace old if exists)
                 try:
@@ -185,16 +185,18 @@ class AsyncStylizer:
             except Exception as e:
                 print(f"Async stylizer error: {e}")
 
-    def submit_frame(self, frame: np.ndarray):
+    def submit_frame(self, frame: np.ndarray, prompt: str = None):
         """Submit a frame for processing. Non-blocking, drops old frames."""
+        if prompt is None:
+            prompt = config.SD_PROMPT
         try:
             # Remove old pending frame if any
             try:
                 self.input_queue.get_nowait()
             except Empty:
                 pass
-            # Add new frame
-            self.input_queue.put_nowait(frame)
+            # Add new frame with prompt
+            self.input_queue.put_nowait((frame, prompt))
         except:
             pass  # Queue full, skip this frame
 
