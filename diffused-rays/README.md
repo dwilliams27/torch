@@ -25,4 +25,5 @@ python main.py
 - **Space** - Toggle SD view mode (stylizes full frame)
 - **T** - Toggle SD texture mode (animates wall textures)
 - **[ ]** - Cycle visual styles
+- **- / =** - Adjust SD blend (0% = raw, 100% = full effect)
 - **Esc** - Quit

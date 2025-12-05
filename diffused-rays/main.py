@@ -33,6 +33,7 @@ def main():
     sd_fps = 0.0
     sd_frame_count = 0
     sd_last_time = time.time()
+    sd_blend = 1.0  # Blend factor: 0.0 = raw, 1.0 = full SD
 
     # Texture mode state
     texture_mode = False
@@ -41,6 +42,7 @@ def main():
     tex_fps = 0.0
     tex_frame_count = 0
     tex_last_time = time.time()
+    tex_last_submit = 0.0  # Throttle submissions
 
     # Visual styles to cycle through
     sd_styles = [
@@ -113,6 +115,12 @@ def main():
                 elif event.key == pygame.K_RIGHTBRACKET:
                     # Next style
                     sd_style_index = (sd_style_index + 1) % len(sd_styles)
+                elif event.key == pygame.K_MINUS:
+                    # Decrease SD blend
+                    sd_blend = max(0.0, sd_blend - 0.1)
+                elif event.key == pygame.K_EQUALS:
+                    # Increase SD blend
+                    sd_blend = min(1.0, sd_blend + 0.1)
                 elif event.key == pygame.K_t:
                     # Toggle texture mode (mutually exclusive with SD view mode)
                     if texture_mode:
@@ -171,10 +179,15 @@ def main():
 
         # Handle texture mode - submit atlas for stylization
         if texture_mode and texture_stylizer is not None:
-            # Create and submit base atlas for stylization
-            _, prompt = sd_styles[sd_style_index]
-            base_atlas = texture_manager.create_base_atlas()
-            texture_stylizer.submit(base_atlas, prompt + ", seamless wall texture, tileable pattern")
+            # Throttle submissions to reduce contention (every 200ms)
+            now = time.time()
+            if now - tex_last_submit > 0.2:
+                tex_last_submit = now
+                _, prompt = sd_styles[sd_style_index]
+                # Cache base atlas - only create once
+                if texture_manager.base_atlas is None:
+                    texture_manager.create_base_atlas()
+                texture_stylizer.submit(texture_manager.base_atlas, prompt)
 
             # Get latest styled atlas if available
             styled_atlas = texture_stylizer.get_result()
@@ -202,8 +215,19 @@ def main():
             _, prompt = sd_styles[sd_style_index]
             async_stylizer.submit_frame(raw_frame.copy(), prompt=prompt)
 
-            # Get latest stylized result (or use raw if none ready)
-            display_frame = async_stylizer.get_latest(raw_frame)
+            # Get latest stylized result
+            sd_frame = async_stylizer.get_latest(raw_frame)
+
+            # Blend raw and SD frames based on sd_blend factor
+            if sd_blend >= 1.0:
+                display_frame = sd_frame
+            elif sd_blend <= 0.0:
+                display_frame = raw_frame
+            else:
+                display_frame = (
+                    raw_frame.astype(np.float32) * (1 - sd_blend) +
+                    sd_frame.astype(np.float32) * sd_blend
+                ).astype(np.uint8)
 
             # Track SD FPS
             current_count = async_stylizer.frames_processed
@@ -240,10 +264,13 @@ def main():
             sd_fps_text = font.render(f"SD: {sd_fps:.1f} FPS", True, (0, 255, 0))
             screen.blit(sd_fps_text, (10, 40))
 
-            # Draw current style
+            # Draw current style and blend
             style_name, _ = sd_styles[sd_style_index]
             style_text = font.render(f"Style: {style_name}", True, (255, 200, 100))
             screen.blit(style_text, (10, 70))
+
+            blend_text = font.render(f"Blend: {int(sd_blend * 100)}%", True, (200, 200, 255))
+            screen.blit(blend_text, (10, 100))
         elif texture_mode:
             tex_fps_text = font.render(f"Tex: {tex_fps:.1f} FPS", True, (100, 200, 255))
             screen.blit(tex_fps_text, (10, 40))
@@ -257,18 +284,22 @@ def main():
         if texture_mode:
             mode_status = "TEX: ON [T off] | [ ] style | [SPACE view mode]"
             mode_color = (100, 200, 255)
+            status_y = 105
         elif sd_enabled:
-            mode_status = "SD: ON [SPACE off] | [ ] style | [T texture mode]"
+            mode_status = "[ ] style | [-/=] blend | [T texture] | [SPACE off]"
             mode_color = (0, 255, 0)
+            status_y = 130
         elif async_stylizer is not None:
             mode_status = "SD: OFF [SPACE on] | [T texture mode]"
             mode_color = (255, 255, 0)
+            status_y = 105
         else:
             mode_status = "[SPACE load SD] | [T texture mode]"
             mode_color = (200, 200, 200)
+            status_y = 105
 
         mode_text = small_font.render(mode_status, True, mode_color)
-        screen.blit(mode_text, (10, 105))
+        screen.blit(mode_text, (10, status_y))
 
         # Draw controls help
         controls = small_font.render("WASD/Arrows: Move | ESC: Quit", True, (200, 200, 200))

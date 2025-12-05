@@ -153,6 +153,7 @@ class AsyncTextureStylizer:
     def _process_loop(self):
         """Background thread that stylizes texture atlases."""
         from stylizer import stylize_frame
+        import time
 
         while self.running:
             try:
@@ -162,7 +163,10 @@ class AsyncTextureStylizer:
 
             try:
                 # Stylize the atlas
+                start = time.time()
                 styled = stylize_frame(atlas, prompt=prompt)
+                elapsed = time.time() - start
+                print(f"Texture stylize took {elapsed:.2f}s")
 
                 # Validate output
                 if styled is None or (styled == 0).all():
