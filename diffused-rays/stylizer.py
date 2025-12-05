@@ -1,7 +1,9 @@
-"""Stable Diffusion img2img stylizer using SDXL Turbo."""
+"""Stable Diffusion img2img stylizer using SD Turbo with async support."""
 
 import warnings
+import threading
 from typing import Optional
+from queue import Queue, Empty
 
 import numpy as np
 from PIL import Image
@@ -11,6 +13,9 @@ import config
 # Lazy imports for torch/diffusers to avoid slow startup
 _pipe = None
 _device = None
+
+# Processing size - 256x256 is optimal for speed (~3 FPS vs ~1 FPS at 512)
+SD_PROCESS_SIZE = 256
 
 
 def get_device() -> str:
@@ -27,7 +32,7 @@ def get_device() -> str:
 
 
 def load_pipeline():
-    """Load and cache the SDXL Turbo pipeline."""
+    """Load and cache the SD Turbo pipeline."""
     global _pipe, _device
 
     if _pipe is not None:
@@ -52,10 +57,6 @@ def load_pipeline():
     return _pipe
 
 
-# Processing size for SDXL Turbo (must be at least 512x512)
-SD_PROCESS_SIZE = 512
-
-
 def stylize_frame(
     frame: np.ndarray,
     prompt: Optional[str] = None,
@@ -63,7 +64,7 @@ def stylize_frame(
     num_steps: Optional[int] = None,
 ) -> np.ndarray:
     """
-    Apply Stable Diffusion img2img to a frame.
+    Apply Stable Diffusion img2img to a frame (synchronous).
 
     Args:
         frame: Input numpy array of shape (H, W, 3) with RGB uint8 values.
@@ -89,12 +90,8 @@ def stylize_frame(
     # Store original size
     orig_h, orig_w = frame.shape[:2]
 
-    # Convert numpy to PIL
-    input_image = Image.fromarray(frame)
-
-    # SDXL Turbo requires larger images (at least 512x512)
-    # Upscale input to processing size
-    input_image = input_image.resize(
+    # Convert numpy to PIL and resize to processing size
+    input_image = Image.fromarray(frame).resize(
         (SD_PROCESS_SIZE, SD_PROCESS_SIZE),
         Image.Resampling.LANCZOS
     )
@@ -122,6 +119,99 @@ def stylize_frame(
     return output_frame
 
 
+class AsyncStylizer:
+    """
+    Async frame stylizer that processes frames in a background thread.
+
+    This allows the game to continue rendering while SD processes the previous frame,
+    effectively hiding latency and improving perceived smoothness.
+    """
+
+    def __init__(self):
+        self.input_queue = Queue(maxsize=1)
+        self.output_queue = Queue(maxsize=1)
+        self.running = False
+        self.thread = None
+        self.last_output = None
+        self.frames_processed = 0
+
+    def start(self):
+        """Start the async processing thread."""
+        if self.running:
+            return
+
+        # Pre-load the pipeline
+        load_pipeline()
+
+        self.running = True
+        self.thread = threading.Thread(target=self._process_loop, daemon=True)
+        self.thread.start()
+
+    def stop(self):
+        """Stop the async processing thread."""
+        self.running = False
+        if self.thread:
+            # Clear queues to unblock thread
+            try:
+                self.input_queue.get_nowait()
+            except Empty:
+                pass
+            self.thread.join(timeout=1.0)
+            self.thread = None
+
+    def _process_loop(self):
+        """Background thread that processes frames."""
+        import torch
+
+        while self.running:
+            try:
+                # Wait for input frame
+                frame = self.input_queue.get(timeout=0.1)
+            except Empty:
+                continue
+
+            try:
+                # Process the frame
+                output = stylize_frame(frame)
+
+                # Put result in output queue (replace old if exists)
+                try:
+                    self.output_queue.get_nowait()
+                except Empty:
+                    pass
+                self.output_queue.put(output)
+                self.frames_processed += 1
+
+            except Exception as e:
+                print(f"Async stylizer error: {e}")
+
+    def submit_frame(self, frame: np.ndarray):
+        """Submit a frame for processing. Non-blocking, drops old frames."""
+        try:
+            # Remove old pending frame if any
+            try:
+                self.input_queue.get_nowait()
+            except Empty:
+                pass
+            # Add new frame
+            self.input_queue.put_nowait(frame)
+        except:
+            pass  # Queue full, skip this frame
+
+    def get_result(self) -> Optional[np.ndarray]:
+        """Get the latest processed frame. Non-blocking, returns None if not ready."""
+        try:
+            self.last_output = self.output_queue.get_nowait()
+        except Empty:
+            pass
+        return self.last_output
+
+    def get_latest(self, fallback: np.ndarray) -> np.ndarray:
+        """Get latest result or fallback if none available."""
+        result = self.get_result()
+        return result if result is not None else fallback
+
+
 def test_stylizer():
     """Test the stylizer with a synthetic image."""
     import time
@@ -145,19 +235,48 @@ def test_stylizer():
     input_pil.save("test_input.png")
     print("Saved test_input.png")
 
-    # Stylize
-    print("Stylizing...")
-    start_time = time.time()
-    output = stylize_frame(test_image)
-    elapsed = time.time() - start_time
-    print(f"Stylization took {elapsed:.2f} seconds")
+    # Test synchronous
+    print("\nTesting synchronous stylizer...")
+    load_pipeline()  # Pre-load
+    _ = stylize_frame(test_image)  # Warm up
+
+    times = []
+    for i in range(5):
+        start_time = time.time()
+        output = stylize_frame(test_image)
+        elapsed = time.time() - start_time
+        times.append(elapsed)
+        print(f"  Run {i+1}: {elapsed:.2f}s")
+
+    avg = sum(times) / len(times)
+    print(f"  Average: {avg:.2f}s ({1/avg:.1f} FPS)")
 
     # Save output
     output_pil = Image.fromarray(output)
     output_pil.save("test_output.png")
     print("Saved test_output.png")
 
-    return elapsed
+    # Test async
+    print("\nTesting async stylizer...")
+    async_stylizer = AsyncStylizer()
+    async_stylizer.start()
+
+    # Submit frames and measure throughput
+    start_time = time.time()
+    for i in range(10):
+        async_stylizer.submit_frame(test_image)
+        time.sleep(0.05)  # Simulate game loop doing other work
+
+    # Wait for processing to complete
+    time.sleep(2.0)
+    elapsed = time.time() - start_time
+    frames = async_stylizer.frames_processed
+    print(f"  Processed {frames} frames in {elapsed:.1f}s")
+    print(f"  Throughput: {frames/elapsed:.1f} FPS")
+
+    async_stylizer.stop()
+
+    return avg
 
 
 if __name__ == "__main__":
