@@ -116,6 +116,12 @@ def stylize_frame(
     if _device == "mps":
         torch.mps.synchronize()
 
+    # Debug: check for black/invalid output
+    if (output_frame == 0).all():
+        print(f"WARNING: SD produced all-black output!")
+        # Return input frame as fallback
+        return frame
+
     return output_frame
 
 
@@ -174,6 +180,11 @@ class AsyncStylizer:
                 # Process the frame with specified prompt
                 output = stylize_frame(frame, prompt=prompt)
 
+                # Validate output - check for all-black or NaN
+                if output is None or (output == 0).all():
+                    print(f"Warning: stylize_frame returned black/empty frame")
+                    continue
+
                 # Put result in output queue (replace old if exists)
                 try:
                     self.output_queue.get_nowait()
@@ -184,6 +195,8 @@ class AsyncStylizer:
 
             except Exception as e:
                 print(f"Async stylizer error: {e}")
+                import traceback
+                traceback.print_exc()
 
     def submit_frame(self, frame: np.ndarray, prompt: str = None):
         """Submit a frame for processing. Non-blocking, drops old frames."""

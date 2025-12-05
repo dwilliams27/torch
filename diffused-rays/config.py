@@ -42,6 +42,6 @@ CEILING_COLOR = (20, 20, 30)
 SD_MODEL = "stabilityai/sd-turbo"
 SD_PROMPT = "dark medieval dungeon, burning torches on walls, flickering firelight, warm orange glow, ancient stone corridors, shadows dancing, atmospheric"
 SD_NEGATIVE_PROMPT = ""
-SD_NUM_STEPS = 2  # 2 steps for img2img, 1 step requires strength=1.0
+SD_NUM_STEPS = 2  # 2 steps minimum for img2img on MPS (1 step causes errors)
 SD_STRENGTH = 0.5  # How much to transform (0.3-0.6 for img2img)
 SD_GUIDANCE_SCALE = 0.0  # Required for SD Turbo

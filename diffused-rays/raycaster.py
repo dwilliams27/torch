@@ -2,6 +2,8 @@
 
 import math
 import time
+from typing import Optional
+
 import numpy as np
 
 import config
@@ -36,9 +38,14 @@ def has_torch(map_x: int, map_y: int, side: int) -> bool:
         return map_x % TORCH_SPACING == 1
 
 
-def cast_rays(player: Player, game_map: Map) -> np.ndarray:
+def cast_rays(player: Player, game_map: Map, texture_manager=None) -> np.ndarray:
     """
     Cast rays and render a frame with torch lighting.
+
+    Args:
+        player: Player object with position and angle.
+        game_map: Map object with wall data.
+        texture_manager: Optional TextureManager for per-pixel texture sampling.
 
     Returns:
         numpy array of shape (RENDER_HEIGHT, RENDER_WIDTH, 3) with RGB values.
@@ -151,18 +158,37 @@ def cast_rays(player: Player, game_map: Map) -> np.ndarray:
             light_intensity = (1 - perp_dist / TORCH_LIGHT_RADIUS) * flicker
             warm_light = light_intensity * 0.5
 
-        # Calculate final wall color with torch warmth
-        color = []
-        for i, c in enumerate(base_color):
-            lit = c * shade
-            # Add warm orange tint from torches
-            if warm_light > 0:
-                warmth = [1.3, 0.9, 0.5][i]  # R, G, B multipliers for warm light
-                lit = lit * (1 + warm_light * warmth)
-            color.append(int(min(255, lit)))
+        # Draw wall column - either with textures or solid color
+        use_textures = texture_manager is not None and texture_manager.has_textures()
 
-        # Draw wall column
-        frame[draw_start:draw_end + 1, x] = color
+        if use_textures:
+            # Per-pixel texture sampling
+            for y in range(draw_start, draw_end + 1):
+                # Calculate V coordinate (0 at top, 1 at bottom)
+                v = (y - draw_start) / max(1, draw_end - draw_start)
+                tex_color = texture_manager.sample(wall_type, wall_x, v)
+
+                # Apply lighting
+                color = []
+                for i, c in enumerate(tex_color):
+                    lit = c * shade
+                    if warm_light > 0:
+                        warmth = [1.3, 0.9, 0.5][i]
+                        lit = lit * (1 + warm_light * warmth)
+                    color.append(int(min(255, lit)))
+                frame[y, x] = color
+        else:
+            # Solid color (original behavior)
+            color = []
+            for i, c in enumerate(base_color):
+                lit = c * shade
+                # Add warm orange tint from torches
+                if warm_light > 0:
+                    warmth = [1.3, 0.9, 0.5][i]  # R, G, B multipliers for warm light
+                    lit = lit * (1 + warm_light * warmth)
+                color.append(int(min(255, lit)))
+
+            frame[draw_start:draw_end + 1, x] = color
 
         # Draw torch on wall if present
         if torch_on_wall and perp_dist < TORCH_LIGHT_RADIUS * 1.5:

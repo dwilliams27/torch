@@ -34,6 +34,14 @@ def main():
     sd_frame_count = 0
     sd_last_time = time.time()
 
+    # Texture mode state
+    texture_mode = False
+    texture_manager = None
+    texture_stylizer = None
+    tex_fps = 0.0
+    tex_frame_count = 0
+    tex_last_time = time.time()
+
     # Visual styles to cycle through
     sd_styles = [
         ("Torch", "dark medieval dungeon, burning torches on walls, flickering firelight, warm orange glow, ancient stone corridors, shadows dancing, atmospheric"),
@@ -67,25 +75,36 @@ def main():
                 if event.key == pygame.K_ESCAPE:
                     running = False
                 elif event.key == pygame.K_SPACE:
-                    # Toggle SD processing
-                    if async_stylizer is None:
-                        # First time - load and start async stylizer
-                        show_message("Loading Stable Diffusion model...")
-                        pygame.event.pump()
-                        try:
-                            from stylizer import AsyncStylizer
-                            async_stylizer = AsyncStylizer()
-                            async_stylizer.start()
-                            sd_enabled = True
-                            sd_last_time = time.time()
-                            sd_frame_count = 0
-                        except Exception as e:
-                            print(f"Failed to load SD: {e}")
-                            show_message(f"SD load failed: {str(e)[:50]}")
-                            pygame.time.wait(2000)
+                    # Toggle SD processing (mutually exclusive with texture mode)
+                    if sd_enabled:
+                        # Turn off SD view mode
+                        sd_enabled = False
                     else:
-                        sd_enabled = not sd_enabled
-                        if sd_enabled:
+                        # Turn on SD view mode - disable texture mode first
+                        if texture_mode:
+                            texture_mode = False
+                            # Wait for current SD inference to complete (~300ms per frame)
+                            show_message("Switching modes...")
+                            pygame.event.pump()
+                            time.sleep(1.0)
+
+                        if async_stylizer is None:
+                            # First time - load and start async stylizer
+                            show_message("Loading Stable Diffusion model...")
+                            pygame.event.pump()
+                            try:
+                                from stylizer import AsyncStylizer
+                                async_stylizer = AsyncStylizer()
+                                async_stylizer.start()
+                                sd_enabled = True
+                                sd_last_time = time.time()
+                                sd_frame_count = 0
+                            except Exception as e:
+                                print(f"Failed to load SD: {e}")
+                                show_message(f"SD load failed: {str(e)[:50]}")
+                                pygame.time.wait(2000)
+                        else:
+                            sd_enabled = True
                             sd_last_time = time.time()
                             sd_frame_count = 0
                 elif event.key == pygame.K_LEFTBRACKET:
@@ -94,6 +113,42 @@ def main():
                 elif event.key == pygame.K_RIGHTBRACKET:
                     # Next style
                     sd_style_index = (sd_style_index + 1) % len(sd_styles)
+                elif event.key == pygame.K_t:
+                    # Toggle texture mode (mutually exclusive with SD view mode)
+                    if texture_mode:
+                        # Turn off texture mode
+                        texture_mode = False
+                    else:
+                        # Turn on texture mode - disable SD view mode first
+                        if sd_enabled:
+                            sd_enabled = False
+                            # Wait for current SD inference to complete (~300ms per frame)
+                            show_message("Switching modes...")
+                            pygame.event.pump()
+                            time.sleep(1.0)
+
+                        if texture_manager is None:
+                            # First time - initialize texture system
+                            show_message("Initializing texture mode...")
+                            pygame.event.pump()
+                            try:
+                                from texture_manager import TextureManager, AsyncTextureStylizer
+                                texture_manager = TextureManager()
+                                texture_stylizer = AsyncTextureStylizer()
+                                texture_stylizer.start()
+                                texture_mode = True
+                                tex_last_time = time.time()
+                                tex_frame_count = 0
+                            except Exception as e:
+                                print(f"Failed to initialize texture mode: {e}")
+                                import traceback
+                                traceback.print_exc()
+                                show_message(f"Texture init failed: {str(e)[:50]}")
+                                pygame.time.wait(2000)
+                        else:
+                            texture_mode = True
+                            tex_last_time = time.time()
+                            tex_frame_count = 0
 
         # Handle continuous key input
         keys = pygame.key.get_pressed()
@@ -114,11 +169,35 @@ def main():
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             player.turn_right(turn_amount)
 
-        # Render frame from raycaster
-        raw_frame = cast_rays(player, game_map)
+        # Handle texture mode - submit atlas for stylization
+        if texture_mode and texture_stylizer is not None:
+            # Create and submit base atlas for stylization
+            _, prompt = sd_styles[sd_style_index]
+            base_atlas = texture_manager.create_base_atlas()
+            texture_stylizer.submit(base_atlas, prompt + ", seamless wall texture, tileable pattern")
 
-        # SD processing (async)
-        if sd_enabled and async_stylizer is not None:
+            # Get latest styled atlas if available
+            styled_atlas = texture_stylizer.get_result()
+            if styled_atlas is not None:
+                texture_manager.split_atlas(styled_atlas)
+
+            # Track texture mode FPS
+            current_count = texture_stylizer.frames_processed
+            if current_count > tex_frame_count:
+                now = time.time()
+                if now - tex_last_time > 0.5:
+                    tex_fps = (current_count - tex_frame_count) / (now - tex_last_time)
+                    tex_frame_count = current_count
+                    tex_last_time = now
+
+        # Render frame from raycaster (pass texture_manager if in texture mode)
+        if texture_mode and texture_manager is not None:
+            raw_frame = cast_rays(player, game_map, texture_manager)
+        else:
+            raw_frame = cast_rays(player, game_map)
+
+        # SD processing (async) - only if not in texture mode
+        if sd_enabled and async_stylizer is not None and not texture_mode:
             # Submit current frame for processing with current style prompt
             _, prompt = sd_styles[sd_style_index]
             async_stylizer.submit_frame(raw_frame.copy(), prompt=prompt)
@@ -157,7 +236,7 @@ def main():
         fps_text = font.render(f"Display: {display_fps:.0f} FPS", True, (255, 255, 255))
         screen.blit(fps_text, (10, 10))
 
-        if sd_enabled:
+        if sd_enabled and not texture_mode:
             sd_fps_text = font.render(f"SD: {sd_fps:.1f} FPS", True, (0, 255, 0))
             screen.blit(sd_fps_text, (10, 40))
 
@@ -165,20 +244,31 @@ def main():
             style_name, _ = sd_styles[sd_style_index]
             style_text = font.render(f"Style: {style_name}", True, (255, 200, 100))
             screen.blit(style_text, (10, 70))
+        elif texture_mode:
+            tex_fps_text = font.render(f"Tex: {tex_fps:.1f} FPS", True, (100, 200, 255))
+            screen.blit(tex_fps_text, (10, 40))
 
-        # Draw SD status
-        if sd_enabled:
-            sd_status = "SD: ON [SPACE off] | [ ] change style"
-            sd_color = (0, 255, 0)
+            # Draw current style
+            style_name, _ = sd_styles[sd_style_index]
+            style_text = font.render(f"Style: {style_name}", True, (255, 200, 100))
+            screen.blit(style_text, (10, 70))
+
+        # Draw mode status
+        if texture_mode:
+            mode_status = "TEX: ON [T off] | [ ] style | [SPACE view mode]"
+            mode_color = (100, 200, 255)
+        elif sd_enabled:
+            mode_status = "SD: ON [SPACE off] | [ ] style | [T texture mode]"
+            mode_color = (0, 255, 0)
         elif async_stylizer is not None:
-            sd_status = "SD: OFF [SPACE on]"
-            sd_color = (255, 255, 0)
+            mode_status = "SD: OFF [SPACE on] | [T texture mode]"
+            mode_color = (255, 255, 0)
         else:
-            sd_status = "SD: [SPACE to load]"
-            sd_color = (200, 200, 200)
+            mode_status = "[SPACE load SD] | [T texture mode]"
+            mode_color = (200, 200, 200)
 
-        sd_text = small_font.render(sd_status, True, sd_color)
-        screen.blit(sd_text, (10, 105))
+        mode_text = small_font.render(mode_status, True, mode_color)
+        screen.blit(mode_text, (10, 105))
 
         # Draw controls help
         controls = small_font.render("WASD/Arrows: Move | ESC: Quit", True, (200, 200, 200))
@@ -189,6 +279,8 @@ def main():
     # Cleanup
     if async_stylizer is not None:
         async_stylizer.stop()
+    if texture_stylizer is not None:
+        texture_stylizer.stop()
 
     pygame.quit()
     sys.exit()

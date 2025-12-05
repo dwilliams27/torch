@@ -22,6 +22,7 @@ python main.py
 ## Controls
 
 - **WASD / Arrows** - Move and turn
-- **Space** - Toggle SD processing (first press loads model)
+- **Space** - Toggle SD view mode (stylizes full frame)
+- **T** - Toggle SD texture mode (animates wall textures)
 - **[ ]** - Cycle visual styles
 - **Esc** - Quit
