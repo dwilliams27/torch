@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hypnagogia Ambience</title>
+<style>
+  :root { --bg:#07080c; --fg:#d9dbe6; --dim:#7b8096; --line:#1d2130; --acc:#b9a6ff; --acc2:#7fe0d0; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 ui-serif, Georgia, serif; }
+  body { padding: 28px 16px 60px; max-width: 880px; margin: 0 auto; }
+  h1 { font-weight: 400; letter-spacing: .32em; text-transform: uppercase; font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--dim); font-style: italic; margin-bottom: 22px; }
+  button { font: inherit; color: var(--fg); background: #0f111a; border: 1px solid var(--line); border-radius: 10px;
+           padding: 10px 14px; cursor: pointer; transition: border-color .3s, background .3s; }
+  button:hover { border-color: #3a4060; }
+  button.on { border-color: var(--acc); background: #16132a; }
+  #start { font-size: 17px; padding: 14px 26px; letter-spacing: .15em; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 18px 0; }
+  .zone { text-align:left; }
+  .zone b { display:block; font-weight: 500; }
+  .zone small { color: var(--dim); font-style: italic; }
+  .row { display:flex; gap: 18px; align-items:center; flex-wrap: wrap; margin: 12px 0; }
+  label { color: var(--dim); display:flex; gap: 10px; align-items:center; }
+  input[type=range] { width: 180px; accent-color: var(--acc); }
+  canvas { width: 100%; height: 140px; display:block; border:1px solid var(--line); border-radius: 12px; background:#05060a; margin-top: 12px; }
+  pre { background:#05060a; border:1px solid var(--line); border-radius: 12px; padding: 12px; overflow:auto; font: 12px/1.4 ui-monospace, Menlo, monospace; color:#aeb3c7; }
+  #state { color: var(--dim); font: 12px ui-monospace, Menlo, monospace; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+<h1>Hypnagogia &middot; Ambience</h1>
+<div class="sub">generative zone sound, pure WebAudio &mdash; no samples</div>
+
+<div class="row">
+  <button id="start">Begin</button>
+  <button id="mute">Mute</button>
+  <button id="walk">Walk</button>
+  <button id="step">Footstep</button>
+  <button id="test">Run offline test</button>
+</div>
+<div class="row">
+  <label>volume <input id="vol" type="range" min="0" max="1" step="0.01" value="0.55"></label>
+  <label>dream <input id="dream" type="range" min="0" max="1" step="0.01" value="0"></label>
+  <label><input id="pulse" type="checkbox"> simulate diffusion pulses</label>
+</div>
+<div id="zones" class="grid"></div>
+<div id="state">not started</div>
+<canvas id="scope" width="1600" height="280"></canvas>
+<pre id="out">Offline test: click "Run offline test" (or open with ?test=1).</pre>
+
+<script type="module">
+import { Ambience, PRESETS, presetForZone } from './ambience.js';
+
+// The real world zones (if the world module is present) + a few extra probes.
+let ZONES = [];
+try { ZONES = (await import('../world/zones.js')).ZONES.map((z) => ({ ...z })); } catch (_) { /* standalone */ }
+ZONES.push(
+  { id: 'x-cathedral', name: 'Cathedral of Hours', subtitle: 'a hymn held for a thousand years', mood: 'cathedral', prompt: 'vast gothic cathedral, candlelight' },
+  { id: 'x-void', name: 'Undreamt', subtitle: 'the blueprint of a place', mood: 'void', prompt: 'dark void, faint glowing contour lines' },
+  { id: 'x-unknown', name: 'Mystery Room', subtitle: 'unknown mood (hash fallback)', mood: 'bittersweet', prompt: 'a strange room' },
+);
+
+const amb = new Ambience({ volume: 0.55 });
+window.amb = amb;
+const $ = (id) => document.getElementById(id);
+let activeBtn = null;
+
+for (const z of ZONES) {
+  const b = document.createElement('button');
+  b.className = 'zone';
+  const p = presetForZone(z).name;
+  b.innerHTML = `<b>${z.name}</b><small>${z.subtitle} &middot; ${p}</small>`;
+  b.onclick = async () => {
+    if (!amb.started) await amb.start();
+    amb.setZone(z);
+    activeBtn?.classList.remove('on'); b.classList.add('on'); activeBtn = b;
+  };
+  $('zones').appendChild(b);
+}
+
+$('start').onclick = async () => { await amb.start(); $('start').classList.add('on'); };
+$('mute').onclick = () => { const on = amb.toggle(); $('mute').textContent = on ? 'Mute' : 'Unmute'; };
+$('vol').oninput = (e) => amb.setVolume(+e.target.value);
+$('dream').oninput = (e) => amb.setDream(+e.target.value);
+$('step').onclick = () => amb.footstep(0.6);
+let walkTimer = null;
+$('walk').onclick = () => {
+  if (walkTimer) { clearInterval(walkTimer); walkTimer = null; $('walk').classList.remove('on'); return; }
+  walkTimer = setInterval(() => amb.footstep(0.35 + Math.random() * 0.2), 520);
+  $('walk').classList.add('on');
+};
+// simulate diffusion activity: bursts of results arriving
+let pulseLevel = 0;
+setInterval(() => {
+  if (!$('pulse').checked) return;
+  pulseLevel = Math.max(0, pulseLevel * 0.85 + (Math.random() < 0.3 ? 0.5 : 0));
+  amb.setDream(Math.min(1, pulseLevel));
+  $('dream').value = Math.min(1, pulseLevel);
+}, 300);
+
+// scope / spectrum
+const cv = $('scope'), g = cv.getContext('2d');
+let fbuf = null;
+function draw() {
+  requestAnimationFrame(draw);
+  $('state').textContent = JSON.stringify(amb.state);
+  if (!amb.analyser) return;
+  const an = amb.analyser;
+  fbuf = fbuf || new Float32Array(an.frequencyBinCount);
+  an.getFloatFrequencyData(fbuf);
+  g.fillStyle = 'rgba(5,6,10,0.35)'; g.fillRect(0, 0, cv.width, cv.height);
+  const sr = amb.ctx.sampleRate, n = fbuf.length;
+  g.beginPath();
+  for (let x = 0; x < cv.width; x++) {
+    const f = 30 * Math.pow(16000 / 30, x / cv.width);
+    const i = Math.min(n - 1, Math.round(f / (sr / 2) * n));
+    const db = Math.max(-110, fbuf[i]);
+    const y = cv.height * (1 - (db + 110) / 90);
+    x ? g.lineTo(x, y) : g.moveTo(x, y);
+  }
+  const grad = g.createLinearGradient(0, 0, cv.width, 0);
+  grad.addColorStop(0, '#7fe0d0'); grad.addColorStop(1, '#b9a6ff');
+  g.strokeStyle = grad; g.lineWidth = 2; g.stroke();
+}
+draw();
+
+// ----------------------------------------------------------------- offline test
+async function analyse(buf, skip) {
+  const sr = buf.sampleRate, s0 = Math.floor(skip * sr);
+  let peak = 0, ss = 0, n = 0;
+  for (let ch = 0; ch < buf.numberOfChannels; ch++) {
+    const d = buf.getChannelData(ch);
+    for (let i = s0; i < d.length; i++) { const v = d[i]; const a = v < 0 ? -v : v; if (a > peak) peak = a; ss += v * v; n++; }
+  }
+  // filtered energies: K-weighting approximation (ITU-R BS.1770-ish) and octave-ish bands
+  async function filtered(chain) {
+    const oc = new OfflineAudioContext(buf.numberOfChannels, buf.length, sr);
+    const src = oc.createBufferSource(); src.buffer = buf;
+    let node = src;
+    for (const [type, f, q, gain] of chain) {
+      const b = oc.createBiquadFilter(); b.type = type; b.frequency.value = f; b.Q.value = q ?? 0.707; b.gain.value = gain ?? 0;
+      node.connect(b); node = b;
+    }
+    node.connect(oc.destination); src.start();
+    const fb = await oc.startRendering();
+    let e = 0;
+    for (let ch = 0; ch < fb.numberOfChannels; ch++) { const d = fb.getChannelData(ch); for (let i = s0; i < d.length; i++) e += d[i] * d[i]; }
+    return e;
+  }
+  const kE = await filtered([['highpass', 38, 0.5], ['highshelf', 1680, 0.707, 4]]);
+  const bands = {};
+  const bdefs = { '<150': [['lowpass', 150], ['lowpass', 150]], '150-600': [['highpass', 150], ['lowpass', 600]], '600-2k4': [['highpass', 600], ['lowpass', 2400]], '2k4-6k': [['highpass', 2400], ['lowpass', 6000]], '>6k': [['highpass', 6000], ['highpass', 6000]] };
+  for (const [k, c] of Object.entries(bdefs)) bands[k] = +(10 * Math.log10((await filtered(c)) / n + 1e-12)).toFixed(1);
+  // loudness variation: RMS over 1 s windows (after skip) -> min/max dB
+  const win = sr, rmsDb = [];
+  const L = buf.getChannelData(0), R = buf.getChannelData(buf.numberOfChannels - 1);
+  for (let s = s0; s + win <= L.length; s += win) {
+    let w = 0; for (let i = s; i < s + win; i++) w += L[i] * L[i] + R[i] * R[i];
+    rmsDb.push(10 * Math.log10(w / (2 * win) + 1e-12));
+  }
+  const db = (x) => 20 * Math.log10(x + 1e-12);
+  return {
+    peak: +peak.toFixed(3), peakDb: +db(peak).toFixed(1),
+    rmsDb: +(10 * Math.log10(ss / n + 1e-12)).toFixed(1),
+    lk: +(-0.691 + 10 * Math.log10(kE / n * 2 + 1e-12)).toFixed(1), bands,
+    win1sDb: [+Math.min(...rmsDb).toFixed(1), +Math.max(...rmsDb).toFixed(1)],
+  };
+}
+
+async function renderScript(secs, volume, script, sr = 44100) {
+  const ctx = new OfflineAudioContext(2, Math.floor(secs * sr), sr);
+  const a = new Ambience({ context: ctx, volume });
+  await a.start();
+  await script(a, ctx);
+  const t0 = performance.now();
+  const buf = await ctx.startRendering();
+  return { buf, ms: performance.now() - t0 };
+}
+
+async function runTests() {
+  const out = $('out');
+  const lines = [];
+  const log = (s) => { lines.push(s); out.textContent = lines.join('\n'); console.log(s); };
+  const results = { presets: {}, errors: [] };
+  const SECS = 45;
+  log(`offline render, ${SECS}s per preset @44.1k, dream=0.4, measure after 8s fade-in`);
+  log('preset       vol   peak   peakDb  rmsDb  LKish  1s-RMS range     x-rt   bands dB <150|150-600|600-2k4|2k4-6k|>6k');
+  for (const name of Object.keys(PRESETS)) {
+    for (const vol of (window.__vols || [0.55, 1.0])) {
+      try {
+        const { buf, ms } = await renderScript(SECS, vol, async (a) => {
+          a.setPreset(name); a.setDream(0.4); a.scheduleUntil(SECS);
+        });
+        const r = await analyse(buf, 8);
+        r.xRealtime = +(SECS * 1000 / ms).toFixed(1);
+        results.presets[name + '@' + vol] = r;
+        log(`${name.padEnd(12)} ${vol.toFixed(2)}  ${r.peak.toFixed(3)}  ${String(r.peakDb).padStart(6)}  ${String(r.rmsDb).padStart(5)}  ${String(r.lk).padStart(5)}  [${r.win1sDb.join(', ')}]  ${r.xRealtime}x  ${Object.values(r.bands).join(' | ')}`);
+      } catch (e) { results.errors.push(name + ': ' + e); log('ERR ' + name + ' ' + e.stack); }
+    }
+  }
+  // crossfade torture: rapid zone flips, revive, dream sweep, footsteps
+  try {
+    const secs = 60;
+    const { buf, ms } = await renderScript(secs, 1.0, async (a, ctx) => {
+      const Z = ZONES;
+      const plan = [[0, Z[0]], [12, Z[1]], [13, Z[5]], [14, Z[0]], [20, Z[4]], [28, Z[6]], [36, Z[7]], [44, Z[2]], [50, Z[3]]];
+      a.setZone(plan[0][1]);
+      a.scheduleUntil(plan[1][0]);
+      for (let i = 1; i < plan.length; i++) {
+        const [t, z] = plan[i];
+        ctx.suspend(t).then(() => {
+          a.setZone(z);
+          a.setDream((i % 3) / 2);
+          for (let k = 0; k < 6; k++) a.footstep(0.3 + 0.7 * Math.random());
+          a.scheduleUntil(i + 1 < plan.length ? plan[i + 1][0] : secs);
+          ctx.resume();
+        });
+      }
+    });
+    const r = await analyse(buf, 3);
+    r.xRealtime = +(secs * 1000 / ms).toFixed(1);
+    results.crossfade = r;
+    log(`crossfade/footstep torture @vol 1.0: peak ${r.peak} (${r.peakDb} dB), rms ${r.rmsDb} dB, LKish ${r.lk}, 1s range [${r.win1sDb}], ${r.xRealtime}x realtime`);
+  } catch (e) { results.errors.push('crossfade: ' + e); log('ERR crossfade ' + e.stack); }
+  // realtime emulation: the live code path (_tick() reading ctx.currentTime) driven every 200 ms,
+  // with a game-like caller: setZone + setDream every "frame", wandering across zone borders.
+  try {
+    const secs = 90, step = 0.2;
+    let maxScenes = 0, a2 = null;
+    const { buf, ms } = await renderScript(secs, 1.0, async (a, ctx) => {
+      a2 = a;
+      let zi = 0;
+      for (let t = step; t < secs; t += step) {
+        ctx.suspend(+t.toFixed(3)).then(() => {
+          if (Math.random() < 0.02) zi = (zi + 1 + ((Math.random() * 2) | 0)) % ZONES.length; // wander
+          if (Math.random() < 0.01) zi = (zi + ZONES.length - 1) % ZONES.length;             // step back across a border
+          a.setZone(ZONES[zi]);
+          a.setDream(0.5 + 0.5 * Math.sin(ctx.currentTime * 0.3));
+          if (Math.random() < 0.3) a.footstep(0.4);
+          a._tick();
+          maxScenes = Math.max(maxScenes, a.scenes.length);
+          ctx.resume();
+        });
+      }
+    });
+    const r = await analyse(buf, 3);
+    r.xRealtime = +(secs * 1000 / ms).toFixed(1);
+    r.maxScenes = maxScenes;
+    r.endScenes = a2.scenes.length;
+    results.realtimeEmu = r;
+    log(`realtime-emulation 90s @vol 1.0: peak ${r.peak} (${r.peakDb} dB), LKish ${r.lk}, 1s range [${r.win1sDb}], scenes max ${maxScenes} end ${r.endScenes}, ${r.xRealtime}x realtime`);
+  } catch (e) { results.errors.push('rt-emu: ' + e); log('ERR rt-emu ' + e.stack); }
+  log(results.errors.length ? 'ERRORS: ' + results.errors.join('; ') : 'no errors');
+  window.__results = results;
+  window.__done = true;
+  return results;
+}
+// Realtime smoke test (headless Chrome with --autoplay-policy=no-user-gesture-required).
+window.runLiveTest = async () => {
+  const errs = [];
+  window.addEventListener('error', (e) => errs.push(String(e.message)));
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const rms = () => {
+    const d = new Float32Array(amb.analyser.fftSize); amb.analyser.getFloatTimeDomainData(d);
+    let s = 0; for (const v of d) s += v * v; return +(10 * Math.log10(s / d.length + 1e-12)).toFixed(1);
+  };
+  const log = [];
+  await amb.start();
+  log.push({ t: 'started', state: amb.state, sr: amb.ctx.sampleRate, baseLatency: amb.ctx.baseLatency });
+  for (const z of ZONES) {
+    amb.setZone(z);
+    for (let i = 0; i < 30; i++) amb.setZone(z); // idempotent per-frame calls
+    amb.setDream(Math.random());
+    amb.footstep(0.5);
+    await sleep(1500);
+    log.push({ zone: z.name, preset: amb.state.preset, scenes: amb.state.scenes, rmsDb: rms() });
+  }
+  amb.setZone(ZONES[0]); await sleep(300); amb.setZone(ZONES[1]); await sleep(300); amb.setZone(ZONES[0]);
+  await sleep(1000);
+  log.push({ t: 'flip-flop', state: amb.state, rmsDb: rms() });
+  const muted = !amb.toggle(); await sleep(2500);
+  log.push({ t: 'muted', muted, ctx: amb.ctx.state });
+  amb.toggle(); await sleep(1500);
+  log.push({ t: 'unmuted', ctx: amb.ctx.state, rmsDb: rms() });
+  return { log, errs };
+};
+$('test').onclick = runTests;
+window.runTests = runTests;
+if (new URLSearchParams(location.search).get('test') === '1') runTests();
+</script>
+</body>
+</html>

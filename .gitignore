@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+bench/out/
+.claude/
+.DS_Store
+node_modules/
+.env
+.env.*
+*.pem
+*.key
+*.mlpackage
+*.mlmodelc
+*.gguf
+*.ckpt
+*.safetensors
+!server/engines/taesd_lite.safetensors

@@ -1,0 +1,11 @@
+# HYPNAGOGIA server — installed by run.sh into .venv (python 3.12). Engine owners may append.
+aiohttp>=3.9
+numpy
+pillow
+simplejpeg
+torch
+diffusers
+transformers
+accelerate
+safetensors
+coremltools; sys_platform == "darwin"   # Core ML / ANE engine (coreml_turbo) runtime

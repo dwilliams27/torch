@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>World Preview</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #07060b; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; touch-action: none; }
+  #hud { position: fixed; left: 14px; top: 12px; font: 12px/1.45 ui-monospace, Menlo, monospace; color: #cfc6e8; opacity: .85; pointer-events: none; white-space: pre; text-shadow: 0 1px 2px #000; }
+  #title { position: fixed; left: 0; right: 0; bottom: 12vh; text-align: center; color: #efe6ff; font: 300 34px/1.2 Georgia, serif; letter-spacing: .12em; opacity: 0; transition: opacity 1.6s; pointer-events: none; text-shadow: 0 2px 18px #000; }
+  #title small { display: block; font-size: 15px; letter-spacing: .3em; opacity: .7; margin-top: 8px; font-style: italic; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "../../vendor/three.module.min.js", "three/addons/": "../../vendor/addons/" } }
+</script>
+</head>
+<body>
+<div id="hud"></div>
+<div id="title"></div>
+<script type="module">
+import * as THREE from 'three';
+import { generateLevel } from './level.js';
+import { Player } from './player.js';
+
+const q = new URLSearchParams(location.search);
+const seed = parseInt(q.get('seed') || '1', 10);
+const mode = { lit: 0, atlas: 1, normal: 2, surface: 3 }[q.get('mode') || 'lit'] ?? 0;
+const hud = q.get('hud') !== '0';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+const t0 = performance.now();
+const level = generateLevel(seed);
+const genMs = performance.now() - t0;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 2000);
+
+const NL = 24;
+const S = level.surfaceTypes;
+const PAT = { stone: 0, tile: 1, brick: 2, wood: 3, metal: 4, crystal: 5, plaster: 6, water: 7, sky: 8, glow: 9 };
+const uniforms = {
+  uSurfColor: { value: S.map((s) => new THREE.Vector3(...s.color)).concat(Array(32 - S.length).fill().map(() => new THREE.Vector3())) },
+  uSurfEmis: { value: S.map((s) => s.emissive).concat(Array(32 - S.length).fill(0)) },
+  uSurfPat: { value: S.map((s) => PAT[s.pattern] ?? 0).concat(Array(32 - S.length).fill(0)) },
+  uLightPos: { value: Array(NL).fill().map(() => new THREE.Vector3()) },
+  uLightCol: { value: Array(NL).fill().map(() => new THREE.Vector3()) },
+  uLightRad: { value: Array(NL).fill(1) },
+  uNum: { value: 0 },
+  uAmbient: { value: new THREE.Vector3() },
+  uZoneLight: { value: new THREE.Vector3() },
+  uFog: { value: new THREE.Vector3() },
+  uFogD: { value: 0.02 },
+  uSky: { value: new THREE.Vector3() },
+  uCam: { value: new THREE.Vector3() },
+  uTime: { value: 0 },
+  uMode: { value: mode },
+  uAtlas: { value: level.atlas.size },
+};
+const mat = new THREE.ShaderMaterial({
+  uniforms,
+  vertexShader: /* glsl */`
+    attribute vec2 atlasUv; attribute float surface; attribute float zone;
+    varying vec3 vN; varying vec3 vW; varying vec2 vUv; varying vec2 vA; varying float vS;
+    void main() {
+      vN = normal; vW = position; vUv = uv; vA = atlasUv; vS = surface;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }`,
+  fragmentShader: /* glsl */`
+    precision highp float;
+    uniform vec3 uSurfColor[32]; uniform float uSurfEmis[32]; uniform float uSurfPat[32];
+    uniform vec3 uLightPos[${NL}]; uniform vec3 uLightCol[${NL}]; uniform float uLightRad[${NL}]; uniform int uNum;
+    uniform vec3 uAmbient, uZoneLight, uFog, uSky, uCam; uniform float uFogD, uTime, uAtlas; uniform int uMode;
+    varying vec3 vN; varying vec3 vW; varying vec2 vUv; varying vec2 vA; varying float vS;
+    float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+    float noise(vec2 p) { vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f);
+      return mix(mix(hash(i), hash(i + vec2(1, 0)), f.x), mix(hash(i + vec2(0, 1)), hash(i + vec2(1, 1)), f.x), f.y); }
+    float lines(vec2 uv, vec2 s, float w) { vec2 g = abs(fract(uv / s - 0.5) - 0.5) * s; vec2 fw = fwidth(uv) * 1.2 + w; vec2 l = 1.0 - smoothstep(vec2(0.0), fw, g); return max(l.x, l.y); }
+    void main() {
+      int si = int(vS + 0.5);
+      vec3 base = uSurfColor[si]; float em = uSurfEmis[si]; int pat = int(uSurfPat[si] + 0.5);
+      vec3 N = normalize(vN);
+      if (!gl_FrontFacing) N = -N;
+      vec3 V = normalize(uCam - vW);
+      if (uMode == 2) { gl_FragColor = vec4(N * 0.5 + 0.5, 1.0); return; }
+      if (uMode == 1) { vec2 t = floor(vA * uAtlas / 8.0); float c = mod(t.x + t.y, 2.0); gl_FragColor = vec4(mix(vec3(0.2), vec3(0.9), c) * (0.6 + 0.4 * abs(N.y)), 1.0); return; }
+      float n = noise(vUv * 1.7) * 0.6 + noise(vUv * 6.0) * 0.4;
+      float grooves = 0.0;
+      if (pat == 0) grooves = lines(vUv, vec2(1.2, 0.6), 0.0) * 0.5;
+      else if (pat == 1) grooves = lines(vUv, vec2(0.5, 0.5), 0.0) * 0.6;
+      else if (pat == 2) grooves = lines(vUv + vec2(step(0.5, fract(vUv.y / 0.5)) * 0.25, 0.0), vec2(0.5, 0.25), 0.0) * 0.6;
+      else if (pat == 3) grooves = lines(vUv, vec2(0.33, 4.0), 0.0) * 0.45;
+      vec3 alb = base * (0.82 + 0.3 * n) * (1.0 - grooves * 0.35);
+      if (pat == 8) {
+        vec3 d = normalize(vW - uCam);
+        float h = d.y;
+        vec3 sky = mix(uFog * 1.4, uSky * 1.2, smoothstep(-0.1, 0.6, h));
+        float st = step(0.9985, hash(floor(d.xz * 400.0 / (1.2 + abs(d.y))))) * smoothstep(0.0, 0.5, h);
+        vec3 col = base.r > 0.4 ? mix(base, uSky, 0.35) * (0.85 + 0.25 * n) : sky + st * 0.8;
+        gl_FragColor = vec4(pow(col / (1.0 + col), vec3(1.0 / 2.2)) * 1.1, 1.0); return;
+      }
+      vec3 L = uAmbient * 1.6 + uZoneLight * 0.18 * (0.6 + 0.4 * N.y);
+      for (int i = 0; i < ${NL}; i++) {
+        if (i >= uNum) break;
+        vec3 lv = uLightPos[i] - vW; float d = length(lv);
+        float att = clamp(1.0 - d / uLightRad[i], 0.0, 1.0); att *= att;
+        float nd = max(dot(N, lv / d), 0.0) * 0.8 + 0.2;
+        L += uLightCol[i] * att * nd;
+      }
+      vec3 col = alb * L;
+      if (pat == 7) { float f = pow(1.0 - max(dot(N, V), 0.0), 4.0); col = alb * L * 0.6 + f * uSky * 0.8 + L * 0.05 * noise(vUv * 3.0 + uTime * 0.3); }
+      col += base * em * (pat == 9 ? 1.8 : 1.0);
+      float edge = lines(vUv, vec2(1.0), 0.0) * 0.06;
+      col += edge * uZoneLight * 0.3;
+      float dist = length(vW - uCam);
+      float fog = 1.0 - exp(-pow(uFogD * dist, 2.0) * 0.8);
+      col = mix(col, uFog * 1.2, clamp(fog, 0.0, 1.0) * (pat == 9 ? 0.5 : 1.0));
+      col = col / (1.0 + col) * 1.15;
+      gl_FragColor = vec4(pow(col, vec3(1.0 / 2.2)), 1.0);
+    }`,
+});
+if (mode === 3) mat.fragmentShader = mat.fragmentShader;
+const mesh = new THREE.Mesh(level.geometry, mat);
+mesh.frustumCulled = false;
+scene.add(mesh);
+if (level.decor && q.get('decor') !== '0') scene.add(level.decor);
+
+const player = new Player(level, camera, renderer.domElement);
+const hudEl = document.getElementById('hud'), titleEl = document.getElementById('title');
+let lastZone = -1, zoneFade = 0;
+const cur = { fog: new THREE.Vector3(), amb: new THREE.Vector3(), light: new THREE.Vector3(), sky: new THREE.Vector3(), fogD: 0.02 };
+const v3 = (a) => new THREE.Vector3(a[0], a[1], a[2]);
+let first = true;
+let last = performance.now(), frames = 0, fps = 0, fpsT = 0;
+function frame(now) {
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  player.update(dt);
+  const p = player.position;
+  const zi = level.zoneAt(p);
+  const Z = level.zones[zi];
+  const k = first ? 1 : 1 - Math.exp(-dt * 1.5);
+  first = false;
+  cur.fog.lerp(v3(Z.fog), k); cur.amb.lerp(v3(Z.ambient), k); cur.light.lerp(v3(Z.light), k); cur.sky.lerp(v3(Z.sky), k);
+  cur.fogD += (Z.fogDensity - cur.fogD) * k;
+  uniforms.uFog.value.copy(cur.fog); uniforms.uAmbient.value.copy(cur.amb); uniforms.uZoneLight.value.copy(cur.light);
+  uniforms.uSky.value.copy(cur.sky); uniforms.uFogD.value = cur.fogD; uniforms.uCam.value.copy(p); uniforms.uTime.value = now / 1000;
+  // nearest lights
+  const ls = level.lights.map((l) => [l, (l.position[0] - p.x) ** 2 + (l.position[1] - p.y) ** 2 + (l.position[2] - p.z) ** 2 - l.radius * l.radius]).sort((a, b) => a[1] - b[1]).slice(0, NL);
+  ls.forEach(([l], i) => {
+    const f = l.flicker ? 0.85 + 0.15 * Math.sin(now * 0.008 + i * 7.1) * Math.sin(now * 0.0131 + i) : 1;
+    uniforms.uLightPos.value[i].set(...l.position);
+    uniforms.uLightCol.value[i].set(l.color[0] * l.intensity * f, l.color[1] * l.intensity * f, l.color[2] * l.intensity * f);
+    uniforms.uLightRad.value[i] = l.radius;
+  });
+  uniforms.uNum.value = ls.length;
+  renderer.setClearColor(new THREE.Color(cur.fog.x, cur.fog.y, cur.fog.z));
+  if (level.decor) level.decor.userData.update(now / 1000, renderer);
+  renderer.render(scene, camera);
+  if (zi !== lastZone) { lastZone = zi; titleEl.innerHTML = `${Z.name}<small>${Z.subtitle}</small>`; titleEl.style.opacity = hud ? 1 : 0; zoneFade = 4; }
+  zoneFade -= dt; if (zoneFade < 0 && titleEl.style.opacity !== '0') titleEl.style.opacity = 0;
+  frames++; fpsT += dt; if (fpsT > 0.5) { fps = frames / fpsT; frames = 0; fpsT = 0; }
+  if (hud) hudEl.textContent = `${Z.name}   seed ${level.seed}   ${fps.toFixed(0)} fps\n` +
+    `pos ${p.x.toFixed(1)}, ${p.y.toFixed(1)}, ${p.z.toFixed(1)}  yaw ${player.yaw.toFixed(2)} pitch ${player.pitch.toFixed(2)}\n` +
+    `tris ${level.stats.triangles}  charts ${level.atlas.charts}  atlas ${level.atlas.size} @ ${level.atlas.texelsPerMeter.toFixed(1)} tex/m  gen ${genMs.toFixed(0)} ms\n` +
+    `click: mouselook  WASD  shift run  space jump  V fly`;
+  window.__frames = (window.__frames || 0) + 1;
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+window.__level = level; window.__player = player;
+</script>
+</body>
+</html>

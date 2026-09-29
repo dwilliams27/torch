@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#050608">
+<title>Hypnagogia</title>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js", "three/addons/": "./vendor/addons/" } }
+</script>
+<style>
+  :root {
+    --ink: #ece6da;
+    --dim: rgba(236, 230, 218, 0.55);
+    --faint: rgba(236, 230, 218, 0.28);
+    --serif: "Didot", "Bodoni 72", "Bodoni MT", "Iowan Old Style", "Palatino", "Book Antiqua", Georgia, serif;
+    --text: "Iowan Old Style", "Palatino", "Book Antiqua", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #050608; color: var(--ink); overflow: hidden;
+    -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: none; }
+  canvas#view { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; display: block; }
+
+  /* ---------- title ---------- */
+  #title { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at 50% 55%, rgba(12, 14, 22, 0.55) 0%, rgba(3, 3, 6, 0.92) 70%);
+    transition: opacity 1.6s ease, visibility 1.6s; cursor: pointer; z-index: 10; padding: 24px; text-align: center; }
+  #title.gone { opacity: 0; visibility: hidden; pointer-events: none; }
+  #title h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 7.2vw, 104px); letter-spacing: 0.42em;
+    margin: 0 0 0 0.42em; text-shadow: 0 0 40px rgba(170, 190, 255, 0.25); animation: breathe 7s ease-in-out infinite; }
+  #title .tag { font-family: var(--text); font-style: italic; font-size: clamp(14px, 1.6vw, 20px); color: var(--dim);
+    margin-top: 1.4em; letter-spacing: 0.04em; }
+  #title .enter { margin-top: 3.4em; font-family: var(--serif); font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase;
+    color: var(--dim); animation: pulse 3.2s ease-in-out infinite; }
+  #title .status { position: absolute; bottom: max(28px, env(safe-area-inset-bottom)); left: 0; right: 0; font-family: var(--mono);
+    font-size: 11px; color: var(--faint); letter-spacing: 0.08em; }
+  #title .status b { font-weight: 400; color: var(--dim); }
+  #title .keys { margin-top: 2.2em; font-family: var(--text); font-size: 12.5px; color: var(--faint); line-height: 1.9; letter-spacing: 0.03em; }
+  #title .keys kbd { font-family: var(--mono); font-size: 10.5px; border: 1px solid rgba(236,230,218,0.18); border-radius: 3px; padding: 1px 5px; color: var(--dim); }
+  .touch #title .keys .desk { display: none; }
+  #title .keys .tch { display: none; }
+  .touch #title .keys .tch { display: inline; }
+  @media (max-width: 560px) {
+    #title h1 { font-size: 30px; letter-spacing: 0.3em; margin-left: 0.3em; animation: none; }
+    #title .status { font-size: 10px; padding: 0 16px; }
+    #stats { font-size: 9.5px; }
+  }
+  .touch.stats-off #stats { display: none; }
+  @keyframes breathe { 0%,100% { opacity: 0.86; letter-spacing: 0.42em; } 50% { opacity: 1; letter-spacing: 0.46em; } }
+  @keyframes pulse { 0%,100% { opacity: 0.35; } 50% { opacity: 0.9; } }
+
+  /* ---------- zone card ---------- */
+  #zonecard { position: fixed; left: 0; right: 0; top: 30%; text-align: center; pointer-events: none; opacity: 0; z-index: 5;
+    transition: opacity 2.4s ease, transform 6s ease; transform: translateY(6px); }
+  #zonecard.show { opacity: 1; transform: translateY(0); }
+  #zonecard .name { font-family: var(--serif); font-size: clamp(24px, 4vw, 54px); letter-spacing: 0.28em; text-transform: uppercase;
+    text-shadow: 0 0 28px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.6); padding: 0 16px; }
+  #zonecard .rule { width: 72px; height: 1px; margin: 18px auto 14px; background: linear-gradient(90deg, transparent, rgba(236,230,218,0.6), transparent); }
+  #zonecard .sub { font-family: var(--text); font-style: italic; font-size: clamp(14px, 1.5vw, 20px); color: var(--dim);
+    text-shadow: 0 0 20px rgba(0,0,0,0.95); padding: 0 16px; }
+
+  /* ---------- stats / toast ---------- */
+  #stats { position: fixed; left: max(14px, env(safe-area-inset-left)); top: max(12px, env(safe-area-inset-top)); font-family: var(--mono); font-size: 10.5px;
+    line-height: 1.55; color: rgba(236,230,218,0.5); white-space: pre; pointer-events: none; z-index: 4; text-shadow: 0 0 6px #000; }
+  #toast { position: fixed; left: 0; right: 0; bottom: 12%; text-align: center; font-family: var(--serif); letter-spacing: 0.35em;
+    text-transform: uppercase; font-size: 12px; color: var(--dim); opacity: 0; transition: opacity 0.6s; pointer-events: none; z-index: 6;
+    text-shadow: 0 0 12px #000; }
+  #toast.show { opacity: 1; }
+  .hud-hidden #stats, .hud-hidden #gear { display: none; }
+  #gear { position: fixed; right: max(12px, env(safe-area-inset-right)); top: max(10px, env(safe-area-inset-top)); z-index: 7; width: 36px; height: 36px;
+    border-radius: 50%; border: 1px solid rgba(236,230,218,0.18); background: rgba(8,9,12,0.35); color: var(--dim);
+    font-size: 17px; line-height: 34px; text-align: center; cursor: pointer; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: none; }
+  .entered #gear { display: block; }
+  .in-title #stats { display: none; }
+
+  /* ---------- panel ---------- */
+  #panel { position: fixed; right: max(12px, env(safe-area-inset-right)); top: 56px; width: min(340px, calc(100vw - 24px)); z-index: 8;
+    background: rgba(8, 9, 13, 0.72); border: 1px solid rgba(236,230,218,0.12); border-radius: 10px; padding: 16px 16px 12px;
+    -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2);
+    opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity 0.35s, transform 0.35s; user-select: text; -webkit-user-select: text; }
+  #panel.open { opacity: 1; transform: none; pointer-events: auto; }
+  #panel h2 { margin: 0 0 12px; font-family: var(--serif); font-weight: 400; font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--dim); }
+  #panel .row { display: grid; grid-template-columns: 108px 1fr 40px; align-items: center; gap: 10px; margin: 7px 0; font-family: var(--text); font-size: 13px; color: var(--dim); }
+  #panel .row .val { font-family: var(--mono); font-size: 11px; text-align: right; color: var(--ink); }
+  #panel .row.prompt { grid-template-columns: 1fr; gap: 6px; }
+  #panel textarea { width: 100%; resize: vertical; background: rgba(255,255,255,0.04); border: 1px solid rgba(236,230,218,0.14); border-radius: 6px;
+    color: var(--ink); font-family: var(--text); font-size: 13px; padding: 8px; outline: none; }
+  #panel .row.buttons { grid-template-columns: 1fr 1fr; }
+  #panel button { background: rgba(255,255,255,0.05); border: 1px solid rgba(236,230,218,0.16); border-radius: 6px; color: var(--ink);
+    font-family: var(--serif); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 9px 6px; cursor: pointer; }
+  #panel button:hover { background: rgba(255,255,255,0.1); }
+  #panel .hint { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: var(--faint); line-height: 1.6; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 18px; background: transparent; }
+  input[type=range]::-webkit-slider-runnable-track { height: 2px; background: rgba(236,230,218,0.22); border-radius: 1px; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -5px; border-radius: 50%; background: var(--ink); }
+  input[type=range]::-moz-range-track { height: 2px; background: rgba(236,230,218,0.22); }
+  input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: var(--ink); }
+  #err { position: fixed; left: 16px; right: 16px; bottom: 16px; font-family: var(--mono); font-size: 11px; color: #f2a0a0; white-space: pre-wrap; z-index: 20; display: none; }
+</style>
+</head>
+<body class="in-title">
+<canvas id="view"></canvas>
+<div id="title">
+  <h1>HYPNAGOGIA</h1>
+  <div class="tag">a place that is being dreamt as you look at it</div>
+  <div class="enter">click to enter</div>
+  <div class="keys">
+    <span class="desk"><kbd>WASD</kbd> walk &nbsp; <kbd>mouse</kbd> look &nbsp; <kbd>shift</kbd> run &nbsp; <kbd>space</kbd> jump<br>
+    <kbd>tab</kbd> dream settings &nbsp; <kbd>F</kbd> raw / dreamt &nbsp; <kbd>R</kbd> forget &nbsp; <kbd>[ ]</kbd> strength &nbsp; <kbd>H</kbd> hud &nbsp; <kbd>M</kbd> sound</span>
+    <span class="tch">left thumb walks &middot; right thumb looks</span>
+  </div>
+  <div class="status" id="status">waking the dream engine&hellip;</div>
+</div>
+<div id="zonecard"><div class="name"></div><div class="rule"></div><div class="sub"></div></div>
+<div id="stats"></div>
+<div id="toast"></div>
+<div id="gear" title="dream settings">&#x2736;</div>
+<div id="panel"><h2>the dream</h2><div class="panel-body"></div>
+  <div class="hint">tab / P panel &middot; H hud &middot; F compare &middot; R forget &middot; [ ] strength &middot; M sound</div></div>
+<div id="err"></div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
