@@ -87,3 +87,9 @@ bench/    engine and whole-system benchmarks, Core ML converter
 docs/     DESIGN.md (architecture, protocol), screenshots
 legacy/   the Dec 2025 game
 ```
+
+## License
+
+MIT (see [`LICENSE`](LICENSE)). Vendored three.js keeps its own MIT license
+(`client/vendor/LICENSE`). SD-Turbo weights are not included and are covered by Stability
+AI's license.
