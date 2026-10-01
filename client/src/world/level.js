@@ -102,13 +102,10 @@ function makeMotes(d, seed) {
   const root = new THREE.Object3D();
   root.name = 'decor';
   root.add(pts);
-  // call decor.userData.update(timeSeconds, renderer?) each frame
-  // accepts (time) | (time, renderer) | (dt, time, camera)
-  root.userData.update = (...args) => {
-    const nums = args.filter((a) => typeof a === 'number');
-    mat.uniforms.uTime.value = nums.length >= 2 ? nums[1] : (nums[0] || 0);
-    const r = args.find((a) => a && a.domElement);
-    mat.uniforms.uScale.value = r ? r.domElement.height : (typeof window !== 'undefined' ? window.innerHeight * Math.min(2, window.devicePixelRatio || 1) : 800);
+  // call decor.userData.update(timeSeconds, drawingBufferHeightPx) each frame
+  root.userData.update = (time, heightPx) => {
+    mat.uniforms.uTime.value = time;
+    mat.uniforms.uScale.value = heightPx;
   };
   return root;
 }

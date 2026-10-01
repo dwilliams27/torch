@@ -2,6 +2,8 @@
 # Build the Core ML models used by server/engines/coreml_turbo.py (macOS, Apple Silicon).
 #
 #   bench/coreml/build_models.sh            # default set: SD-Turbo 512 (kv2w8) + 384 (w8) + TAESD
+#   bench/coreml/build_models.sh graft      # the served look (depth graft 0.8) at the game's 512x320
+#                                           # capture, to pool with torch_turbo (~0.9 GB + the venv)
 #   bench/coreml/build_models.sh 384        # only 384 (e.g. on a 16 GB laptop)
 #   bench/coreml/build_models.sh all        # + exact fp16 variants + SDXS
 #
@@ -32,6 +34,8 @@ case "$WHAT" in
     conv --model sdturbo --res 384 --w8 --suffix _w8 --vae taesd ;;
   512)
     conv --model sdturbo --res 512 --kv-down 2 --w8 --suffix _kv2w8 --vae taesd ;;
+  graft)
+    conv --model sdturbo --res 512x320 --kv-down 2 --w8 --suffix _kv2w8_d08 --depth-graft 0.8 --vae taesd ;;
   default)
     conv --model sdturbo --res 512 --kv-down 2 --w8 --suffix _kv2w8 --vae taesd
     conv --model sdturbo --res 384 --w8 --suffix _w8 --vae taesd ;;
@@ -41,7 +45,7 @@ case "$WHAT" in
     conv --model sdturbo --res 512 384
     conv --model sdturbo --res 512 --w8 --suffix _w8
     conv --model sdxs --res 512 384 256 --vae sdxs ;;
-  *) echo "usage: $0 [default|384|512|all]"; exit 2 ;;
+  *) echo "usage: $0 [default|384|512|graft|all]"; exit 2 ;;
 esac
 # the .mlpackage sources are not needed at runtime
 rm -rf "$CACHE"/coreml/*.mlpackage

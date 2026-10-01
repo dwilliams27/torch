@@ -1,0 +1,158 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: X = M111 final (client d2d27404, server xframe=0 and its single-slot DeepCache; the strips judge-end-to-end.json used), Y = the build M113 closed with (cross-frame attention, per-stream DeepCache, seeds per capture kind, atrium/vestibule/desert/baths prompts); walking filmstrips, 8 frames 0.15 s apart, all 8 zones, headless WebKit 1280x720; labels mapped back to M111/now below",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "steadier": {
+  "vestibule": "now clearly",
+  "nave": "now clearly",
+  "stacks": "now slightly",
+  "geode": "now clearly",
+  "baths": "now slightly",
+  "garden": "now clearly",
+  "atrium": "now clearly",
+  "desert": "now slightly"
+ },
+ "sharper": {
+  "vestibule": "now",
+  "nave": "M111 clearly",
+  "stacks": "M111 slightly",
+  "geode": "now clearly",
+  "baths": "now slightly",
+  "garden": "even",
+  "atrium": "now clearly",
+  "desert": "M111 clearly"
+ },
+ "more_coherent": {
+  "vestibule": "now clearly",
+  "nave": "M111 clearly",
+  "stacks": "even",
+  "geode": "now clearly",
+  "baths": "now slightly",
+  "garden": "now slightly",
+  "atrium": "now clearly",
+  "desert": "M111 slightly"
+ },
+ "grades_steadiness_sharpness_coherence_1_to_5": {
+  "now": {
+   "vestibule": [
+    4,
+    3,
+    3
+   ],
+   "nave": [
+    4,
+    2,
+    2.5
+   ],
+   "stacks": [
+    3.5,
+    3,
+    3
+   ],
+   "geode": [
+    4.5,
+    4,
+    4
+   ],
+   "baths": [
+    3.5,
+    3,
+    3.5
+   ],
+   "garden": [
+    4,
+    3,
+    3.5
+   ],
+   "atrium": [
+    4,
+    3.5,
+    4
+   ],
+   "desert": [
+    4.5,
+    2,
+    3
+   ]
+  },
+  "M111": {
+   "vestibule": [
+    2,
+    2,
+    2
+   ],
+   "nave": [
+    3,
+    4,
+    4
+   ],
+   "stacks": [
+    3,
+    3.5,
+    3
+   ],
+   "geode": [
+    2,
+    2,
+    2
+   ],
+   "baths": [
+    3,
+    2.5,
+    3
+   ],
+   "garden": [
+    2.5,
+    3,
+    3
+   ],
+   "atrium": [
+    1,
+    1,
+    1
+   ],
+   "desert": [
+    4,
+    4,
+    3.5
+   ]
+  }
+ },
+ "mean_grades": {
+  "now": [
+   4.0,
+   2.94,
+   3.31
+  ],
+  "M111": [
+   2.56,
+   2.75,
+   2.69
+  ]
+ },
+ "ghosts_now": {
+  "vestibule": "Same rotated translucent panes over the whole frame; right ~15% is flat unpainted purple with stacked hard rectangles; pale block at lower left (frames 5-7); tiny standing figure in a lit doorway/mirror on the right wall (frames 0-3).",
+  "nave": "Vertical see-through pane edges at the same places as [the old build], plus a bright thick vertical bar at right (frame 6) and dark vertical drip lines near the centre; smoky cloud blob at right; dark mottled patch under the rose window. No figure.",
+  "stacks": "Same straight hard edge across the top (frames 0-5); faceted disc with a pale light spill beneath it (frame 0); hairline wire across the left (frames 6-7); hard dark block inside the lit ring (frame 7).",
+  "geode": "Faint thin hex/triangle lines over the purple floor; otherwise essentially clean.",
+  "baths": "Row of 3-5 dark human silhouettes standing in the glowing far arch (every frame); large translucent teal swooshes from the arcades to the tunnel; thin translucent arch outlines along both sides; white horizontal wall lines; hard-edged translucent panels on the water (frames 5-7).",
+  "garden": "Misty oval hole of sky and mountains cut into the foliage at left; soft vertical cut where the villa meets the right-hand tree; horizontal seam across the left hedge; hairline scribbles and stakes on the lawn; white fountain fragment at the right edge.",
+  "atrium": "Wavy white torn-paper border around the whole image with grey grid lines outside it (frame 0), wavy fragments at the edges later; pseudo-text inscription on the lower-right slab (frames 1-7); fine crosshatch mesh on the ceiling; faint arch-shaped ghost on the lit wall; small dark figure/doorway at the corridor end; misaligned bench glitch at centre (frames 0-2).",
+  "desert": "Same flat pink side slabs, plus a pale rectangle on the left wall; grey tiled rectangle behind the tower top; cropped sun disc at the top edge; black tiled strip across the bottom (frame 4); smeared right third; dark smudge on the right balustrade."
+ },
+ "now_weak_spots": [
+  "the nave goes murky and shallow: a fixed shaft of light, a smoke blob, streaky vertical texture",
+  "the desert is soft: smeared stairs and right third, a grey tiled patch behind the tower; a stair in a pink box more than a desert",
+  "translucent teal swooshes and a row of dark silhouettes in the baths' far arch",
+  "the vestibule's right edge is flat unpainted purple with stacked rectangles",
+  "a torn-paper border and grid lines in the atrium's first frame, and pseudo-text on a slab",
+  "smeared shelves in the stacks and a misty oval hole of sky in the garden's foliage"
+ ],
+ "notes": [
+  "many ghosts sit at identical positions in both builds and look like geometry showing through rather than a build difference (vestibule panes, nave pane edges, stacks top edge, geode floor lines, baths arch outlines, garden hedge seam, desert side slabs)",
+  "the new build's steadiness sometimes shades into looking frozen (nave, desert); its detail drops where the scene is foggy or wide",
+  "the old build's detail advantage is real but local: the nave, the desert butte, the stair treads in the stacks",
+  "reviewer's own crude cross-check (160x90 blurred, mean consecutive-frame difference, old/new): vestibule 8.7/7.4, nave 7.4/4.9, stacks 7.1/6.5, geode 6.3/5.4, baths 3.7/3.1, garden 6.6/5.0, atrium 8.7/6.1, desert 4.5/4.2"
+ ],
+ "summary": "I would rather walk through [the new build]. It keeps each place's identity in all eight zones, and in the atrium, geode and vestibule it is also much crisper and more legible, while [the old build]'s atrium is an unreadable grey smear and its geode, garden and vestibule re-invent their focal shapes every few steps. [the old build]'s advantage is real but narrower: more detail and depth in the nave and desert, and slightly in stacks, where [the new build] goes murky or soft. The margin is clear overall ([the new build] is steadier 8/8 and more coherent in 5 of 8), not a toss-up."
+}

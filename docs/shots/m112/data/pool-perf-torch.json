@@ -1,0 +1,61 @@
+{
+ "by": "tools/shoot.mjs --browser webkit --perf 20",
+ "server": "./run.sh --port 8785 --engine torch_turbo",
+ "date": "2026-09-30T15:06:34.126Z",
+ "browser": "webkit",
+ "device": null,
+ "size": [
+  1280,
+  720
+ ],
+ "speed": 3.4,
+ "settle": 5,
+ "params": "",
+ "engine": {
+  "engine": "torch-sd-turbo",
+  "model": "stabilityai/sd-turbo",
+  "width": 384,
+  "height": 384,
+  "flexible": true,
+  "xframe": true,
+  "depth": true,
+  "depth_graft": 0.8,
+  "lora": null,
+  "held_only": "deepcache",
+  "device": "mps"
+ },
+ "client": "89abad3ed4af",
+ "perf": {
+  "frames": 993,
+  "fps": 49.6,
+  "p50": 1,
+  "p95": 7,
+  "p99": 7,
+  "max": 13,
+  "worst": [
+   {
+    "ms": 13,
+    "at": 0.86
+   },
+   {
+    "ms": 11,
+    "at": 1.64
+   },
+   {
+    "ms": 9,
+    "at": 1.85
+   },
+   {
+    "ms": 8,
+    "at": 0.33
+   },
+   {
+    "ms": 8,
+    "at": 0.72
+   }
+  ],
+  "lastPerf": "log: [perf] fps=50.0 cpu=1.66ms res=1280x720 scale=1.00 dream=11.5/s lat=146ms enc=15.0ms paint=0.86ms caps=240 res=238 drop=0",
+  "errors": []
+ },
+ "dcReuseAfter": 0.684
+}

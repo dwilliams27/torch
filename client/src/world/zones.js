@@ -8,7 +8,7 @@ export const SURFACES = [
   { name: 'brick',     color: [0.54, 0.36, 0.28], pattern: 'brick',   emissive: 0 },
   { name: 'wood',      color: [0.40, 0.25, 0.14], pattern: 'wood',    emissive: 0 },
   { name: 'books',     color: [0.46, 0.22, 0.16], pattern: 'wood',    emissive: 0.02 },
-  { name: 'concrete',  color: [0.64, 0.63, 0.60], pattern: 'plaster', emissive: 0 },
+  { name: 'concrete',  color: [0.64, 0.63, 0.60], pattern: 'formwork', emissive: 0 },
   { name: 'metal',     color: [0.46, 0.48, 0.52], pattern: 'metal',   emissive: 0 },
   { name: 'gold',      color: [0.86, 0.66, 0.30], pattern: 'metal',   emissive: 0.04 },
   { name: 'rock',      color: [0.30, 0.27, 0.33], pattern: 'stone',   emissive: 0 },
@@ -39,7 +39,9 @@ const NEG = 'blurry, lowres, text, watermark, signature, people, faces, deformed
 export const ZONES = [
   {
     id: 'vestibule', name: 'The Vestibule', subtitle: 'where the waking world thins',
-    prompt: 'an endless corridor of ornate gilded picture frames twisting through a starry indigo void, candlelight glow, surreal dream, baroque oil painting, rich detail, volumetric light',
+    // name the geometry (a tunnel of rotated square frames around a walkway): "picture
+    // frames" got a gallery of paintings, and the real frames showed through it as panes
+    prompt: 'a tunnel of enormous square gilded baroque frames, one behind another, each rotated a little further, twisting around a narrow walkway through a starry indigo void, candlelight glow, surreal dream, baroque oil painting, rich detail',
     negative: NEG,
     fog: [0.05, 0.04, 0.10], fogDensity: 0.018, light: [1.0, 0.78, 0.48], ambient: [0.10, 0.09, 0.16], sky: [0.06, 0.05, 0.14],
     mood: 'hushed threshold, distant choir pad, slow heartbeat, dust',
@@ -67,7 +69,9 @@ export const ZONES = [
   },
   {
     id: 'baths', name: 'Lethe Baths', subtitle: 'the water here forgets for you',
-    prompt: 'a neon-lit bathhouse with terraced turquoise pools, glowing pink and cyan neon lights, white ceramic tiles, steam, arches, vaporwave, retro-futuristic, glossy reflections, cinematic lighting',
+    // name the vaulted hall and its arcades: with cross-frame attention on, the old prompt
+    // ("a neon-lit bathhouse ... arches") left the walls bare stucco while walking
+    prompt: 'a long barrel-vaulted roman bathhouse hall, a turquoise pool stepping down in terraces between round-arched arcades of white mosaic tile, pink and cyan neon tubes along the vault, a glowing arch at the far end, steam, glossy wet reflections, vaporwave, cinematic lighting, intricate tilework',
     negative: NEG,
     fog: [0.16, 0.07, 0.16], fogDensity: 0.024, light: [1.0, 0.40, 0.80], ambient: [0.10, 0.10, 0.16], sky: [0.35, 0.15, 0.40],
     mood: 'wet synth pads, slow chorus, lapping water, 80s dream pop haze',
@@ -81,14 +85,19 @@ export const ZONES = [
   },
   {
     id: 'atrium', name: 'Monolith Atrium', subtitle: 'concrete that learned to float',
-    prompt: 'a vast brutalist concrete atrium with enormous floating monoliths and narrow ramps over an abyss, hazy sunlight beams through slits, minimalist, monumental scale, soft shadows, architectural photography, dreamy haze',
+    // describe what the walk actually passes (a walkway to a doorway in a huge wall): asked
+    // for monoliths and ramps over an abyss, the model painted beams onto the flat planes,
+    // and they drifted as you walked
+    prompt: 'a narrow concrete walkway across a vast brutalist hall toward a tall arched doorway in a colossal board-formed concrete wall, distant floating concrete monoliths, soft daylight from above, long shadows, monumental scale, architectural photography, detailed concrete texture',
     negative: NEG,
     fog: [0.24, 0.23, 0.22], fogDensity: 0.009, light: [1.0, 0.92, 0.78], ambient: [0.16, 0.15, 0.15], sky: [0.80, 0.78, 0.72],
     mood: 'monumental silence, sub drones, distant wind, sparse piano',
   },
   {
     id: 'desert', name: 'Desert of Two Moons', subtitle: 'the arches hold up nothing',
-    prompt: 'colossal sandstone arches receding across an endless desert at dusk, two enormous moons in a violet sky, surreal de chirico landscape, long shadows, vast emptiness, cinematic matte painting',
+    // the walk climbs a staircase to a windowed tower between walls; asked for arches across
+    // an empty desert, the model painted a distant mesa and the stairs became a flat slab
+    prompt: 'a colossal sandstone staircase climbing toward a tall windowed tower between towering sandstone walls, endless desert at dusk, two enormous moons in a violet sky, surreal de chirico landscape, long shadows, cinematic matte painting',
     negative: NEG,
     fog: [0.34, 0.22, 0.30], fogDensity: 0.006, light: [1.0, 0.70, 0.55], ambient: [0.20, 0.15, 0.24], sky: [0.42, 0.28, 0.52],
     mood: 'wide open dusk, wind, detuned slow strings, lonely theremin',

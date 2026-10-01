@@ -1,0 +1,77 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: the reviewer saw two builds as X and Y and was not told which was which. X = before (data/shots-before.json), Y = now (data/shots-after.json). Frames: walk1-3 and rest of every zone at full size, plus a walk2 overview sheet.",
+ "reviewer": "a fresh-context Claude Opus 5.5 session with no other context",
+ "walking": {
+  "vestibule": "now",
+  "nave": "now",
+  "stacks": "now",
+  "geode": "before",
+  "baths": "now",
+  "garden": "now",
+  "atrium": "before",
+  "desert": "now"
+ },
+ "walking_margin": {
+  "vestibule": "clear",
+  "nave": "clear",
+  "stacks": "moderate",
+  "geode": "slight",
+  "baths": "slight",
+  "garden": "large",
+  "atrium": "clear",
+  "desert": "large"
+ },
+ "rest": {
+  "vestibule": "now",
+  "nave": "now",
+  "stacks": "now",
+  "geode": "now",
+  "baths": "now",
+  "garden": "now",
+  "atrium": "before",
+  "desert": "now"
+ },
+ "walking_crispness_1_to_5": {
+  "before": {
+   "vestibule": 2,
+   "nave": 2,
+   "stacks": 2,
+   "geode": 3,
+   "baths": 2,
+   "garden": 1,
+   "atrium": 3,
+   "desert": 2
+  },
+  "now": {
+   "vestibule": 4,
+   "nave": 4,
+   "stacks": 3,
+   "geode": 3,
+   "baths": 3,
+   "garden": 4,
+   "atrium": 2,
+   "desert": 4
+  }
+ },
+ "now_walking_vs_rest": "mostly",
+ "now_walking_vs_rest_by_zone": {
+  "vestibule": "nearly",
+  "nave": "mostly",
+  "stacks": "no",
+  "geode": "partly",
+  "baths": "mostly",
+  "garden": "yes",
+  "atrium": "no",
+  "desert": "yes"
+ },
+ "now_weak_spots": [
+  "the atrium smears while walking",
+  "the geode is blotchy while walking",
+  "translucent ghost geometry (vestibule diamond planes, arcs in the garden)",
+  "hard-edged rectangles in the desert and geode",
+  "objects re-invented between dreams (the desert mesa's dome becomes twin chimneys)"
+ ],
+ "summary": "Y paints real places - a gilded gallery, a mossy flooded cathedral, a formal garden, a desert mesa - and keeps them fairly steady while moving. X mostly shows the bare geometry under a thin, streaky wash. Y's weak spots are the atrium, the blotchy geode, translucent ghost geometry, and a few hard-edged seams in the desert and geode.",
+ "prompt": "You are a fresh-eyes visual judge. Nothing you have seen before applies; judge only the pictures.\n\nA browser game paints its 3D world with an image-diffusion model while the player walks. Two builds of the game, called X and Y, walked the same scripted route through eight zones (vestibule, nave, stacks, geode, baths, garden, atrium, desert). For each zone there are frames at the same moments of the same walk: `walk1`, `walk2`, `walk3` (2, 4 and 6 seconds into walking at 3.4 m/s) and `rest` (3 seconds after stopping). The camera poses match to within a frame; only the painting differs. The paint is expected to be dreamlike and painterly. Judge sharpness, clarity and quality of the painting, not realism.\n\nFiles (1280x720 PNGs):\n- <dir>/X/<zone>_<phase>.png and <dir>/Y/<zone>_<phase>.png\n- An overview sheet, X left and Y right, one row per zone at walk2: <dir>/walk2-sheet.jpg\n\nLook at the overview, then open the full-size frames. At minimum, open walk2 and rest for every zone in both builds, plus walk1 and walk3 wherever the difference isn't obvious. Crop or zoom as you need (Python with Pillow is available at a local Python; write any scratch files under <dir>/scratch/ only).\n\nAnswer:\n1. Per zone, while walking (walk1-3): which build is sharper and clearer, X or Y, or no difference? One line of evidence each (what you see and where).\n2. Per zone, at rest: the same question.\n3. Artifacts in each build: smears or streaks, visible seams or rectangles, blotches, unpainted or blueprint-looking areas, thin lines, objects that change identity between walk1, walk2 and walk3 (re-invention). Name zone and frame.\n4. For the better build only: is walking nearly as crisp as standing still? Compare its walk2/walk3 to its rest frames per zone and give an overall answer: yes / mostly / no.\n5. Overall: which build would you rather walk through, and why, in two or three sentences. Grade walking crispness for each build from 1 (mush) to 5 (crisp painting) per zone in a small table.\n\nBe concrete and honest; if a difference is small or mixed, say so. Do not edit or delete any files outside <dir>/scratch/. Do not start servers or browsers. Keep the report under 800 words.\n"
+}

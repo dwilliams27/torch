@@ -72,6 +72,7 @@ export class Painter {
     U.uNear.value = s.near; U.uFar.value = s.far;
     U.uRate.value = job.rate;
     U.uSide.value = s.side || 0;
+    U.uWarp.value = s.warp || 1;
     U.uDepthTexel.value.set(1 / s.rt.width, 1 / s.rt.height);
     U.uPixelAngle.value = 2 * Math.tan(THREE.MathUtils.degToRad(s.fov) / 2) / s.rt.height;
     this.frustum.setFromProjectionMatrix(s.viewProj);

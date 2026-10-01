@@ -25,6 +25,7 @@ class MockEngine:
         self.model = model or "mock-painterly (CPU, no diffusion)"
         self.width = int(width)
         self.height = int(height)
+        self.flexible = True   # filters whatever size it is given
         self.device = "cpu"
         self.latency_ms = float(latency_ms)
         self.jitter_ms = float(jitter_ms)

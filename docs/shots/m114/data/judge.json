@@ -1,0 +1,104 @@
+{
+ "date": "2026-09-30",
+ "reviewer": "a fresh-context Claude Opus 5.5 session, blind to which build was which and to what had changed",
+ "method": "per zone, the undreamt blueprint (dream=off) beside a rest and a walking frame of each build (tools/shoot.mjs, WebKit 1280x720, same poses), builds shuffled A/B per zone with a fixed seed; questions: a centre region painted differently (lens), which follows the blueprint's geometry, which is more beautiful, which the reviewer would rather walk through, flaws. Builds: base = d4cf3a1c client with the stock engine, new = the M114 client with depth graft 0.8. The key is judge-key.json.",
+ "zones": {
+  "vestibule": {
+   "lens_A": false,
+   "lens_A_where": "",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "A",
+   "geometry_why": "A rebuilds the tunnel of tilted square frames almost frame for frame and hangs its lanterns exactly where the blueprint's windows are, while B swaps the frames for a round vaulted tunnel and invents stairs (though B keeps the railed walkway and the far doorway better).",
+   "beauty": "A",
+   "preferred": "A",
+   "artifacts_A": "walkway reads as a narrow roof ridge; the vanishing point of the walk frame turns into a busy woven crosshatch; small pale translucent rectangles (ghost windows and a ghost post) in the walk frame; the far doorway is lost",
+   "artifacts_B": "glassy diagonal panes (ghosts of the tilted frames) slice across the vault, strongest in the walk frame; invented stairs and columns at the left edge; faint sunburst lines show through the vault"
+  },
+  "nave": {
+   "lens_A": true,
+   "lens_A_where": "walk frame, lower centre: a darker, murkier oval of water with a soft curved lower edge that cuts into the moss",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "B",
+   "geometry_why": "B stands its near pillars exactly where the blueprint's are, free of the walls and receding in two rows toward the far end, while A has the arcades and rose window but reduces the near pillars to thin ghost seams and replaces the central causeway with water and moss.",
+   "beauty": "A",
+   "preferred": "B",
+   "artifacts_A": "rose window pasted on as a flat grey spoked disc; pillars reduced to thin vertical seams and a translucent grey bar; muddy dark oval in the walk frame",
+   "artifacts_B": "heavy vertical streaking over the whole frame, background columns dissolve into smeared vertical lines; soft, low detail; rose window turned into a lancet"
+  },
+  "stacks": {
+   "lens_A": false,
+   "lens_A_where": "",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "A",
+   "geometry_why": "A lays its golden band exactly along the blueprint's spiral stair in both frames and puts the pale globe where it is, while B's balcony curve is bent and cut off by an invented window in the rest frame and the stair all but disappears in the walk frame.",
+   "beauty": "B",
+   "preferred": "B",
+   "artifacts_A": "most of the frame is featureless brown murk; the stair is a carved gold beam with almost no steps; the globe in the walk frame has a doubled, ghostly outline",
+   "artifacts_B": "milky haze smeared beneath the balcony; large invented bright windows over the wall panels; the globe is a blown-out white disc; the stair survives only as a thin line in the walk frame"
+  },
+  "geode": {
+   "lens_A": false,
+   "lens_A_where": "",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "A",
+   "geometry_why": "A keeps every brick pillar as a standing block in its blueprint position around the central crystal column (and the big crystal cluster in the walk frame), while B turns pillars into flat dark patches or a stump and adds cave walls and foreground spikes the blueprint doesn't have.",
+   "beauty": "B",
+   "preferred": "B",
+   "artifacts_A": "garish yellow-green neon slashes across the upper left; walk frame soft and slightly smeared; a faint vertical seam through the central crystal",
+   "artifacts_B": "hard vertical seams and a flat dark rectangle where pillars stand in the rest frame; pasted-looking teal spikes along the bottom edge; faint hexagonal floor-tile lines show through in the walk frame"
+  },
+  "baths": {
+   "lens_A": true,
+   "lens_A_where": "upper centre of both frames: a smooth airbrushed magenta-and-teal vault with no stone texture that dissolves into the textured stone around it; the walk frame also has a lighter oval across the pool with a soft lower edge",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "B",
+   "geometry_why": "B keeps both rows of arches in correct perspective along the side walls with an end wall closing the hall, while A's central glow swallows the inner arches (though A keeps the closed ceiling and single end alcove that B turns into open sky and a row of arches).",
+   "beauty": "B",
+   "preferred": "B",
+   "artifacts_A": "flat airbrushed glow over the middle of the hall; blocky pixel squares in the ceiling of the rest frame; faint ghost arch outlines inside the teal wings; blurred pool in the walk frame",
+   "artifacts_B": "ceiling replaced by open night sky; vertical white drip-like streaks in the pool reflections; fine horizontal scanline texture; small ghostly glowing blob at the far end of the walk frame"
+  },
+  "garden": {
+   "lens_A": true,
+   "lens_A_where": "walk frame: the centre (terrace, steps, building) is crisp while everything around it is smeared, with a vertical edge left of centre where a cool grey-blue patch of sky and hills meets a blurred band of trees",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "B",
+   "geometry_why": "B plants five cypresses exactly where the blueprint's five trees stand, in front of hedge walls and behind the sunken stone basin, while A paints a generic villa garden with a fountain, a round lawn and open sky where the walls are (neither paints the right-hand stairs).",
+   "beauty": "A",
+   "preferred": "B",
+   "artifacts_A": "a blueprint tree outline leaks as a thin curved line beside the big cypress; the round lawn has a doubled rim; walk frame edges smeared, with a ghost tree trunk and a thin horizontal seam on the left",
+   "artifacts_B": "thin light outline arcs along the cypress edges; flat green patch where the sky should be; ghostly translucent water jet in the basin; walk frame soft overall"
+  },
+  "atrium": {
+   "lens_A": true,
+   "lens_A_where": "both frames, around the centre: a soft round-edged patch on the right-centre wall (dark in rest, a pale disc in walk) and a curved dark rim across the lower-left floor, like the edge of a central oval",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "B",
+   "geometry_why": "B reproduces the T-shaped concrete slab and its narrow walkway almost exactly and puts the doorway where the blueprint's portal stands in the walk frame, while A paints an unrelated long corridor with a slatted ceiling.",
+   "beauty": "B",
+   "preferred": "B",
+   "artifacts_A": "ghostly overlapping layers (walls and ceiling seen through one another); smeared shadow blobs; garbled watermark-like text on the floor of the walk frame",
+   "artifacts_B": "the far doorway is missing in the rest frame; garbled watermark-like text on the floor of the walk frame; mild dark corner vignette"
+  },
+  "desert": {
+   "lens_A": true,
+   "lens_A_where": "centre of both frames: a rounded blue-violet window of sky behind the tower, with soft rounded corners against the pink walls",
+   "lens_B": false,
+   "lens_B_where": "",
+   "geometry": "B",
+   "geometry_why": "B keeps the long straight stair rising between the two tall walls to a doorway at the top, matching the blueprint almost exactly, while A turns it into a squat stepped pyramid topped by an invented tower and flanked by columns.",
+   "beauty": "B",
+   "preferred": "B",
+   "artifacts_A": "pale blocky squares (ghosts of the lit windows and a wall panel) in the upper centre and on the left; jagged pixel-stair edges; muddy smeared steps",
+   "artifacts_B": "steps rendered as fine horizontal ridges, so the stair reads almost as a ramp; a tiny pale square beside the far door in the walk frame"
+  }
+ },
+ "summary": "One build stays close to the blueprint: frames, pillars, slabs, walls, trees and doorways sit where the real geometry is and the paint is even across the frame, though it can be plainer, streaky (nave) or murky (stacks). The other build invents more scenery and dramatic light (sunbeams, neon glow, a villa, a tower, extra windows, cave walls), leaks more ghostly overlays, and in five zones (nave, baths, garden, atrium, desert) shows a centred, rounded window whose paint differs from its surroundings. It wins on beauty in half the zones, but the faithful build is the one I would rather walk through in six of eight."
+}

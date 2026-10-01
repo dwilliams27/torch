@@ -1,0 +1,103 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: two builds as X and Y, reviewer not told which was which. X = now (client 51091980, cross-frame attention on); Y = M111 final (client d2d27404, server --engine-arg xframe=0). Walking filmstrips, 8 frames 0.15 s apart at 3.4 m/s, all 8 zones (tools/shoot.mjs --strip).",
+ "reviewer": "a fresh-context Claude Opus 5.5 session with no other context",
+ "steadier": {
+  "vestibule": "now",
+  "nave": "now",
+  "stacks": "before",
+  "geode": "now",
+  "baths": "now",
+  "garden": "now",
+  "atrium": "now",
+  "desert": "now"
+ },
+ "sharper": {
+  "vestibule": "now",
+  "nave": "before",
+  "stacks": "before",
+  "geode": "now",
+  "baths": "before",
+  "garden": "before",
+  "atrium": "now",
+  "desert": "before"
+ },
+ "grades_steadiness_sharpness_1_to_5": {
+  "now": {
+   "vestibule": [
+    3,
+    3
+   ],
+   "nave": [
+    5,
+    2
+   ],
+   "stacks": [
+    3,
+    2
+   ],
+   "geode": [
+    4,
+    4
+   ],
+   "baths": [
+    4,
+    2
+   ],
+   "garden": [
+    3,
+    3
+   ],
+   "atrium": [
+    3,
+    3
+   ],
+   "desert": [
+    4,
+    3
+   ]
+  },
+  "before": {
+   "vestibule": [
+    2,
+    2
+   ],
+   "nave": [
+    3,
+    3
+   ],
+   "stacks": [
+    4,
+    3
+   ],
+   "geode": [
+    2,
+    3
+   ],
+   "baths": [
+    3,
+    3
+   ],
+   "garden": [
+    2,
+    3
+   ],
+   "atrium": [
+    1,
+    1
+   ],
+   "desert": [
+    3,
+    4
+   ]
+  }
+ },
+ "notes": [
+  "part of the new build's steadiness comes from painting less in places (haze in the nave, a blank slab in the desert, bare walls in the baths)",
+  "sharpness is even on average (2.8 each): the new build is sharper in 3 zones by larger margins, the old in 5",
+  "both builds show ghost geometry: tilted translucent rectangles in the vestibule, thin pane lines in the nave, a ghost-building rectangle in the desert sky",
+  "new build only: an unpainted wall strip in the geode (first frame), a blueprint border and ghost lettering in the atrium, dotted tick lines in the garden, a flat brown slab in the desert"
+ ],
+ "summary": "I'd rather walk through X [now]. It holds its world together in 7 of 8 zones, and even its weakest zone is a readable corridor. Y [M111] keeps reinventing the things you look at (the garden shrine, the geode crystals, the end wall of the nave), and its atrium can't be read at all.",
+ "prompt_summary": "per zone: which build keeps things the same from frame to frame, which is sharper, artifacts, 1-5 grades for steadiness and sharpness, overall preference; judge only the pictures"
+}

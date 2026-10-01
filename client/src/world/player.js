@@ -33,6 +33,7 @@ export class Player {
     this.fly = false;
     this.autopilot = null;
     this.onRespawn = null;       // optional callback
+    this.onStep = null;          // optional (intensity 0..1): a footfall (walk ~0.65, run 0.9, hard landing 1)
     this.respawns = 0;
 
     const q = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams('');
@@ -58,6 +59,12 @@ export class Player {
   get pitch() { return this._pitch; }
   get grounded() { return this.st.grounded; }
   get velocity() { return [this.st.vx, this.st.vy, this.st.vz]; }
+
+  // Turn the view without touching position or physics (the idle gaze in main.js).
+  look(yaw, pitch) {
+    this._yaw = wrapPi(yaw);
+    this._pitch = Math.max(-1.48, Math.min(1.48, pitch));
+  }
 
   setPose(pos, yaw = this._yaw, pitch = this._pitch) {
     const x = pos.x != null ? pos.x : pos[0], y = pos.y != null ? pos.y : pos[1], z = pos.z != null ? pos.z : pos[2];
@@ -154,7 +161,7 @@ export class Player {
     if (jump && (st.grounded || this.coyote > 0)) { st.vy = JUMP_V; st.grounded = false; this.coyote = 0; }
     const vyBefore = st.vy, wasGrounded = st.grounded;
     stepCharacter(this.col, st, dt);
-    if (!wasGrounded && st.grounded && vyBefore < -5) this.dipV -= Math.min(2.2, -vyBefore * 0.14);
+    if (!wasGrounded && st.grounded && vyBefore < -5) { this.dipV -= Math.min(2.2, -vyBefore * 0.14); this.onStep?.(1); }
 
     // safe-position memory + void respawn
     this.safeT += dt;
@@ -175,6 +182,12 @@ export class Player {
     const hs = Math.hypot(st.vx, st.vz);
     this.bobAmp += ((st.grounded ? Math.min(1, hs / WALK) : 0) - this.bobAmp) * (1 - Math.exp(-6 * dt));
     this.bobPhase += dt * (1.6 + hs * 1.9);
+    // one footfall per bob cycle (the head dips twice per stride), at the dip's bottom
+    const step = Math.floor((this.bobPhase + Math.PI / 4) / Math.PI);
+    if (step !== this._step) {
+      this._step = step;
+      if (st.grounded && hs > 0.8) this.onStep?.(Math.min(0.9, 0.35 + hs / RUN * 0.55));
+    }
     this.lean += ((-ax.x * 0.012) - this.lean) * (1 - Math.exp(-5 * dt));
     this._apply(dt);
   }

@@ -1,0 +1,40 @@
+{
+ "by": "bench/coreml/pool_consistency.py --size 512x320 --graft",
+ "date": "2026-09-30",
+ "machine": "Apple M4 Pro",
+ "size": [
+  512,
+  320
+ ],
+ "strength": 0.5,
+ "graft": true,
+ "engines": {
+  "torch_turbo": "stabilityai/sd-turbo",
+  "coreml_turbo": "stabilityai/sd-turbo + TAESD, Core ML/ANE [kv2w8_d08]"
+ },
+ "config": {
+  "torch_turbo": {
+   "deepcache": 0,
+   "xframe": 0,
+   "morph": 0
+  },
+  "coreml_turbo": {
+   "morph": 0
+  }
+ },
+ "stills": [
+  {
+   "mean_abs_diff": 4.8,
+   "psnr_db": 31.71
+  },
+  {
+   "mean_abs_diff": 4.22,
+   "psnr_db": 32.54
+  },
+  {
+   "mean_abs_diff": 4.9,
+   "psnr_db": 30.82
+  }
+ ],
+ "sheet": "bench/samples/coreml_vs_torch_512x320_graft.jpg"
+}

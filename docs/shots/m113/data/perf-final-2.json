@@ -1,0 +1,55 @@
+{
+ "date": "2026-09-29T13:24:36.329Z",
+ "browser": "chromium",
+ "device": null,
+ "size": [
+  1920,
+  1080
+ ],
+ "speed": 3.4,
+ "settle": 5,
+ "params": "",
+ "engine": {
+  "engine": "torch-sd-turbo",
+  "model": "stabilityai/sd-turbo",
+  "width": 384,
+  "height": 384,
+  "flexible": true,
+  "xframe": true,
+  "device": "mps"
+ },
+ "perf": {
+  "frames": 797,
+  "fps": 31.9,
+  "p50": 1.4,
+  "p95": 3.3,
+  "p99": 4.9,
+  "max": 13.1,
+  "worst": [
+   {
+    "ms": 13.1,
+    "at": 0.93
+   },
+   {
+    "ms": 11.9,
+    "at": 0.83
+   },
+   {
+    "ms": 8.2,
+    "at": 0.46
+   },
+   {
+    "ms": 6.9,
+    "at": 12.64
+   },
+   {
+    "ms": 5.2,
+    "at": 2.73
+   }
+  ],
+  "lastPerf": "log: [perf] fps=13.6 cpu=1.63ms res=1920x1080 scale=1.00 dream=4.5/s lat=94ms enc=228.8ms paint=0.94ms caps=181 res=181 drop=0",
+  "errors": []
+ },
+ "dcReuseAfter": 0.651,
+ "note": "the build M113 closed with; headless Chromium 1920x1080, 25 s on the nave tour; server default (cross-frame attention on, per-stream DeepCache)"
+}

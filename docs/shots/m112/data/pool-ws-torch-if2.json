@@ -1,0 +1,54 @@
+{
+ "by": "bench/ws_client.py ws://127.0.0.1:8785/ws -d 30 --width 512 --height 320 --inflight 2 --lock --json",
+ "server": "./run.sh --port 8785 --engine torch_turbo",
+ "machine": "Apple M4 Pro, 48GB",
+ "url": "ws://127.0.0.1:8785/ws",
+ "engine": "torch-sd-turbo",
+ "model": "stabilityai/sd-turbo",
+ "size": [
+  512,
+  320
+ ],
+ "connections": 1,
+ "inflight": 2,
+ "rate": 0.0,
+ "jit": false,
+ "duration_s": 30.0,
+ "results": 396,
+ "dropped": 0,
+ "errors": 0,
+ "fps_total": 13.2,
+ "fps_per_conn": [
+  13.2
+ ],
+ "latency_ms": {
+  "p50": 171.1,
+  "p90": 177.3,
+  "p99": 185.5,
+  "max": 217.5
+ },
+ "server_ms_infer_mean": 75.8,
+ "server_ms_total_mean": 150.5,
+ "engine_only_fps": 13.2,
+ "per_engine": {
+  "torch_turbo": {
+   "frames": 396,
+   "ms_infer": 75.8
+  }
+ },
+ "last_server_stats": {
+  "type": "stats",
+  "fps": 13.45,
+  "ms_infer": 72.6,
+  "queue": 1,
+  "ms_total": 147.9,
+  "gpu_util": 0.99,
+  "clients": 1,
+  "gap_ms": 0.07,
+  "status": "ready",
+  "conn_fps": 13.45,
+  "dropped": 0
+ },
+ "system_efficiency": 1.0,
+ "date": "2026-09-30"
+}

@@ -1,0 +1,34 @@
+{
+ "vestibule": {
+  "A": "fresh",
+  "B": "waking"
+ },
+ "nave": {
+  "A": "fresh",
+  "B": "waking"
+ },
+ "stacks": {
+  "A": "waking",
+  "B": "fresh"
+ },
+ "geode": {
+  "A": "waking",
+  "B": "fresh"
+ },
+ "baths": {
+  "A": "fresh",
+  "B": "waking"
+ },
+ "garden": {
+  "A": "waking",
+  "B": "fresh"
+ },
+ "atrium": {
+  "A": "fresh",
+  "B": "waking"
+ },
+ "desert": {
+  "A": "fresh",
+  "B": "waking"
+ }
+}

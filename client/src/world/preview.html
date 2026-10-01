@@ -158,7 +158,7 @@ function frame(now) {
   });
   uniforms.uNum.value = ls.length;
   renderer.setClearColor(new THREE.Color(cur.fog.x, cur.fog.y, cur.fog.z));
-  if (level.decor) level.decor.userData.update(now / 1000, renderer);
+  if (level.decor) level.decor.userData.update(now / 1000, renderer.domElement.height);
   renderer.render(scene, camera);
   if (zi !== lastZone) { lastZone = zi; titleEl.innerHTML = `${Z.name}<small>${Z.subtitle}</small>`; titleEl.style.opacity = hud ? 1 : 0; zoneFade = 4; }
   zoneFade -= dt; if (zoneFade < 0 && titleEl.style.opacity !== '0') titleEl.style.opacity = 0;

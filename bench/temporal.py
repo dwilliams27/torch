@@ -30,7 +30,7 @@ def main():
     ap.add_argument("--strength", type=float, default=0.55)
     ap.add_argument("--frames", type=int, default=6, help="frames shown in the strip")
     ap.add_argument("--cell", type=int, default=192)
-    ap.add_argument("--cfgs", nargs="+", default=["{}", '{"deepcache":3}'])
+    ap.add_argument("--cfgs", nargs="+", default=['{"deepcache":0}', '{"deepcache":3}'])
     ap.add_argument("--out", default=os.path.join(HERE, "samples", "temporal.jpg"))
     ap.add_argument("--seq", default="walk", choices=["walk", "turn"])
     a = ap.parse_args()
@@ -45,14 +45,20 @@ def main():
     for c in a.cfgs:
         cfg = json.loads(c)
         if base is None:
-            base = tt.create_engine(model=a.model, width=a.size, height=a.size, morph=0, **cfg)
+            base = tt.create_engine(model=a.model, width=a.size, height=a.size, morph=0, **{"depth_graft": 0, **cfg})
         else:  # reuse loaded weights, just change runtime knobs
+            unknown = set(cfg) - {"deepcache", "dc_branch", "dc_thresh", "dc_motion", "dc_max_shift", "xframe", "xframe_bias"}
+            if unknown:
+                raise SystemExit(f"temporal.py can't switch {sorted(unknown)} on a loaded engine; run it separately")
             base.deepcache = int(cfg.get("deepcache", 3))
             base.dc_branch = int(cfg.get("dc_branch", 1))
-            base._dc.clear()
             base.dc_thresh = float(cfg.get("dc_thresh", 0.06))
             base.dc_motion = bool(cfg.get("dc_motion", False))
             base.dc_max_shift = int(cfg.get("dc_max_shift", 3))
+            if base._attn_ref is not None:
+                base._attn_ref["xframe"] = bool(int(cfg.get("xframe", 1)))
+                base._attn_ref["xbias"] = float(cfg.get("xframe_bias", 0.0))
+            base.reset_temporal()
         outs, diffs = [], []
         for f in seq:
             outs.append(base.process(f, PROMPTS[0], a.strength, 7))

@@ -148,7 +148,10 @@ further (0.9968). The sample sheets show no visible difference.
 - **`_w8` variant:** per-channel symmetric int8 weights (`linear_quantize_weights`). The UNet
   drops from 1.6 GB to 0.83 GB and gets ~6–9% faster.
 - **Default variant:** `_kv2w8` at ≥ 512²; `_w8` below that (see quality). Override with
-  `--engine-arg variant=""` for the exact fp16 model.
+  `--engine-arg variant=""` for the exact fp16 model. A depth-grafted build (`_kv2w8_d08`,
+  `build_models.sh graft`, 512x320; M112) comes first when `depth_graft` is 0.8, the server's
+  default: it copies torch_turbo, whose ToDo acts at every size, although its pooled keys
+  (32x20) are under the rule of thumb below.
 
 ## Quality (sample sheets in `bench/samples/`, rows = input, strength 0.3 / 0.5 / 0.7)
 
@@ -165,7 +168,7 @@ further (0.9968). The sample sheets show no visible difference.
   at 512.
 - `coreml_sdturbo_384_kv2.jpg`: **visibly worse**. There's haze, and vertical "curtain" streaks
   at strength 0.3–0.5, because 48×48 → 24×24 keys is too coarse. That's why kv2 is not used
-  below 512.
+  below 512 (except in the graft build, which copies the served torch engine).
   - The same holds at 448 (`coreml_sdturbo_448_kv2w8.jpg`: hazy at 0.3) and for kv2 on only
     the down blocks at 384 (`coreml_sdturbo_384_kv2dw8.jpg`).
   - Exact-architecture int8 (`coreml_sdturbo_448_w8.jpg`, `coreml_sdturbo_384_w8.jpg`) stays
@@ -177,7 +180,7 @@ further (0.9968). The sample sheets show no visible difference.
 
 ## How to run / reproduce
 
-One-shot: `bench/coreml/build_models.sh [default|384|512|all]` creates the converter venv
+One-shot: `bench/coreml/build_models.sh [default|384|512|graft|all]` creates the converter venv
 and builds the models into `~/hypnagogia-cache/coreml`. The `384` set took 59 s on the mini.
 Manual steps:
 

@@ -1,0 +1,130 @@
+{
+ "vestibule": {
+  "walk2": {
+   "before": {
+    "detail": 7.31,
+    "contrast": 28.75,
+    "sat": 0.353,
+    "luma": 67.7
+   },
+   "after": {
+    "detail": 6.88,
+    "contrast": 34.67,
+    "sat": 0.361,
+    "luma": 64.1
+   }
+  }
+ },
+ "nave": {
+  "walk2": {
+   "before": {
+    "detail": 6.07,
+    "contrast": 24.25,
+    "sat": 0.221,
+    "luma": 80.2
+   },
+   "after": {
+    "detail": 5.64,
+    "contrast": 31.22,
+    "sat": 0.248,
+    "luma": 74.8
+   }
+  }
+ },
+ "stacks": {
+  "walk2": {
+   "before": {
+    "detail": 5.54,
+    "contrast": 64.45,
+    "sat": 0.426,
+    "luma": 62.2
+   },
+   "after": {
+    "detail": 5.43,
+    "contrast": 61.3,
+    "sat": 0.411,
+    "luma": 63.8
+   }
+  }
+ },
+ "geode": {
+  "walk2": {
+   "before": {
+    "detail": 7.99,
+    "contrast": 40.14,
+    "sat": 0.415,
+    "luma": 68.5
+   },
+   "after": {
+    "detail": 5.96,
+    "contrast": 40.71,
+    "sat": 0.466,
+    "luma": 63.3
+   }
+  }
+ },
+ "baths": {
+  "walk2": {
+   "before": {
+    "detail": 5.74,
+    "contrast": 32.6,
+    "sat": 0.553,
+    "luma": 92.7
+   },
+   "after": {
+    "detail": 4.62,
+    "contrast": 28.5,
+    "sat": 0.51,
+    "luma": 92.2
+   }
+  }
+ },
+ "garden": {
+  "walk2": {
+   "before": {
+    "detail": 5.26,
+    "contrast": 44.28,
+    "sat": 0.428,
+    "luma": 103.9
+   },
+   "after": {
+    "detail": 6.04,
+    "contrast": 46.35,
+    "sat": 0.368,
+    "luma": 117.4
+   }
+  }
+ },
+ "atrium": {
+  "walk2": {
+   "before": {
+    "detail": 5.02,
+    "contrast": 32.32,
+    "sat": 0.043,
+    "luma": 71.6
+   },
+   "after": {
+    "detail": 4.27,
+    "contrast": 34.75,
+    "sat": 0.047,
+    "luma": 79.2
+   }
+  }
+ },
+ "desert": {
+  "walk2": {
+   "before": {
+    "detail": 5.32,
+    "contrast": 20.19,
+    "sat": 0.376,
+    "luma": 70.2
+   },
+   "after": {
+    "detail": 6.08,
+    "contrast": 24.35,
+    "sat": 0.412,
+    "luma": 71.5
+   }
+  }
+ }
+}

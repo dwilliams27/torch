@@ -1,0 +1,138 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: X = M111 final (client d2d27404, server xframe=0 and its single-slot DeepCache), Y = now (e51b6fd3: cross-frame attention, per-stream DeepCache, seeds per capture kind, atrium/vestibule/desert prompts); walking filmstrips, all 8 zones, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "steadier": {
+  "vestibule": "now",
+  "nave": "now",
+  "stacks": "now",
+  "geode": "now",
+  "baths": "now",
+  "garden": "now",
+  "atrium": "now",
+  "desert": "now"
+ },
+ "sharper": {
+  "vestibule": "even",
+  "nave": "M111, clearly",
+  "stacks": "M111, slightly",
+  "geode": "now",
+  "baths": "M111",
+  "garden": "even",
+  "atrium": "now, by far",
+  "desert": "M111"
+ },
+ "more_coherent": {
+  "vestibule": "now",
+  "nave": "M111",
+  "stacks": "M111, slightly",
+  "geode": "now",
+  "baths": "M111",
+  "garden": "even",
+  "atrium": "now, decisively",
+  "desert": "now, slightly"
+ },
+ "grades_steadiness_sharpness_coherence_1_to_5": {
+  "now": {
+   "vestibule": [
+    4,
+    3,
+    3
+   ],
+   "nave": [
+    4,
+    2,
+    3
+   ],
+   "stacks": [
+    4,
+    2,
+    3
+   ],
+   "geode": [
+    4,
+    4,
+    4
+   ],
+   "baths": [
+    5,
+    2,
+    3
+   ],
+   "garden": [
+    4,
+    3,
+    4
+   ],
+   "atrium": [
+    4,
+    3,
+    4
+   ],
+   "desert": [
+    4,
+    3,
+    3
+   ]
+  },
+  "M111": {
+   "vestibule": [
+    2,
+    3,
+    2
+   ],
+   "nave": [
+    3,
+    4,
+    4
+   ],
+   "stacks": [
+    3,
+    3,
+    3
+   ],
+   "geode": [
+    2,
+    3,
+    2
+   ],
+   "baths": [
+    3,
+    4,
+    4
+   ],
+   "garden": [
+    3,
+    3,
+    4
+   ],
+   "atrium": [
+    1,
+    2,
+    1
+   ],
+   "desert": [
+    3,
+    4,
+    3
+   ]
+  }
+ },
+ "mean_grades": {
+  "now": [
+   4.12,
+   2.75,
+   3.38
+  ],
+  "M111": [
+   2.5,
+   3.25,
+   2.88
+  ]
+ },
+ "notes": [
+  "now is less detailed in the nave (mostly fog), baths (walls nearly bare) and desert (smeared balustrade)",
+  "M111 collapses in the atrium throughout and the geode from frame 4"
+ ],
+ "summary": "I'd rather walk through Y [now]. It is steadier in every zone and avoids X's two collapses (the atrium throughout, the geode from f4), which matter most while moving; X paints richer still frames in the nave, baths and desert. The margin is clear but moderate."
+}

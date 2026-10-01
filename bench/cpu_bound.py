@@ -23,7 +23,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sizes", default="512,384,256")
     a = ap.parse_args()
-    eng = tt.create_engine(width=512, height=512, morph=0)
+    eng = tt.create_engine(width=512, height=512, morph=0, depth_graft=0)
     emb = eng._embed("test prompt")
     t = torch.tensor(499.0, device=eng.device)
     for S in [int(s) for s in a.sizes.split(",")]:

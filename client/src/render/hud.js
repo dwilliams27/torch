@@ -28,6 +28,16 @@ export class Hud {
     ];
     const body = this.panelEl.querySelector('.panel-body');
     body.innerHTML = '';
+    // looks: one tap switches a whole set of settings (looks.js)
+    const looks = this.actions.looks || [];
+    if (looks.length) {
+      const lrow = document.createElement('div');
+      lrow.className = 'row looks';
+      lrow.innerHTML = looks.map((l, i) => `<button data-look="${l.id}" title="${l.hint} (${i + 1})">${l.id}</button>`).join('');
+      lrow.addEventListener('click', (e) => { const id = e.target?.dataset?.look; if (id) this.actions.look?.(id); });
+      lrow._sync = () => { for (const b of lrow.querySelectorAll('button')) b.classList.toggle('on', b.dataset.look === S.look); };
+      body.appendChild(lrow);
+    }
     for (const [key, label, min, max, step, fmt] of sliders) {
       const row = document.createElement('label');
       row.className = 'row';
@@ -49,10 +59,12 @@ export class Hud {
     body.appendChild(prow);
     const brow = document.createElement('div');
     brow.className = 'row buttons';
-    brow.innerHTML = `<button data-a="forget">forget the dream</button><button data-a="compare">raw / dreamt</button><button data-a="audio">sound</button><button data-a="stats">stats</button><button data-a="close" style="grid-column: span 2">close</button>`;
+    brow.innerHTML = `<button data-a="blink" style="grid-column: span 2">close your eyes</button><button data-a="forget">forget the dream</button><button data-a="compare">raw / dreamt</button><button data-a="audio">sound</button><button data-a="stats">stats</button><button data-a="close" style="grid-column: span 2">close</button>`;
     brow.addEventListener('click', (e) => {
       const a = e.target?.dataset?.a;
-      if (a === 'forget') this.actions.forget?.();
+      if (a) e.target.blur?.();   // (a focused button would take the next Enter)
+      if (a === 'blink') this.actions.blink?.();
+      else if (a === 'forget') this.actions.forget?.();
       else if (a === 'compare') this.actions.compare?.();
       else if (a === 'audio') this.actions.audio?.();
       else if (a === 'stats') document.documentElement.classList.toggle('stats-off');

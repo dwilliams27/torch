@@ -1,0 +1,238 @@
+diff --git a/projects/hypnagogia/client/src/dream/dream.js b/projects/hypnagogia/client/src/dream/dream.js
+index 963dadae..7c1ef0c3 100644
+--- a/projects/hypnagogia/client/src/dream/dream.js
++++ b/projects/hypnagogia/client/src/dream/dream.js
+@@ -496,7 +496,13 @@ export class Dream {
+       if (ask.cut) header.cut = true;
+       // the framing id (header `kf`, the fresh look): the server tells an engine whether a frame
+       // repeats the last framing it painted on this stream, so a new framing gets a plain pass
+-      if (S.kfDist > 0 && S.plainWalk) header.kf = slot.kfId;
++      if (S.kfDist > 0 && (S.plainWalk || S.anchorNoise)) header.kf = slot.kfId;
++      // the capture camera (not with the foveal warp, whose projection isn't a matrix), for an
++      // engine that carries its noise with the surfaces (noise=anchor)
++      if (S.anchorNoise && slot.warp <= 1) {
++        header.view = Array.from(slot.camera.matrixWorld.elements, (x) => +x.toPrecision(7));
++        header.proj = Array.from(slot.camera.projectionMatrix.elements, (x) => +x.toPrecision(7));
++      }
+       if (this.link.send(header, jpeg)) {
+         slot.state = 'sent'; slot.sentAt = performance.now();
+         this.stats.captures++;
+@@ -535,7 +541,8 @@ function packDepth(px, w, h) {
+   const k = 255 / Math.max(hi - lo, 1e-9);
+   let str = '';
+   for (let i = 0; i < n; i++) str += String.fromCharCode(Math.max(0, Math.min(255, Math.round((iz[i] - lo) * k))));
+-  return { w, h, data: btoa(str) };
++  // lo/hi: the metric inverse-depth range (1/m), so an engine can reproject
++  return { w, h, data: btoa(str), lo: +lo.toPrecision(6), hi: +hi.toPrecision(6) };
+ }
+ 
+ // RGBA (bottom-up, from readPixels) -> JPEG bytes. Uses OffscreenCanvas when
+diff --git a/projects/hypnagogia/client/src/main.js b/projects/hypnagogia/client/src/main.js
+index f8a4a3ca..15fbfe50 100644
+--- a/projects/hypnagogia/client/src/main.js
++++ b/projects/hypnagogia/client/src/main.js
+@@ -46,7 +46,8 @@ const settings = {
+   // every capture, because a result projected from where you were half a second ago
+   // stretches along your motion (radial smears on floors, streaks on walls).
+   kfDist: num('kfdist', 0.2),
+-  plainWalk: num('plainwalk', 0),         // send framing ids, so an engine with held_only paints each new framing afresh (the fresh look)
++  plainWalk: num('plainwalk', 0),
++  anchorNoise: num('anchor', 0),           // send framing ids and the capture camera, for an engine with noise=anchor (M112 experiment)         // send framing ids, so an engine with held_only paints each new framing afresh (the fresh look)
+   kfAngle: num('kfangle', 0.06),
+   glance: num('glance', 0.62),
+   live: num('live', isMobile ? 3 : 5),   // newest results projected at display time (max 5, 0 = atlas only)
+diff --git a/projects/hypnagogia/server/app.py b/projects/hypnagogia/server/app.py
+index edb62b07..22e97c5f 100644
+--- a/projects/hypnagogia/server/app.py
++++ b/projects/hypnagogia/server/app.py
+@@ -26,6 +26,7 @@ import io
+ import itertools
+ import json
+ import logging
++import math
+ import mimetypes
+ import os
+ import struct
+@@ -136,6 +137,22 @@ def _depth_field(d) -> np.ndarray:
+     return np.frombuffer(raw, np.uint8).reshape(h, w).astype(np.float32) / 127.5 - 1.0
+ 
+ 
++def _pose_field(hdr: dict) -> dict | None:
++    """Headers `view` and `proj` (16 finite numbers each, column-major 4x4: camera-to-world and
++    projection, as three.js) and the depth's `lo`/`hi` (its metric inverse-depth range) -> a pose
++    for an engine that reprojects (torch_turbo noise=anchor), or None."""
++    v, p, d = hdr.get("view"), hdr.get("proj"), hdr.get("depth")
++    num = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
++    ok = lambda a: isinstance(a, list) and len(a) == 16 and all(num(x) for x in a)
++    if not (ok(v) and ok(p) and isinstance(d, dict)):
++        return None
++    lo, hi = d.get("lo"), d.get("hi")
++    if not (num(lo) and num(hi) and 0 < lo < hi):
++        return None
++    return {"view": np.asarray(v, np.float32).reshape(4, 4).T, "proj": np.asarray(p, np.float32).reshape(4, 4).T,
++            "lo": float(lo), "hi": float(hi)}
++
++
+ def pack(header: dict, payload: bytes = b"") -> bytes:
+     hb = json.dumps(header, separators=(",", ":")).encode()
+     return struct.pack("<I", len(hb)) + hb + payload
+@@ -321,7 +338,7 @@ def _engine_child(conn, name: str, cfg: dict, level: int):
+         logging.getLogger(noisy).setLevel(logging.WARNING)
+     try:
+         eng = engines_pkg.load(name, **cfg)
+-        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device", "flexible", "xframe", "wants_depth", "depth_graft", "takes_cut", "takes_held", "held_only", "lora")}
++        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device", "flexible", "xframe", "wants_depth", "depth_graft", "takes_cut", "takes_held", "takes_pose", "held_only", "lora")}
+         conn.send(("ok", meta))
+     except BaseException as e:  # noqa: BLE001
+         conn.send(("err", f"{type(e).__name__}: {e}"))
+@@ -466,6 +483,7 @@ class Frame:
+     depth: np.ndarray | None = None   # the capture's relative inverse depth in [-1, 1] (header `depth`)
+     cut: bool = False                 # the prompt changed where nobody sees: no morph (header `cut`)
+     kf: int | None = None             # the capture's framing id (header `kf`)
++    pose: dict | None = None          # the capture's camera and depth range (headers `view`, `proj`, depth `lo`/`hi`)
+     held: bool | None = None          # set by the worker: it repeats the last framing this engine painted on its stream
+ 
+ 
+@@ -865,6 +883,8 @@ class DreamServer:
+             kw["cut"] = True
+         if frame.held is not None and getattr(engine, "takes_held", False):
+             kw["held"] = frame.held
++        if frame.pose is not None and getattr(engine, "takes_pose", False):
++            kw["pose"] = frame.pose
+         out = engine.process(img, frame.prompt, frame.strength, frame.seed, frame.negative, **kw)
+         if not isinstance(out, np.ndarray):
+             out = np.asarray(out.convert("RGB") if hasattr(out, "convert") else out)
+@@ -924,6 +944,7 @@ class DreamServer:
+             frame.cut = hdr.get("cut") is True
+             kf = hdr.get("kf")
+             frame.kf = kf if isinstance(kf, int) and not isinstance(kf, bool) else None
++            frame.pose = _pose_field(hdr)
+             if hdr.get("depth") is not None and self.wants_depth:
+                 try:
+                     frame.depth = _depth_field(hdr["depth"])
+diff --git a/projects/hypnagogia/server/engines/torch_turbo.py b/projects/hypnagogia/server/engines/torch_turbo.py
+index a27b3f50..846f5963 100644
+--- a/projects/hypnagogia/server/engines/torch_turbo.py
++++ b/projects/hypnagogia/server/engines/torch_turbo.py
+@@ -246,6 +246,24 @@ class _FastAttn:
+         return k, v
+ 
+ 
++def reproject_grid(inv_depth, view_cur, proj_cur, view_old, proj_old) -> "torch.Tensor":
++    """For each pixel of the current frame, where its surface point was in an earlier frame, as a
++    grid_sample grid: (1, h, w, 2) in [-1, 1], x right, y down. inv_depth: (h, w) metric inverse
++    depth (1/m), rows top first; view_*: 4x4 camera-to-world, proj_*: 4x4 perspective
++    projections (column vectors, as three.js)."""
++    iz = torch.as_tensor(np.asarray(inv_depth, np.float32))
++    h, w = iz.shape
++    y_ndc = (1 - 2 * (torch.arange(h, dtype=torch.float32) + 0.5) / h)[:, None].expand(h, w)
++    x_ndc = (2 * (torch.arange(w, dtype=torch.float32) + 0.5) / w - 1)[None, :].expand(h, w)
++    z = 1.0 / iz.clamp(min=1e-4)
++    Pc, Po = (torch.as_tensor(np.asarray(m, np.float32)) for m in (proj_cur, proj_old))
++    pts = torch.stack([x_ndc * z / Pc[0, 0], y_ndc * z / Pc[1, 1], -z, torch.ones_like(z)], -1).reshape(-1, 4)
++    world = pts @ torch.as_tensor(np.asarray(view_cur, np.float32)).T
++    old = world @ torch.linalg.inv(torch.as_tensor(np.asarray(view_old, np.float32))).T
++    zo = (-old[:, 2]).clamp(min=1e-4)
++    return torch.stack([Po[0, 0] * old[:, 0] / zo, -(Po[1, 1] * old[:, 1] / zo)], -1).reshape(1, h, w, 2)
++
++
+ ANCHOR_STREAMS = 4    # streams remembered per layer (narrow, wide, two side glances)
+ ANCHOR_MAX_AGE = 18   # frames (~1.5 s at 12 dreams/s); deep layers refresh only on full passes,
+                       # every deepcache x streams frames, so this must stay above 3 x 4
+@@ -396,6 +414,7 @@ class TorchTurboEngine:
+                  deepcache: int = 3, dc_branch: int = 1, dc_thresh: float = 0.06, dc_max_shift: int = 3,
+                  dc_motion: bool = False,
+                  encoder: str = "taesd", xframe: int = 1, xframe_bias: float = 0.0, held_only: int | str = "deepcache",
++                 noise: str = "screen",
+                  depth_graft: float = 0.8, lora: str | None = None, lora_scale: float = 1.0,
+                  **_ignored):
+         if torch is None:
+@@ -533,6 +552,15 @@ class TorchTurboEngine:
+         self.held_only = "both" if self._held_xframe and self._held_dc else "xframe" if self._held_xframe \
+             else "deepcache" if self._held_dc else ""
+         self.takes_held = True
++        # noise: "screen" (one fixed noise per stream) or "anchor" (M112 experiment): a new framing
++        # that carries its camera takes the stream's last noise reprojected through its depth, so
++        # the painted grain stays on the surfaces while you walk; each earlier sample is used once
++        # (the noise stays Gaussian), and uncovered or doubled pixels get fresh samples
++        if noise not in ("screen", "anchor"):
++            raise ValueError(f"noise={noise!r}: screen or anchor")
++        self.noise_mode = noise
++        self.takes_pose = noise == "anchor"
++        self._stream_noise: "OrderedDict[tuple, tuple]" = OrderedDict()
+         if compile:
+             try:
+                 self._unet_call = torch.compile(lean_unet_forward) if self._lean_ok else None
+@@ -744,11 +772,11 @@ class TorchTurboEngine:
+ 
+     @torch.inference_mode()
+     def process(self, image, prompt: str, strength: float, seed: int, negative: str | None = None, depth=None, cut=False,
+-                held=None):
++                held=None, pose=None):
+         with self._lock:
+-            return self._process(image, prompt, strength, seed, depth, cut, held)
++            return self._process(image, prompt, strength, seed, depth, cut, held, pose)
+ 
+-    def _process(self, image, prompt, strength, seed, depth=None, cut=False, held=None):
++    def _process(self, image, prompt, strength, seed, depth=None, cut=False, held=None, pose=None):
+         dev, dt = self.device, self.dtype
+         t0 = time.perf_counter()
+         tp = t0
+@@ -792,6 +820,8 @@ class TorchTurboEngine:
+                 # whatever its prompt or strength bucket, nor a deep layer's that a cheap pass skipped
+                 self._attn_ref.setdefault("fence", {})[int(seed)] = self._attn_ref["frame"]
+         noise = self._noise(seed, z0.shape)
++        if self.noise_mode == "anchor":
++            noise = self._anchored_noise(seed, noise, held, pose, depth)
+         zt = z0 * sa + noise * s1a
+         # the UNet's input: the noised latent, plus the depth channel on a grafted UNet
+         zin = torch.cat([zt, self._depth_latent(depth, zt.shape, ((H + 7) // 8, (W + 7) // 8), (int(seed), H, W))], 1) if self.wants_depth else zt
+@@ -862,9 +892,48 @@ class TorchTurboEngine:
+         self.fps_estimate = 1000.0 / ms if self.fps_estimate is None else 0.9 * self.fps_estimate + 100.0 / ms
+         return res
+ 
++    def _anchored_noise(self, seed, base, held, pose, depth):
++        """The stream's noise, carried with the surfaces from its last new framing (noise=anchor)."""
++        key = (int(seed), tuple(base.shape))
++        st = self._stream_noise.pop(key, None)
++        n, h, w = base.shape[1], base.shape[2], base.shape[3]
++        if pose is None or depth is None or np.asarray(depth).shape != (h, w):
++            out = st[0] if st is not None and held else base
++        elif st is None or st[1] is None:
++            out = base
++        elif held:
++            out = st[0]
++        else:
++            d = np.asarray(depth, np.float32)
++            inv = pose["lo"] + (d + 1.0) * 0.5 * (pose["hi"] - pose["lo"])
++            g = reproject_grid(inv, pose["view"], pose["proj"], *st[1])[0]     # (h, w, 2) in [-1, 1]
++            ix = torch.round(((g[..., 0] + 1) * w - 1) / 2).long().flatten()
++            iy = torch.round(((g[..., 1] + 1) * h - 1) / 2).long().flatten()
++            src = torch.where((ix >= 0) & (ix < w) & (iy >= 0) & (iy < h), iy * w + ix, torch.full_like(ix, -1))
++            order = torch.argsort(src, stable=True)
++            ss = src[order]
++            first = torch.ones_like(ss, dtype=torch.bool)
++            first[1:] = ss[1:] != ss[:-1]
++            keep = torch.zeros_like(src, dtype=torch.bool)
++            keep[order[first & (ss >= 0)]] = True
++            gen = torch.Generator("cpu").manual_seed((int(seed) * 1000003 + self._frame) & 0x7FFFFFFFFFFFFFFF)
++            out = torch.randn(base.shape, generator=gen, dtype=torch.float32).to(base.device, base.dtype)
++            prev = st[0].reshape(base.shape[0], n, h * w)
++            flat = out.reshape(base.shape[0], n, h * w)
++            idx = torch.nonzero(keep).flatten().to(base.device)
++            flat[:, :, idx] = prev[:, :, src[keep].to(base.device)]
++            out = flat.reshape(base.shape)
++            self.last_noise_kept = float(keep.float().mean())
++        self._stream_noise[key] = (out, (pose["view"], pose["proj"]) if pose is not None and not (held and st is not None and st[1] is not None)
++                                   else (st[1] if st is not None else None))
++        while len(self._stream_noise) > DC_STREAMS:
++            self._stream_noise.pop(next(iter(self._stream_noise)))
++        return out
++
+     def reset_temporal(self) -> None:
+         """Forget everything carried between frames (DeepCache features, cross-frame anchors)."""
+         self._dcs.clear()
++        self._stream_noise.clear()
+         self.last_dc_diff = 0.0
+         self.dc_reuse = 0.0
+         for proc in self.unet.attn_processors.values():

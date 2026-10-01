@@ -1,0 +1,34 @@
+{
+ "vestibule": {
+  "A": "new",
+  "B": "base"
+ },
+ "nave": {
+  "A": "base",
+  "B": "new"
+ },
+ "stacks": {
+  "A": "new",
+  "B": "base"
+ },
+ "geode": {
+  "A": "new",
+  "B": "base"
+ },
+ "baths": {
+  "A": "base",
+  "B": "new"
+ },
+ "garden": {
+  "A": "base",
+  "B": "new"
+ },
+ "atrium": {
+  "A": "base",
+  "B": "new"
+ },
+ "desert": {
+  "A": "base",
+  "B": "new"
+ }
+}

@@ -1,0 +1,166 @@
+{
+ "date": "2026-09-30",
+ "strength": 0.66,
+ "size": [
+  512,
+  320
+ ],
+ "frames": [
+  "pillar",
+  "vestibule",
+  "geode",
+  "baths",
+  "garden",
+  "desert"
+ ],
+ "engine": {
+  "depth_graft": 0.8,
+  "deepcache": 0,
+  "xframe": 0,
+  "device": "mps"
+ },
+ "cuts": {
+  "none": {
+   "skip": [],
+   "unet_ms": 100.0,
+   "psnr_vs_none": null,
+   "sil_ratio": 2.492,
+   "saving": 0.0
+  },
+  "mida": {
+   "skip": [
+    "mida"
+   ],
+   "unet_ms": 98.8,
+   "psnr_vs_none": 42.57,
+   "sil_ratio": 2.455,
+   "saving": 0.012
+  },
+  "mid": {
+   "skip": [
+    "mid"
+   ],
+   "unet_ms": 96.9,
+   "psnr_vs_none": 33.43,
+   "sil_ratio": 2.444,
+   "saving": 0.031
+  },
+  "d0.1a": {
+   "skip": [
+    "d0.1a"
+   ],
+   "unet_ms": 98.1,
+   "psnr_vs_none": 21.85,
+   "sil_ratio": 2.199,
+   "saving": 0.019
+  },
+  "d1.1a": {
+   "skip": [
+    "d1.1a"
+   ],
+   "unet_ms": 96.4,
+   "psnr_vs_none": 24.3,
+   "sil_ratio": 2.339,
+   "saving": 0.036
+  },
+  "d2.1a": {
+   "skip": [
+    "d2.1a"
+   ],
+   "unet_ms": 96.1,
+   "psnr_vs_none": 26.95,
+   "sil_ratio": 2.496,
+   "saving": 0.039
+  },
+  "d0.1": {
+   "skip": [
+    "d0.1"
+   ],
+   "unet_ms": 96.9,
+   "psnr_vs_none": 19.9,
+   "sil_ratio": 1.288,
+   "saving": 0.031
+  },
+  "d1.1": {
+   "skip": [
+    "d1.1"
+   ],
+   "unet_ms": 94.6,
+   "psnr_vs_none": 22.24,
+   "sil_ratio": 1.976,
+   "saving": 0.054
+  },
+  "d2.1": {
+   "skip": [
+    "d2.1"
+   ],
+   "unet_ms": 95.3,
+   "psnr_vs_none": 25.27,
+   "sil_ratio": 2.639,
+   "saving": 0.047
+  },
+  "d3.1": {
+   "skip": [
+    "d3.1"
+   ],
+   "unet_ms": 99.1,
+   "psnr_vs_none": 39.07,
+   "sil_ratio": 2.532,
+   "saving": 0.009
+  },
+  "u1.2a": {
+   "skip": [
+    "u1.2a"
+   ],
+   "unet_ms": 97.2,
+   "psnr_vs_none": 24.03,
+   "sil_ratio": 3.008,
+   "saving": 0.028
+  },
+  "u2.2a": {
+   "skip": [
+    "u2.2a"
+   ],
+   "unet_ms": 98.0,
+   "psnr_vs_none": 24.25,
+   "sil_ratio": 2.863,
+   "saving": 0.02
+  },
+  "u3.2a": {
+   "skip": [
+    "u3.2a"
+   ],
+   "unet_ms": 96.9,
+   "psnr_vs_none": 17.34,
+   "sil_ratio": 1.77,
+   "saving": 0.031
+  },
+  "u3.*a": {
+   "skip": [
+    "u3.0a",
+    "u3.1a",
+    "u3.2a"
+   ],
+   "unet_ms": 91.7,
+   "psnr_vs_none": 17.45,
+   "sil_ratio": 1.323,
+   "saving": 0.083
+  },
+  "bk": {
+   "skip": [
+    "mid",
+    "d0.1",
+    "d1.1",
+    "d2.1",
+    "d3.1",
+    "u1.2a",
+    "u2.2a",
+    "u3.2a"
+   ],
+   "unet_ms": 74.1,
+   "psnr_vs_none": 15.12,
+   "sil_ratio": 0.964,
+   "saving": 0.259
+  }
+ }
+}

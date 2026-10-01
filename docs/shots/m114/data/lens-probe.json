@@ -1,0 +1,22 @@
+{
+ "method": "d4cf3a1c client (fovea 1.7), WebKit 1280x720, dream settled 6 s at a zone waypoint and paused; the same frame rendered with and without its narrow (foveated) live views; |difference| after a Gaussian blur of 6 px (colour and composition, not detail), mean over the frame and over its central 30% x 30%",
+ "date": "2026-09-30",
+ "zones": {
+  "nave": {
+   "frame": 5.8,
+   "centre": 13.8
+  },
+  "garden": {
+   "frame": 11.03,
+   "centre": 26.8
+  },
+  "baths": {
+   "frame": 7.55,
+   "centre": 23.31
+  },
+  "atrium": {
+   "frame": 7.59,
+   "centre": 28.75
+  }
+ }
+}

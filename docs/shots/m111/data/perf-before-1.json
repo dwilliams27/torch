@@ -1,0 +1,30 @@
+{
+ "date": "2026-09-29T05:19:40.964Z",
+ "browser": "chromium",
+ "size": [
+  1920,
+  1080
+ ],
+ "speed": 3.4,
+ "settle": 5,
+ "params": "",
+ "engine": {
+  "engine": "torch-sd-turbo",
+  "model": "stabilityai/sd-turbo",
+  "width": 384,
+  "height": 384,
+  "flexible": true,
+  "device": "mps"
+ },
+ "perf": {
+  "frames": 701,
+  "fps": 28,
+  "p50": 1.1,
+  "p95": 2.9,
+  "p99": 3.5,
+  "max": 4.5,
+  "lastPerf": "log: [perf] fps=10.9 cpu=1.45ms res=1920x1080 scale=1.00 dream=4.5/s lat=85ms enc=232.7ms paint=0.86ms caps=168 res=167 drop=0",
+  "errors": []
+ },
+ "note": "client at 4abe4538 served with ./run.sh --client-dir; headless Chromium"
+}

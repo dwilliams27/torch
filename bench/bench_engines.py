@@ -46,11 +46,12 @@ PROMPTS = [
 
 def machine() -> str:
     try:
-        chip = subprocess.check_output(["sysctl", "-n", "machdep.cpu.brand_string"]).decode().strip()
-        mem = int(subprocess.check_output(["sysctl", "-n", "hw.memsize"]).strip()) // 2**30
-        return f"{platform.node().split('.')[0]} ({chip}, {mem}GB)"
+        sysctl = "/usr/sbin/sysctl" if os.path.exists("/usr/sbin/sysctl") else "sysctl"   # (not always on PATH)
+        chip = subprocess.check_output([sysctl, "-n", "machdep.cpu.brand_string"]).decode().strip()
+        mem = int(subprocess.check_output([sysctl, "-n", "hw.memsize"]).strip()) // 2**30
+        return f"{chip}, {mem}GB"   # (no host name: results get published)
     except Exception:
-        return platform.node()
+        return platform.machine()
 
 
 @contextlib.contextmanager
@@ -78,16 +79,20 @@ def resize(img, w, h):
 def run(args):
     mod = importlib.import_module(f"server.engines.{args.engine}")
     extra = json.loads(args.cfg) if args.cfg else {}
-    sizes = [int(s) for s in args.sizes.split(",")]
+    if args.engine == "torch_turbo":   # its scenes carry no depth: stock unless --cfg asks for the graft
+        extra.setdefault("depth_graft", 0)
+    # "384" = 384x384; "512x320" = 512 wide, 320 tall (flexible engines take any size)
+    sizes = [tuple(int(v) for v in s.split("x")) if "x" in s else (int(s), int(s)) for s in args.sizes.split(",")]
     t0 = time.time()
-    eng = mod.create_engine(model=args.model, width=sizes[0], height=sizes[0], **extra)
+    eng = mod.create_engine(model=args.model, width=sizes[0][0], height=sizes[0][1], **extra)
     load_s = time.time() - t0
     print(f"# {eng.name} model={eng.model} device={eng.device} load={load_s:.1f}s cfg={extra}", flush=True)
     base_seq = scenes.walk(24, 512, 512, palette="blue")
     stills = scenes.test_set(512, 512)
     rows = []
-    for S in sizes:
-        seq = [resize(f, S, S) for f in base_seq]
+    for W, H in sizes:
+        S = W if W == H else f"{W}x{H}"
+        seq = [resize(f, W, H) for f in base_seq]
         # warm up this shape outside the lock (kernel compilation / allocator growth)
         for i in range(args.warmup):
             eng.process(seq[i % len(seq)], PROMPTS[0], args.strength, 7)
@@ -113,7 +118,7 @@ def run(args):
         st = " ".join(f"{k}={v:.1f}" for k, v in stages.items() if k != "total")
         print(f"| {eng.name} | {S} | {e2e:.1f} ms | {1000 / e2e:.1f} FPS | {st} |", flush=True)
         if args.samples:
-            sheet(eng, stills, S, args)
+            sheet(eng, stills, (W, H), S, args)
     os.makedirs(os.path.join(HERE, "out"), exist_ok=True)
     with open(os.path.join(HERE, "out", "results.jsonl"), "a") as f:
         for r in rows:
@@ -130,14 +135,14 @@ def _torch_version():
         return None
 
 
-def sheet(eng, stills, S, args):
+def sheet(eng, stills, wh, S, args):
     """Contact sheet: rows = strengths, cols = (input, output) per still/prompt pair."""
     from PIL import Image
 
     strengths = [float(s) for s in args.sheet_strengths.split(",")]
     cell = args.cell
     rows = []
-    ins = [resize(im, S, S) for im in stills]
+    ins = [resize(im, *wh) for im in stills]
     top = [np.asarray(Image.fromarray(im).resize((cell, cell))) for im in ins]
     rows.append(np.concatenate(top, 1))
     for s in strengths:

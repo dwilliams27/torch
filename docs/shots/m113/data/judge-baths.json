@@ -1,0 +1,34 @@
+{
+ "date": "2026-09-29",
+ "zone": "baths",
+ "method": "blind: P = the previous prompt ('a neon-lit bathhouse with terraced turquoise pools, ... arches, vaporwave'), Q = prompt naming the barrel-vaulted hall, terraced pool and round-arched arcades of mosaic tile (adopted); settled, walk1-3, rest and an 8-frame walking strip each, current build, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "mapping": {
+  "P": "old prompt",
+  "Q": "new prompt"
+ },
+ "grades_detail_steadiness_coherence_1_to_5": {
+  "old": [
+   2,
+   4,
+   2
+  ],
+  "new": [
+   4,
+   3,
+   4
+  ]
+ },
+ "prefer": "new",
+ "margin": "clear",
+ "worst_flaw": {
+  "old": "almost nothing structural is painted: flat grey walls with magenta neon bands, a shapeless pink glow where the far wall should be, arches left as see-through outlines",
+  "new": "part of the painted stone arcade sticks to the screen and flickers (a pier narrows, the arch count changes between frames) while the see-through geometry arches slide past in front"
+ },
+ "ghosts": "the same see-through arch outlines, white lines across the piers and seams across the pool in both (from the scene, not the painting); more visible in the old because its walls are blank. New: small dark human-like silhouettes inside the far doorway in walk1-2",
+ "notes": [
+  "the old prompt is steadier from strip frame to strip frame, 'mostly because it has little to hold' (reviewer's rough raw luma change on the strips: 2.95 old vs 4.10 new; not motion-compensated)",
+  "over the longer walk the new keeps its identity (arcade and lit doorway in every frame); the old goes from tiled piers to a neon tunnel to stone arches to inflatable-looking tubes"
+ ],
+ "summary": "Q reads as one believable vaulted stone bathhouse whose arcades and lit doorway last from settled to rest; P mostly paints a flat foggy neon tube and keeps changing identity. P holds steadier frame to frame only because there is little to hold. Clear preference for Q."
+}

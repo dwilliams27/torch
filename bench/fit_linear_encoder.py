@@ -30,7 +30,7 @@ def main():
 
     from server.engines import torch_turbo as tt
 
-    eng = tt.create_engine(model="sd-turbo", width=512, height=512, morph=0, vae="taesd", deepcache=0)
+    eng = tt.create_engine(model="sd-turbo", width=512, height=512, morph=0, vae="taesd", deepcache=0, depth_graft=0)
     dev = eng.device
     imgs = []
     for pal in ("blue", "amber", "violet"):

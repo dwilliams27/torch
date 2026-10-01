@@ -1,0 +1,15 @@
+{
+ "date": "2026-09-29",
+ "zone": "vestibule",
+ "method": "blind: P = prompt naming the tunnel of rotated square frames (adopted), Q = the previous prompt ('ornate gilded picture frames'); walk1-3, rest and an 8-frame walking strip each, current build, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "coherence": "P",
+ "fewer_ghosts": "P",
+ "beauty": "P (Q's rest frame is the prettiest single frame, 'it just isn't this place')",
+ "steadiness": "P",
+ "recommendation": "P, clearly",
+ "notes": [
+  "Q paints a gallery hung with paintings; the real frames show through it as clear panes",
+  "P's panes carry the tunnel's own texture and read as the frames; P still has flat violet/green shapes at the right edge"
+ ]
+}

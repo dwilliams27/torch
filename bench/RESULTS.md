@@ -9,6 +9,68 @@ DeepCache on, "UNet" is the *average* over full + cheap passes (`dc_reuse` = sha
 passes on that sequence). The mini was busy with other work during some runs: single runs vary ±5%, outliers were
 re-measured.
 
+## Current state, 2026-09-30 (M112): chart-first brief
+
+`showcase/hypnagogia-speed.html`, rebuilt by `docs/shots/m112/brief.py` from
+`docs/shots/m112/data/` (`engines.json` from this bench, two runs of each config, the
+commands in its `by`; `batch.json` from `bench/batch_probe.py`; the experiment data).
+`bench_engines.py --sizes 384,512x320 --iters 40` on the mini, background priority, torch
+2.14.0:
+
+| config | 384 (two runs) | 512x320 (two runs) |
+|---|---|---|
+| stock-equivalent (`{"deepcache":0,"attn":"sdpa","vae":"taesd","xframe":0}`) | 123.9 / 123.6 ms | 131.7 / 132.4 ms |
+| defaults, no graft (`{}`) | 75.2 / 75.1 ms | 81.5 / 80.6 ms |
+| as served (`{"depth_graft":0.8}`, flat depth) | 74.8 / 74.9 ms | 79.8 / 80.5 ms |
+
+The graft build (on flat depth) ran about 1% faster than defaults in every run; it always ran last in its
+round, so an order effect is the likely cause, and its cost is below what this bench resolves. In the game (WebKit harness) the
+dream rate is about 11 a second (`docs/shots/m116/data/flicker-waking-*.json`). Measured no
+this week: smaller captures, batching, reprojected DeepCache, world-anchored noise (the page
+and M112's log).
+
+**GPU + Neural Engine pool** (same day; `bench/coreml/build_models.sh graft`, then
+`./run.sh --engine torch_turbo,coreml_turbo --width 512 --height 320`): `ws_client` 18.3 / 19.0 fps
+at 2 / 3 in flight against 13.2 for the GPU alone at 2; in the pool a frame takes 127 ms on the
+ANE and 89 on the GPU (76 alone). Data `docs/shots/m112/data/pool-*.json`, one run each; the page
+has the game's dream rate, frame time and the extra shimmer, and `--pool-held carry`, which keeps
+a view held still on the GPU (`data/flicker-carry-*.json`). The sections below are history: other days and account priorities, so
+compare rows within one table.
+
+## 2026-09-29 re-baseline: the capture shapes clients now send
+
+`python bench/bench_engines.py --engine torch_turbo --sizes 384,512x320,320x512 --iters 40`
+on the mini (M4 Pro), from an account that runs at background priority, under
+`bench.lock`, torch 2.14.0. Rows as printed by the bench (e2e = mean
+`process()` over the 24-frame walking sequence; main stages from the profiled pass):
+
+| engine | size | e2e | FPS | stages (ms) |
+|---|---|---|---|---|
+| torch-sd-turbo | 384 | 72.1 ms | 13.9 | upload 4.4, encode 6.8, unet 59.6, decode 9.3, dc_reuse 0.5 |
+| torch-sd-turbo | 512x320 | 77.8 ms | 12.9 | upload 4.8, encode 7.9, unet 62.7, decode 10.2, dc_reuse 0.5 |
+| torch-sd-turbo | 320x512 | 72.0 ms | 13.9 | upload 4.9, encode 7.5, unet 57.3, decode 9.8, dc_reuse 0.6 |
+
+512x320 (what a 16:9 client now sends to a 384x384 engine) cost ~8% more than 384x384 in
+this one run (single runs vary about ±5%). 320x512 has the same pixel count but reused
+DeepCache slightly more on this sequence (`dc_reuse` is a share, not ms), so it is not a
+clean shape comparison. The 2026-09-28 table below came from a normal-priority account,
+probably why it reads faster (63.5 ms at 384): compare rows within one table.
+
+## 2026-09-29: cross-frame attention (`xframe`, now on by default)
+
+Self-attention also attends to the previous frame's K/V (per prompt + seed). Cost, same
+protocol as the re-baseline above: 384 = 73.8 ms (+2.4%), 512x320 = 79.4 ms (+2.1%).
+Frame-to-frame change the engine adds on the synthetic sequences
+(`bench/temporal.py --size 384 --cfgs '{"xframe":0}' '{"xframe":1}' --seq walk|turn`):
+
+| sequence | input change | output, off | output, on |
+|---|---|---|---|
+| walk | 8.07 | 6.51 | 5.44 |
+| turn | 14.39 | 16.72 | 13.64 |
+
+In the game (WebKit, 8 zones, two runs each way) it cuts change after motion
+compensation by 12% on average at equal detail (`docs/shots/m113/`).
+
 ## Recommendation
 
 | machine | engine config | size | e2e | FPS |

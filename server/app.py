@@ -18,6 +18,7 @@ client keeping 2 frames in flight the GPU never waits on I/O or the event loop.
 from __future__ import annotations
 
 import asyncio
+import base64
 import collections
 import fcntl
 import gc
@@ -61,10 +62,20 @@ for ext, mime in {
 # ----------------------------------------------------------------------------
 # JPEG codec: simplejpeg (libjpeg-turbo, releases the GIL, ~1.7x PIL) w/ PIL fallback
 # ----------------------------------------------------------------------------
+MAX_SIDE = 2048   # frames (header size and JPEG size) larger than this are refused
+
+
+def _check_side(w: int, h: int):
+    if not (8 <= w <= MAX_SIDE and 8 <= h <= MAX_SIDE):
+        raise ValueError(f"frame size {w}x{h} outside 8..{MAX_SIDE}")
+
+
 try:
     import simplejpeg
 
     def jpeg_decode(buf: bytes) -> np.ndarray:
+        h, w, _, _ = simplejpeg.decode_jpeg_header(buf)   # size first: never inflate a huge image
+        _check_side(w, h)
         return simplejpeg.decode_jpeg(buf, colorspace="RGB", fastdct=True, fastupsample=True)
 
     def jpeg_encode(img: np.ndarray, quality: int = JPEG_QUALITY) -> bytes:
@@ -77,6 +88,7 @@ except Exception:  # pragma: no cover
     def jpeg_decode(buf: bytes) -> np.ndarray:
         from PIL import Image
         with Image.open(io.BytesIO(buf)) as im:
+            _check_side(*im.size)
             return np.asarray(im.convert("RGB"))
 
     def jpeg_encode(img: np.ndarray, quality: int = JPEG_QUALITY) -> bytes:
@@ -87,11 +99,41 @@ except Exception:  # pragma: no cover
     JPEG_LIB = "pillow"
 
 
+def takes_size(engine, w: int, h: int) -> bool:
+    """Engines with `flexible = True` take frames at the client's own capture size (it picks
+    one matching its screen's aspect) within their pixel budget; others get every frame
+    resized to their fixed width x height. Multiples of 64, so no two sizes share a padded
+    latent shape (torch_turbo's DeepCache keys on it) and no padding is hidden."""
+    if engine is None or not getattr(engine, "flexible", False) or w % 64 or h % 64:
+        return False
+    ew, eh = int(engine.width), int(engine.height)
+    return min(w, h) >= 64 and max(w, h) <= 2 * max(ew, eh) and w * h <= 1.25 * ew * eh
+
+
 def resize(img: np.ndarray, w: int, h: int) -> np.ndarray:
     if img.shape[1] == w and img.shape[0] == h:
         return img
     from PIL import Image
     return np.asarray(Image.fromarray(img).resize((w, h), Image.BILINEAR))
+
+
+DEPTH_PREFERENCE = 1.5   # --engine auto: how much faster a depth-less engine must be to win
+
+
+def _depth_field(d) -> np.ndarray:
+    """Header `depth` -> float32 array in [-1, 1]: {"w", "h", "data": base64 of w*h bytes, rows
+    top first, byte b = relative inverse depth (b / 127.5 - 1, near = 1)}."""
+    if not isinstance(d, dict) or not {"w", "h", "data"} <= d.keys():
+        raise ValueError("depth needs w, h and data")
+    w, h, data = int(d["w"]), int(d["h"]), d["data"]
+    if not (1 <= w <= 256 and 1 <= h <= 256):
+        raise ValueError(f"depth size {w}x{h} out of range")
+    if not isinstance(data, str) or len(data) != 4 * ((w * h + 2) // 3):   # checked before decoding
+        raise ValueError(f"depth data is not base64 of {w}x{h} bytes")
+    raw = base64.b64decode(data, validate=True)
+    if len(raw) != w * h:
+        raise ValueError(f"depth has {len(raw)} bytes for {w}x{h}")
+    return np.frombuffer(raw, np.uint8).reshape(h, w).astype(np.float32) / 127.5 - 1.0
 
 
 def pack(header: dict, payload: bytes = b"") -> bytes:
@@ -134,6 +176,7 @@ class GpuWorker:
         self.waiting = False
         self.busy = False
         self.last_end = 0.0
+        self.last_kf: dict = {}   # (client, seed) -> the framing id of the last frame painted (header `kf`)
         self.gap_ms_ema = 0.0
         self.ms_ema = 0.0
         self.done = 0
@@ -188,6 +231,15 @@ class GpuWorker:
                         return
                 else:
                     engine, frame = job
+                    if frame.kf is not None:
+                        # held: the last frame this engine painted on the stream (client, seed) had
+                        # the same framing id; judged here, in the order the engine paints, so drops
+                        # and a pool's other engines can't make it stale
+                        k = (frame.conn.cid, frame.seed)
+                        frame.held = self.last_kf.pop(k, None) == frame.kf
+                        self.last_kf[k] = frame.kf
+                        while len(self.last_kf) > 64:
+                            self.last_kf.pop(next(iter(self.last_kf)))
                     t0 = time.perf_counter()
                     gap = t0 - self.last_end if self.last_end and frame.t_decoded < self.last_end else None
                     try:
@@ -269,7 +321,7 @@ def _engine_child(conn, name: str, cfg: dict, level: int):
         logging.getLogger(noisy).setLevel(logging.WARNING)
     try:
         eng = engines_pkg.load(name, **cfg)
-        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device")}
+        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device", "flexible", "xframe", "wants_depth", "depth_graft", "takes_cut", "takes_held", "held_only", "lora")}
         conn.send(("ok", meta))
     except BaseException as e:  # noqa: BLE001
         conn.send(("err", f"{type(e).__name__}: {e}"))
@@ -284,7 +336,8 @@ def _engine_child(conn, name: str, cfg: dict, level: int):
         op, args = msg
         try:
             if op == "process":
-                out = eng.process(*args)
+                args, kw = args
+                out = eng.process(*args, **kw)
                 if not isinstance(out, np.ndarray):
                     out = np.asarray(out)
                 conn.send(("ok", out))
@@ -332,8 +385,8 @@ class ProcEngine:
     def warmup(self):
         self._call("warmup")
 
-    def process(self, image, prompt, strength, seed, negative=None):
-        return self._call("process", image, prompt, strength, seed, negative)
+    def process(self, image, prompt, strength, seed, negative=None, **kw):
+        return self._call("process", (image, prompt, strength, seed, negative), {k: v for k, v in kw.items() if v is not None})
 
     def close(self):
         try:
@@ -410,6 +463,11 @@ class Frame:
     image: np.ndarray | None = None
     t_decoded: float = 0.0
     engine: str = ""
+    depth: np.ndarray | None = None   # the capture's relative inverse depth in [-1, 1] (header `depth`)
+    cut: bool = False                 # the prompt changed where nobody sees: no morph (header `cut`)
+    kf: int | None = None             # the capture's framing id (header `kf`; sent in the fresh look)
+    fid: int | None = None            # the framing id the pool routes by (header `fid`, sent in every look; else `kf`)
+    held: bool | None = None          # set by the worker: it repeats the last framing this engine painted on its stream
 
 
 @dataclass
@@ -424,6 +482,7 @@ class Conn:
     done_times: collections.deque = field(default_factory=lambda: collections.deque(maxlen=64))
     closed: bool = False
     want_started: bool = False   # opt-in: notify when a frame starts on the GPU
+    depth_warned: bool = False   # a bad depth field was logged once
 
     async def send_json(self, obj: dict):
         if self.closed or self.ws.closed:
@@ -464,6 +523,7 @@ class DreamServer:
         self.workers: list[GpuWorker] = []  # serving engines, fastest first
         self._loading: list[GpuWorker] = []
         self._pool_mode = False
+        self._pool_kf: collections.OrderedDict = collections.OrderedDict()   # (client, seed) -> last framing id handed out
         self.codec = ThreadPoolExecutor(max_workers=max(2, min(4, (os.cpu_count() or 4) // 3)),
                                         thread_name_prefix="codec")
         # stats
@@ -487,7 +547,16 @@ class DreamServer:
     def busy(self) -> bool:
         return any(w.busy for w in self.workers)
 
+    @property
+    def flexible(self) -> bool:
+        """Every serving engine takes the client's own capture size (see takes_size)."""
+        return bool(self.workers) and all(getattr(w.engine, "flexible", False) for w in self.workers)
+
     # -- info ------------------------------------------------------------------
+    @property
+    def wants_depth(self) -> bool:
+        return any(bool(getattr(w.engine, "wants_depth", False)) for w in self.workers)
+
     def info(self) -> dict:
         e = self.engine
         w = e.width if e else (self.args.width or 512)
@@ -496,6 +565,15 @@ class DreamServer:
             "engine": getattr(e, "name", self.engine_name) if e else self.engine_name,
             "model": getattr(e, "model", "") if e else (self.args.model or ""),
             "width": int(w), "height": int(h),
+            "flexible": self.flexible,
+            "xframe": bool(getattr(e, "xframe", False)) if e else False,
+            # the client should send each capture's depth (header `depth`): an engine paints with it
+            "depth": self.wants_depth,
+            "depth_graft": float(getattr(e, "depth_graft", 0.0) or 0.0) if e else 0.0,
+            "lora": getattr(e, "lora", None) if e else None,
+            "held_only": (getattr(e, "held_only", "") or "") if e else "",
+            # share of cheap DeepCache passes (in-process torch engines only; None elsewhere)
+            "dc_reuse": round(float(e.dc_reuse), 3) if e is not None and isinstance(getattr(e, "dc_reuse", None), float) else None,
             "fps_estimate": round(self.live_fps() or self.fps_estimate, 2),
             "device": getattr(e, "device", "") if e else "",
             "warming": self.status != "ready",
@@ -650,8 +728,11 @@ class DreamServer:
             elif mode == "bench":
                 # earlier preference wins unless the newcomer is clearly faster: the startup bench
                 # is noisy on a shared machine, and the default order puts the ANE engine (which
-                # leaves the GPU to the browser's renderer) first
-                if kept and kept[0].ms <= w.ms * (1.0 + a.prefer_margin):
+                # leaves the GPU to the browser's renderer) first. An engine that paints with the
+                # capture's depth counts as DEPTH_PREFERENCE times faster: without depth the model
+                # paints over the geometry (a pillar becomes the wall behind it)
+                eff = lambda x: x.ms / (DEPTH_PREFERENCE if getattr(x.engine, "wants_depth", False) else 1.0)  # noqa: E731
+                if kept and eff(kept[0]) <= eff(w) * (1.0 + a.prefer_margin):
                     await self._drop_worker(w)
                 else:
                     for old in kept:
@@ -693,6 +774,10 @@ class DreamServer:
                  self.engine_name, getattr(e, "model", "?"), e.width, e.height,
                  "+".join(str(getattr(w.engine, "device", "?")) for w in self.workers), best.ms,
                  self.fps_estimate, f", pool of {len(self.workers)}" if len(self.workers) > 1 else "")
+        grafted = {bool(getattr(w.engine, "wants_depth", False)) for w in self.workers}
+        if len(grafted) > 1:
+            log.warning("the pool mixes engines that paint with depth and engines that don't: their frames will "
+                        "look different (--engine-arg depth_graft=0 makes torch_turbo match a stock pool)")
         await self._broadcast_info()
 
     async def _serve(self, kept: list[GpuWorker]):
@@ -712,28 +797,48 @@ class DreamServer:
     # -- scheduling (runs on the GPU thread, under self.lock) ----------------------
     def _next_job(self, worker: GpuWorker):
         """Round-robin over connections with a decoded pending frame. In a pool, a slower
-        idle engine leaves the frame to a faster idle one."""
+        idle engine leaves a frame to a faster idle one that would take it."""
         if not worker.serving or worker.engine is None:
             return None
+        faster_idle = []
         for other in self.workers:
             if other is worker:
                 break
             if other.waiting and other.serving:
-                return None
-        for _ in range(len(self.conns)):
-            cid, conn = next(iter(self.conns.items()))
-            self.conns.move_to_end(cid)
+                faster_idle.append(other)
+        # --pool-held carry: a frame repeating its stream's last framing (header fid, else kf) goes only to an engine
+        # that carries the stream (takes_held: cross-frame attention, DeepCache), so a view held still
+        # doesn't alternate engines; off unless such an engine serves
+        carry = (getattr(self.args, "pool_held", "carry") == "carry" and len(self.workers) > 1
+                 and any(o.serving and getattr(o.engine, "takes_held", False) for o in self.workers))
+
+        def refuses(w, f, k):
+            return (carry and f.fid is not None and not getattr(w.engine, "takes_held", False)
+                    and self._pool_kf.get(k) == f.fid)
+        for cid, conn in list(self.conns.items()):
             f = conn.pending
-            if f is not None and not conn.closed:
-                conn.pending = None
-                f.engine = worker.name
-                if conn.want_started:
-                    try:
-                        self.loop.call_soon_threadsafe(self._spawn, conn.send_json(
-                            {"type": "started", "id": f.id, "ms_infer": round(self.ms_infer_ema or self.bench_ms, 1)}))
-                    except RuntimeError:
-                        pass
-                return worker.engine, f
+            if f is None or conn.closed:
+                continue
+            k = (cid, f.seed)
+            if refuses(worker, f, k):
+                continue
+            if any(not refuses(o, f, k) for o in faster_idle):
+                return None
+            self.conns.move_to_end(cid)   # the served connection goes to the back of the round
+            if f.fid is not None:
+                self._pool_kf[k] = f.fid
+                self._pool_kf.move_to_end(k)
+                while len(self._pool_kf) > 64:
+                    self._pool_kf.popitem(last=False)
+            conn.pending = None
+            f.engine = worker.name
+            if conn.want_started:
+                try:
+                    self.loop.call_soon_threadsafe(self._spawn, conn.send_json(
+                        {"type": "started", "id": f.id, "ms_infer": round(self.ms_infer_ema or self.bench_ms, 1)}))
+                except RuntimeError:
+                    pass
+            return worker.engine, f
         return None
 
     def _frame_done(self, worker: GpuWorker, frame: Frame, res, err, t0: float, t1: float,
@@ -741,6 +846,15 @@ class DreamServer:
         """Engine thread: record timing and hand the result to the event loop."""
         self._busy_window.append((t1, (t1 - t0) / max(1, len(self.workers))))
         worker.done += 1
+        proc = getattr(worker.engine, "_proc", None)
+        if err is not None and proc is not None and not proc.is_alive():
+            # an isolated engine's process died: take it out of the pool while another engine serves,
+            # so frames (and --pool-held carry, which then turns itself off) go to the engines left
+            with self.lock:
+                if worker.serving and any(o.serving for o in self.workers if o is not worker):
+                    log.error("pool: %s's process died; no longer serving", worker.name)
+                    worker.serving = False
+                    self.lock.notify_all()
         if res is not None:
             worker.ms_ema = res[1] if not worker.ms_ema else 0.85 * worker.ms_ema + 0.15 * res[1]
         if gap is not None and gap < 0.25:
@@ -772,10 +886,17 @@ class DreamServer:
     @staticmethod
     def _infer(engine, frame: Frame):
         img = frame.image
-        if img.shape[1] != engine.width or img.shape[0] != engine.height:
+        if (img.shape[1], img.shape[0]) != (engine.width, engine.height) and not takes_size(engine, img.shape[1], img.shape[0]):
             img = resize(img, engine.width, engine.height)
         t = time.perf_counter()
-        out = engine.process(img, frame.prompt, frame.strength, frame.seed, frame.negative)
+        kw = {}
+        if frame.depth is not None and getattr(engine, "wants_depth", False):
+            kw["depth"] = frame.depth
+        if frame.cut and getattr(engine, "takes_cut", False):
+            kw["cut"] = True
+        if frame.held is not None and getattr(engine, "takes_held", False):
+            kw["held"] = frame.held
+        out = engine.process(img, frame.prompt, frame.strength, frame.seed, frame.negative, **kw)
         if not isinstance(out, np.ndarray):
             out = np.asarray(out.convert("RGB") if hasattr(out, "convert") else out)
         if out.dtype != np.uint8:
@@ -791,6 +912,9 @@ class DreamServer:
         try:
             payload = await loop.run_in_executor(self.codec, encode)
         except RuntimeError:  # executor shut down
+            return
+        except Exception as ex:  # noqa: BLE001
+            await self._send_failed(frame, f"result encode: {ex}")
             return
         now = time.perf_counter()
         ms_total = (now - frame.t_recv) * 1000.0
@@ -826,6 +950,19 @@ class DreamServer:
                           seed=int(hdr.get("seed", 0)) & 0x7FFFFFFF,
                           out_w=int(hdr.get("width") or 0), out_h=int(hdr.get("height") or 0),
                           jpeg=payload, t_recv=t_recv)
+            if frame.out_w or frame.out_h:
+                _check_side(frame.out_w, frame.out_h)
+            frame.cut = hdr.get("cut") is True
+            kf, framing = hdr.get("kf"), hdr.get("fid")
+            frame.kf = kf if isinstance(kf, int) and not isinstance(kf, bool) else None
+            frame.fid = framing if isinstance(framing, int) and not isinstance(framing, bool) else frame.kf
+            if hdr.get("depth") is not None and self.wants_depth:
+                try:
+                    frame.depth = _depth_field(hdr["depth"])
+                except (ValueError, TypeError, KeyError) as e:   # the image is still good: dream without it
+                    if not conn.depth_warned:
+                        conn.depth_warned = True
+                        log.warning("client %d sent a bad depth field (%s); ignoring it", conn.cid, e)
         except Exception as e:  # noqa: BLE001
             fid = hdr.get("id") if isinstance(hdr, dict) else None
             err = {"type": "error", "message": f"bad frame: {e}"[:300]}
@@ -839,11 +976,13 @@ class DreamServer:
         e = self.engine
         tw = e.width if e else (self.args.width or 0)
         th = e.height if e else (self.args.height or 0)
+        if self.flexible and takes_size(e, frame.out_w, frame.out_h):
+            tw, th = frame.out_w, frame.out_h   # the client's own capture size
 
         def decode():
             img = jpeg_decode(frame.jpeg)
             h, w = img.shape[:2]
-            return img, w, h, (resize(img, tw, th) if tw and th else img)
+            return img, w, h, (resize(img, tw, th) if tw and th and (w, h) != (tw, th) else img)
         try:
             img, w, h, img_in = await asyncio.get_running_loop().run_in_executor(self.codec, decode)
         except RuntimeError:
@@ -854,7 +993,8 @@ class DreamServer:
         frame.out_w, frame.out_h = frame.out_w or w, frame.out_h or h
         # engine may have become ready (with another size) during decode
         e = self.engine
-        if e is not None and (img_in.shape[1] != e.width or img_in.shape[0] != e.height):
+        if e is not None and (img_in.shape[1], img_in.shape[0]) != (e.width, e.height) \
+                and not (self.flexible and takes_size(e, img_in.shape[1], img_in.shape[0])):
             img_in = resize(img, e.width, e.height)
         frame.image, frame.jpeg = img_in, b""
         frame.t_decoded = time.perf_counter()

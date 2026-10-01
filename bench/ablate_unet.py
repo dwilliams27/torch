@@ -39,7 +39,7 @@ def main():
     ap.add_argument("--variants", default="eager,cl,todo2,todo2_32,noattn64")
     ap.add_argument("--iters", type=int, default=15)
     a = ap.parse_args()
-    eng = tt.create_engine(model=a.model, width=512, height=512, morph=0)
+    eng = tt.create_engine(model=a.model, width=512, height=512, morph=0, depth_graft=0)
     dev, dt = eng.device, eng.dtype
     unet = eng.unet
     emb = eng._embed("vast drowned gothic cathedral, bioluminescent, volumetric light, oil painting")

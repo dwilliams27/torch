@@ -1,0 +1,99 @@
+{
+ "by": "tools/framing_probe.mjs 8785 inflight=3 (first run as a /tmp copy of the same code, zones passed as JSON)",
+ "server": "./run.sh --port 8785 --engine torch_turbo,coreml_turbo --width 512 --height 320 (defaults: --pool-held carry)",
+ "machine": "mini, as _sink",
+ "date": "2026-09-30",
+ "browser": "webkit",
+ "rooms": {
+  "vestibule": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 79,
+    "rep": 47
+   }
+  },
+  "nave": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 82,
+    "rep": 52
+   }
+  },
+  "stacks": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 81,
+    "rep": 44
+   }
+  },
+  "geode": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 79,
+    "rep": 42
+   }
+  },
+  "baths": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 82,
+    "rep": 47
+   }
+  },
+  "garden": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 81,
+    "rep": 43
+   }
+  },
+  "atrium": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 81,
+    "rep": 46
+   }
+  },
+  "desert": {
+   "still": {
+    "n": 83,
+    "rep": 80
+   },
+   "walking": {
+    "n": 82,
+    "rep": 52
+   }
+  }
+ },
+ "total": {
+  "still": {
+   "rep": 640,
+   "n": 664
+  },
+  "walking": {
+   "rep": 373,
+   "n": 647
+  }
+ }
+}

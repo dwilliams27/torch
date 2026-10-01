@@ -1,0 +1,713 @@
+{
+ "date": "2026-09-29T12:00:16.159Z",
+ "browser": "webkit",
+ "device": null,
+ "size": [
+  1280,
+  720
+ ],
+ "speed": 3.4,
+ "settle": 5,
+ "params": "",
+ "engine": {
+  "engine": "torch-sd-turbo",
+  "model": "stabilityai/sd-turbo",
+  "width": 384,
+  "height": 384,
+  "flexible": true,
+  "xframe": true,
+  "device": "mps"
+ },
+ "zones": {
+  "vestibule": {
+   "shots": [
+    {
+     "zone": "vestibule",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      0,
+      1.6,
+      47
+     ],
+     "file": "vestibule_settled.png"
+    },
+    {
+     "zone": "vestibule",
+     "phase": "walk1",
+     "t": 2.020999999999999,
+     "pos": [
+      0,
+      1.6481873064647878,
+      41.69315757308419
+     ],
+     "file": "vestibule_walk1.png"
+    },
+    {
+     "zone": "vestibule",
+     "phase": "walk2",
+     "t": 4.019999999999998,
+     "pos": [
+      0,
+      1.7162281048046943,
+      34.171076358289355
+     ],
+     "file": "vestibule_walk2.png"
+    },
+    {
+     "zone": "vestibule",
+     "phase": "walk3",
+     "t": 6.012999999999986,
+     "pos": [
+      0,
+      1.7810616036026186,
+      26.507231974016065
+     ],
+     "file": "vestibule_walk3.png"
+    },
+    {
+     "zone": "vestibule",
+     "phase": "rest",
+     "t": 9.018999999999977,
+     "pos": [
+      0,
+      1.786192193774828,
+      25.850566386229765
+     ],
+     "file": "vestibule_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.95004995004995,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 63,
+     "dreamFps": 11.892444729863119,
+     "latency": 117.56526717432942,
+     "encodeMs": 20.915994969083485,
+     "captures": 164,
+     "results": 162,
+     "dropped": 0,
+     "paintMs": 0.8915874626267903,
+     "lastResultAt": 0,
+     "activity": 0.7691407114383652
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "nave": {
+   "shots": [
+    {
+     "zone": "nave",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      0,
+      3.2,
+      -3
+     ],
+     "file": "nave_settled.png"
+    },
+    {
+     "zone": "nave",
+     "phase": "walk1",
+     "t": 2.0199999999999982,
+     "pos": [
+      0,
+      1.7727286315794404,
+      -8.454547161086335
+     ],
+     "file": "nave_walk1.png"
+    },
+    {
+     "zone": "nave",
+     "phase": "walk2",
+     "t": 4.015999999999995,
+     "pos": [
+      0,
+      -0.36925384615709,
+      -15.147706575574341
+     ],
+     "file": "nave_walk2.png"
+    },
+    {
+     "zone": "nave",
+     "phase": "walk3",
+     "t": 6.004999999999977,
+     "pos": [
+      0,
+      -2.103954467483091,
+      -22.622740545149608
+     ],
+     "file": "nave_walk3.png"
+    },
+    {
+     "zone": "nave",
+     "phase": "rest",
+     "t": 9.014999999999965,
+     "pos": [
+      0,
+      -2.193074670504158,
+      -23.176025294268246
+     ],
+     "file": "nave_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.85044865403788,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 56,
+     "dreamFps": 11.517270146584805,
+     "latency": 144.4821767228055,
+     "encodeMs": 21.334515921908615,
+     "captures": 161,
+     "results": 159,
+     "dropped": 0,
+     "paintMs": 1.2276570781177136,
+     "lastResultAt": 0,
+     "activity": 0.6436711346596913
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "stacks": {
+   "shots": [
+    {
+     "zone": "stacks",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      0,
+      -5.4,
+      -76
+     ],
+     "file": "stacks_settled.png"
+    },
+    {
+     "zone": "stacks",
+     "phase": "walk1",
+     "t": 2.007999999999999,
+     "pos": [
+      -0.13905326825780806,
+      -5.198983297661806,
+      -84.09556453711173
+     ],
+     "file": "stacks_walk1.png"
+    },
+    {
+     "zone": "stacks",
+     "phase": "walk2",
+     "t": 4.011999999999995,
+     "pos": [
+      0.4119974821849269,
+      -3.118602172032787,
+      -89.33758804974606
+     ],
+     "file": "stacks_walk2.png"
+    },
+    {
+     "zone": "stacks",
+     "phase": "walk3",
+     "t": 6.0219999999999825,
+     "pos": [
+      1.8652685456801679,
+      2.5815077016423507,
+      -92.07546211780779
+     ],
+     "file": "stacks_walk3.png"
+    },
+    {
+     "zone": "stacks",
+     "phase": "rest",
+     "t": 9.02699999999998,
+     "pos": [
+      1.5810949580801106,
+      2.6560453951148215,
+      -92.17608336906459
+     ],
+     "file": "stacks_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.85044865403788,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 54,
+     "dreamFps": 11.511505749997122,
+     "latency": 167.54627311695572,
+     "encodeMs": 26.59474968524796,
+     "captures": 162,
+     "results": 160,
+     "dropped": 0,
+     "paintMs": 1.1166421951925822,
+     "lastResultAt": 0,
+     "activity": 0.6481301837118436
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "geode": {
+   "shots": [
+    {
+     "zone": "geode",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      -6,
+      0.5,
+      -92
+     ],
+     "file": "geode_settled.png"
+    },
+    {
+     "zone": "geode",
+     "phase": "walk1",
+     "t": 2.007,
+     "pos": [
+      -12.651351442886691,
+      -0.21228763787904498,
+      -91.63631867328901
+     ],
+     "file": "geode_walk1.png"
+    },
+    {
+     "zone": "geode",
+     "phase": "walk2",
+     "t": 4.003999999999998,
+     "pos": [
+      -19.611913203414417,
+      -0.7679808209966938,
+      -91.9106621027882
+     ],
+     "file": "geode_walk2.png"
+    },
+    {
+     "zone": "geode",
+     "phase": "walk3",
+     "t": 6.017999999999983,
+     "pos": [
+      -26.91520127641622,
+      -1.3996210083606633,
+      -96.03020996212618
+     ],
+     "file": "geode_walk3.png"
+    },
+    {
+     "zone": "geode",
+     "phase": "rest",
+     "t": 9.033999999999969,
+     "pos": [
+      -27.384387680161684,
+      -1.4355417515571924,
+      -96.38539964670362
+     ],
+     "file": "geode_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.95004995004995,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 64,
+     "dreamFps": 11.598582148975215,
+     "latency": 140.50111304955104,
+     "encodeMs": 16.455080114606524,
+     "captures": 158,
+     "results": 157,
+     "dropped": 0,
+     "paintMs": 1.2096157497024689,
+     "lastResultAt": 0,
+     "activity": 0.6887701418323432
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "baths": {
+   "shots": [
+    {
+     "zone": "baths",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      20,
+      10,
+      -92
+     ],
+     "file": "baths_settled.png"
+    },
+    {
+     "zone": "baths",
+     "phase": "walk1",
+     "t": 2.020999999999999,
+     "pos": [
+      26.43575289148398,
+      9.337565988858854,
+      -91.31501626505452
+     ],
+     "file": "baths_walk1.png"
+    },
+    {
+     "zone": "baths",
+     "phase": "walk2",
+     "t": 4.0139999999999985,
+     "pos": [
+      33.447970016723545,
+      8.629439105550716,
+      -90.42363110688032
+     ],
+     "file": "baths_walk2.png"
+    },
+    {
+     "zone": "baths",
+     "phase": "walk3",
+     "t": 6.012999999999986,
+     "pos": [
+      40.25220237396716,
+      7.976830599078669,
+      -90.00087277179675
+     ],
+     "file": "baths_walk3.png"
+    },
+    {
+     "zone": "baths",
+     "phase": "rest",
+     "t": 9.02499999999997,
+     "pos": [
+      40.918875964724414,
+      7.916142475215811,
+      -90.01130387112231
+     ],
+     "file": "baths_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.95004995004995,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 62,
+     "dreamFps": 12.07850423829681,
+     "latency": 123.34592324215527,
+     "encodeMs": 15.440952604596658,
+     "captures": 160,
+     "results": 159,
+     "dropped": 0,
+     "paintMs": 1.2809732892657748,
+     "lastResultAt": 0,
+     "activity": 0.7641551294418123
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "garden": {
+   "shots": [
+    {
+     "zone": "garden",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      70,
+      5.5,
+      -92
+     ],
+     "file": "garden_settled.png"
+    },
+    {
+     "zone": "garden",
+     "phase": "walk1",
+     "t": 2.004999999999999,
+     "pos": [
+      75.78667340962612,
+      3.4904466797921407,
+      -88.49393605286336
+     ],
+     "file": "garden_walk1.png"
+    },
+    {
+     "zone": "garden",
+     "phase": "walk2",
+     "t": 4.017999999999997,
+     "pos": [
+      82.00458543361219,
+      1.0294261713622368,
+      -84.35879093757941
+     ],
+     "file": "garden_walk2.png"
+    },
+    {
+     "zone": "garden",
+     "phase": "walk3",
+     "t": 6.018999999999983,
+     "pos": [
+      87.05090409128371,
+      -0.07860448639635628,
+      -84.71222843625169
+     ],
+     "file": "garden_walk3.png"
+    },
+    {
+     "zone": "garden",
+     "phase": "rest",
+     "t": 9.022999999999982,
+     "pos": [
+      87.44743431095024,
+      -0.08898258910409292,
+      -85.08226101341556
+     ],
+     "file": "garden_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 50.04906771344455,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 63,
+     "dreamFps": 11.728703860936328,
+     "latency": 146.08503228925335,
+     "encodeMs": 24.564995196159092,
+     "captures": 164,
+     "results": 162,
+     "dropped": 0,
+     "paintMs": 1.0236708953540028,
+     "lastResultAt": 0,
+     "activity": 0.6696605131330681
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "atrium": {
+   "shots": [
+    {
+     "zone": "atrium",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      0,
+      27.999999999999996,
+      -110
+     ],
+     "file": "atrium_settled.png"
+    },
+    {
+     "zone": "atrium",
+     "phase": "walk1",
+     "t": 2.0109999999999992,
+     "pos": [
+      -1.0564413475708216,
+      28.30976136548301,
+      -116.12893130377032
+     ],
+     "file": "atrium_walk1.png"
+    },
+    {
+     "zone": "atrium",
+     "phase": "walk2",
+     "t": 4.003999999999996,
+     "pos": [
+      -1.381485365071149,
+      28.2279421382094,
+      -123.81356286374047
+     ],
+     "file": "atrium_walk2.png"
+    },
+    {
+     "zone": "atrium",
+     "phase": "walk3",
+     "t": 6.012999999999984,
+     "pos": [
+      -0.44656400924969786,
+      28.2354135120361,
+      -130.77415979116816
+     ],
+     "file": "atrium_walk3.png"
+    },
+    {
+     "zone": "atrium",
+     "phase": "rest",
+     "t": 9.021999999999984,
+     "pos": [
+      -0.29501039392707984,
+      28.25519450938623,
+      -131.24178018417416
+     ],
+     "file": "atrium_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 50.04906771344455,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 64,
+     "dreamFps": 11.452362596375536,
+     "latency": 162.77279479597763,
+     "encodeMs": 20.312610659886612,
+     "captures": 157,
+     "results": 155,
+     "dropped": 0,
+     "paintMs": 1.2438932304573644,
+     "lastResultAt": 0,
+     "activity": 0.6264068328583412
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  },
+  "desert": {
+   "shots": [
+    {
+     "zone": "desert",
+     "phase": "settled",
+     "t": 0,
+     "pos": [
+      -2,
+      18,
+      -198
+     ],
+     "file": "desert_settled.png"
+    },
+    {
+     "zone": "desert",
+     "phase": "walk1",
+     "t": 2.0119999999999987,
+     "pos": [
+      -2,
+      15.821962535758278,
+      -203.4122120716039
+     ],
+     "file": "desert_walk1.png"
+    },
+    {
+     "zone": "desert",
+     "phase": "walk2",
+     "t": 4.011999999999999,
+     "pos": [
+      -2,
+      13.164092210633521,
+      -208.52123880835265
+     ],
+     "file": "desert_walk2.png"
+    },
+    {
+     "zone": "desert",
+     "phase": "walk3",
+     "t": 6.020999999999983,
+     "pos": [
+      -2,
+      10.381576481530944,
+      -214.14530621370906
+     ],
+     "file": "desert_walk3.png"
+    },
+    {
+     "zone": "desert",
+     "phase": "rest",
+     "t": 9.02299999999997,
+     "pos": [
+      -2,
+      10.073010930098148,
+      -214.85502819048526
+     ],
+     "file": "desert_rest.png"
+    }
+   ],
+   "perf": {
+    "fps": 49.9001996007984,
+    "res": [
+     1280,
+     720
+    ],
+    "dream": {
+     "keyframes": 58,
+     "dreamFps": 10.59535287822761,
+     "latency": 155.24654071714926,
+     "encodeMs": 16.4934026968776,
+     "captures": 154,
+     "results": 152,
+     "dropped": 0,
+     "paintMs": 1.0277685234516387,
+     "lastResultAt": 0,
+     "activity": 0.6175829964466302
+    }
+   },
+   "capture": {
+    "size": [
+     512,
+     320
+    ],
+    "fov": 86.1805152742993
+   },
+   "errors": []
+  }
+ },
+ "dcReuseAfter": 0.657,
+ "note": "per-stream DeepCache with the review fixes; walk shots with dream rate per zone; dcReuseAfter = the engine share of cheap passes after the run"
+}

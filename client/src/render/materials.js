@@ -7,18 +7,22 @@ import {
   GLSL_COMMON, GLSL_PATTERNS, GLSL_LIGHTING, LEVEL_VERT,
   MAX_LIGHTS, MAX_SURF, MAX_ZONES, PATTERN_IDS,
 } from './shaders.js';
+import { GLSL_LIVE, createLiveUniforms } from '../dream/live.js';
 
 const DISPLAY_FRAG = /* glsl */ `
 ${GLSL_COMMON}
 ${GLSL_PATTERNS}
 ${GLSL_LIGHTING}
+${GLSL_LIVE}
 uniform sampler2D uAtlas;
+uniform float uLiveMix;
 uniform float uDreamMix;
 uniform float uPaintGain;
 uniform float uFrontier;
 uniform float uLivingLight;
 uniform float uDetail;
 uniform float uLocalContrast;
+uniform float uRelight;
 varying vec3 vWorld;
 varying vec3 vNormal;
 varying vec2 vUv;
@@ -60,15 +64,29 @@ void main(){
   // hole fill: thin never-visible slivers (behind silhouettes, chart borders)
   // borrow paint from their atlas neighbourhood via the premultiplied mips
   float fill = (1.0 - smoothstep(0.05, 0.45, A.a)) * smoothstep(0.12, 0.45, Ab.a);
-  float conf = max(A.a, Ab.a * fill);
+  // a filled sliver inside painted surroundings counts as dreamt (at Ab.a-weighted
+  // confidence it stayed under the wash-in threshold: a jagged zone-lit crack); a sparse
+  // neighbourhood, e.g. mip blur reaching across chart padding from an unrelated chart,
+  // still doesn't
+  float conf = max(A.a, fill * 0.75 * smoothstep(0.2, 0.5, Ab.a));
   vec3 painted = mix(A.rgb / max(A.a, 1e-4), blurred, fill);
   painted = max(painted + (painted - blurred) * uLocalContrast, 0.0); // unsharp: crisper brushwork
+  // live layer: the newest results projected at their own resolution (dream/live.js)
+  vec4 L = liveComposite(vWorld, n);
+  float la = L.a * uLiveMix;
+  painted = mix(painted, L.rgb, la);
+  conf = max(conf, la);
   painted = srgbToLinear(painted);
-  // detail map: the procedural pattern keeps close surfaces crisp under the paint
-  if (pat != 8) painted *= mix(1.0, (0.55 + 0.5 * P.x) * (1.0 - 0.35 * P.y), uDetail * near);
+  // detail map: the procedural pattern keeps close atlas paint crisp (live paint has its own)
+  if (pat != 8) painted *= mix(1.0, (0.55 + 0.5 * P.x) * (1.0 - 0.35 * P.y), uDetail * near * (1.0 - 0.8 * la));
   float lm = luma(lit + amb) / max(luma(steady + amb), 1e-3);
   painted *= mix(1.0, clamp(lm, 0.6, 1.5), uLivingLight) * uPaintGain;
-  if (pat != 8) painted += painted * (surf.a + P.z * 0.5) * 0.6;
+  // relight from the real geometry: surfaces turning away from the eye darken, so a round
+  // pillar shades toward its edges even where the paint made it one with the wall behind
+  if (pat != 8) painted *= mix(1.0, 0.45 + 0.55 * sqrt(saturate(abs(dot(n, vdir)))), uRelight);
+  // emissive surfaces glow; their procedural pattern (window spokes, glow bands) only
+  // modulates atlas paint, not the model's own picture in the live views
+  if (pat != 8) painted += painted * (surf.a + P.z * 0.5 * (1.0 - la)) * 0.6;
 
   // organic wash-in: confidence crosses a world-space noise threshold, so the
   // dream arrives like ink bleeding into wet paper rather than a uniform fade
@@ -76,6 +94,12 @@ void main(){
   float c2 = conf * 1.35;
   float k = smoothstep(nz - 0.1, nz + 0.1, c2) * uDreamMix;
   float front = (1.0 - smoothstep(0.0, 0.1, abs(c2 - nz))) * smoothstep(0.01, 0.05, conf);
+  // ...but only where a region is being dreamt for the first time: slivers inside painted
+  // surroundings (behind silhouettes, chart borders) stay quiet instead of outlining edges
+  front *= (1.0 - smoothstep(0.3, 0.7, Ab.a)) * (1.0 - la);
+  // ...and not along a static visibility edge (confidence jumping within a few pixels):
+  // a wash-in is smooth across the screen, an edge would sit there as a pale seam
+  front *= 1.0 - smoothstep(0.02, 0.08, fwidth(conf));
   float sh = vnoise3(vWorld * 1.7 + vec3(0.0, uTime * 0.25, uTime * 0.11));
   vec3 col = mix(undreamt, painted, k);
   col += zl * front * uFrontier * (0.35 + 0.65 * sh) * uDreamMix * near * 0.5;
@@ -94,13 +118,19 @@ const CAPTURE_FRAG = /* glsl */ `
 ${GLSL_COMMON}
 ${GLSL_PATTERNS}
 ${GLSL_LIGHTING}
+${GLSL_LIVE}
 uniform sampler2D uAtlas;
+uniform float uLiveFeedback;
 uniform float uFeedback;
 uniform float uFeedbackBlur;
 uniform float uFeedbackAnchor;
 uniform float uFeedbackSat;
 uniform float uCapExposure;
 uniform float uCapContrast;
+uniform sampler2D uCapNear;     // this capture's inverse depth at quarter resolution, mipmapped
+uniform vec2 uCapRes;           // this capture's render size (px)
+uniform float uCapDepthSep;
+uniform float uCapEdgeKeep;
 varying vec3 vWorld;
 varying vec3 vNormal;
 varying vec2 vUv;
@@ -131,15 +161,40 @@ void main(){
   float fog = 1.0 - exp(-uFogDensity * 0.4 * dist);
   if (pat == 8) fog *= 0.3;
   col = mix(col, uFogColor, fog);
+  // depth separation, as on the display (post.js): the surface just behind a nearer
+  // silhouette darkens, the silhouette's rim lifts, so a pillar reads apart from the wall
+  // behind it in what the model sees. On the raw render only: the feedback below carries
+  // the model's own picture, and a cue added there would compound pass after pass.
+  // Two scales, as on the display: rims (mip 1, ~8 px) and objects (mip 3, ~32 px and its
+  // bilinear spread), so a whole pillar lifts against a shade on the wall around it.
+  float sepX = 0.0;   // strongest of the two, soft-limited: how far from a silhouette's depth
+  if (uCapDepthSep > 0.0 || uCapEdgeKeep > 0.0) {
+    vec2 cuv = gl_FragCoord.xy / uCapRes;
+    float xr = log(max(vViewZ * textureLod(uCapNear, cuv, 1.0).r, 1e-3));
+    float xo = log(max(vViewZ * textureLod(uCapNear, cuv, 3.0).r, 1e-3));
+    xr = xr / (1.0 + abs(xr) / 0.6);
+    xo = xo / (1.0 + abs(xo) / 0.6);
+    float far = smoothstep(80.0, 300.0, vViewZ);
+    col *= mix(exp(-uCapDepthSep * ((xr > 0.0 ? xr : 0.4 * xr) + 0.8 * (xo > 0.0 ? xo : 0.6 * xo))), 1.0, far);
+    sepX = max(abs(xr), abs(xo)) * (1.0 - far);
+  }
   vec3 srgb = linearToSrgb(softClip(col * uCapExposure));
   srgb = saturate3((srgb - 0.45) * uCapContrast + 0.43);   // punchy input: the model mirrors contrast
-  // feedback: show the model its own prior dream so it refines rather than restarts
-  // Low-passed (mip-biased) so the model inherits the dream's palette and
-  // composition but not its high-frequency artifacts (JPEG blocks, noise), and
-  // luminance-anchored to the raw render so tone can't run away in the loop.
+  // feedback: show the model its own prior dream so it refines rather than restarts.
+  // The atlas part is low-passed (mip-biased) so the model inherits the dream's palette
+  // and composition but not its high-frequency artifacts; where the live views reach, the
+  // model sees its previous results at full resolution (a 90 s hold stayed stable).
+  // Both are luminance-anchored to the raw render so tone can't run away in the loop.
   vec4 A = texture(uAtlas, vAtlasUv, uFeedbackBlur);
   float conf = A.a;
   vec3 painted = A.rgb / max(conf, 1e-4);
+  // where the previous results saw this surface, show the model those pixels (sharp,
+  // reprojected) rather than the soft atlas: it refines its last dream instead of
+  // re-inventing detail for every new viewpoint
+  vec4 L = liveComposite(vWorld, n);
+  float la = L.a * uLiveFeedback;
+  painted = mix(painted, L.rgb, la);
+  conf = max(conf, la);
   // leak: pull saturation back a little each trip round the loop so colour
   // can't run away into flat neon blobs, and anchor luminance to the raw render
   float lp0 = luma(painted);
@@ -147,6 +202,9 @@ void main(){
   float lr = luma(srgb) + 0.02, lp = lp0 + 0.02;
   painted *= mix(1.0, clamp(lr / lp, 0.5, 2.0), uFeedbackAnchor);
   float fb = uFeedback * smoothstep(0.05, 0.5, conf);
+  // at silhouettes the model sees more of the real geometry and less of its last dream, so
+  // a pillar it once painted into the wall can come back out
+  fb *= 1.0 - uCapEdgeKeep * smoothstep(0.08, 0.3, sepX);
   gl_FragColor = vec4(saturate3(mix(srgb, painted, fb)), 1.0);
 }
 `;
@@ -178,6 +236,7 @@ uniform vec2 uDepthTexel;
 uniform float uPixelAngle;
 uniform float uDistRef;
 uniform float uSide;
+uniform float uWarp;            // the capture image's foveal warp (live.js liveWarp; 1 = none)
 uniform float uSurfPat[${MAX_SURF}];
 varying vec3 vWorld;
 varying vec3 vNormal;
@@ -221,7 +280,8 @@ void main(){
   float sideW = uSide == 0.0 ? 1.0 : mix(0.2, 1.0, smoothstep(0.3, 0.8, uSide > 0.0 ? 1.0 - suv.x : suv.x));
   float a = uRate * vis * edge * face * distW * sideW;
   if (a < 0.002) discard;
-  vec2 iuv = vec2(suv.x, uFlipY > 0.5 ? 1.0 - suv.y : suv.y);
+  vec2 wuv = uWarp * ndc / (1.0 + (uWarp - 1.0) * abs(ndc)) * 0.5 + 0.5;
+  vec2 iuv = vec2(wuv.x, uFlipY > 0.5 ? 1.0 - wuv.y : wuv.y);
   vec3 c = texture(uImage, iuv).rgb;
   gl_FragColor = vec4(c, a);
 }
@@ -259,6 +319,7 @@ export function createSharedUniforms(level) {
     uSkyColor: { value: new THREE.Vector3(0.3, 0.35, 0.6) },
     uSkyColor2: { value: new THREE.Vector3(0.05, 0.05, 0.1) },
     uAtlas: { value: null },
+    ...createLiveUniforms(),
   };
 }
 
@@ -268,11 +329,13 @@ export function createLevelMaterials(shared) {
     uniforms: {
       ...shared,
       uDreamMix: { value: 1 },
+      uLiveMix: { value: 1 },
       uPaintGain: { value: 1.0 },
       uFrontier: { value: 1.0 },
       uLivingLight: { value: 0.55 },
       uDetail: { value: 0.22 },
       uLocalContrast: { value: 0.45 },
+      uRelight: { value: 0 },
     },
     vertexShader: LEVEL_VERT,
     fragmentShader: DISPLAY_FRAG,
@@ -280,7 +343,10 @@ export function createLevelMaterials(shared) {
   });
   const capture = new THREE.ShaderMaterial({
     name: 'dream-capture',
-    uniforms: { ...shared, uFeedback: { value: 0.45 }, uFeedbackBlur: { value: 0.5 }, uFeedbackAnchor: { value: 0.35 }, uFeedbackSat: { value: 0.8 }, uCapExposure: { value: 1.0 }, uCapContrast: { value: 1.15 } },
+    // the capture reads the live views unsharpened: sharpening inside the feedback loop
+    // would compound pass after pass over a long hold
+    uniforms: { ...shared, uLiveSharpen: { value: 0 }, uLiveFeedback: { value: 1 }, uFeedback: { value: 0.45 }, uFeedbackBlur: { value: 0.5 }, uFeedbackAnchor: { value: 0.35 }, uFeedbackSat: { value: 0.8 }, uCapExposure: { value: 1.0 }, uCapContrast: { value: 1.15 },
+      uCapNear: { value: null }, uCapRes: { value: new THREE.Vector2(1, 1) }, uCapDepthSep: { value: 0 }, uCapEdgeKeep: { value: 0 } },
     vertexShader: LEVEL_VERT,
     fragmentShader: CAPTURE_FRAG,
     side: THREE.DoubleSide,
@@ -300,6 +366,7 @@ export function createLevelMaterials(shared) {
       uPixelAngle: { value: 0.003 },
       uDistRef: { value: 12 },
       uSide: { value: 0 },
+      uWarp: { value: 1 },
       uSurfPat: shared.uSurfPat,
     },
     vertexShader: PAINT_VERT,
@@ -333,7 +400,14 @@ export function createLevelMaterials(shared) {
     blendSrcAlpha: THREE.ZeroFactor,
     blendDstAlpha: THREE.SrcAlphaFactor,
   });
-  return { display, capture, paint, relax };
+  // a capture's inverse depth (1/m), for the capture's depth separation (dream.js)
+  const capNear = new THREE.ShaderMaterial({
+    name: 'dream-capture-depth',
+    vertexShader: LEVEL_VERT,
+    fragmentShader: `varying float vViewZ; void main(){ float v = 1.0 / max(vViewZ, 0.05); gl_FragColor = vec4(v, v, v, 1.0); }`,
+    side: THREE.DoubleSide,
+  });
+  return { display, capture, paint, relax, capNear };
 }
 
 // Picks the nearest lights to the camera, flickers them, fades the cut-off ones.

@@ -88,6 +88,9 @@
   #panel textarea { width: 100%; resize: vertical; background: rgba(255,255,255,0.04); border: 1px solid rgba(236,230,218,0.14); border-radius: 6px;
     color: var(--ink); font-family: var(--text); font-size: 13px; padding: 8px; outline: none; }
   #panel .row.buttons { grid-template-columns: 1fr 1fr; }
+  #panel .row.looks { grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 12px; }
+  #panel .row.looks button { padding: 8px 2px; font-size: 9.5px; letter-spacing: 0.08em; }
+  #panel .row.looks button.on { border-color: rgba(236,230,218,0.6); background: rgba(255,255,255,0.14); }
   #panel button { background: rgba(255,255,255,0.05); border: 1px solid rgba(236,230,218,0.16); border-radius: 6px; color: var(--ink);
     font-family: var(--serif); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 9px 6px; cursor: pointer; }
   #panel button:hover { background: rgba(255,255,255,0.1); }
@@ -108,7 +111,7 @@
   <div class="enter">click to enter</div>
   <div class="keys">
     <span class="desk"><kbd>WASD</kbd> walk &nbsp; <kbd>mouse</kbd> look &nbsp; <kbd>shift</kbd> run &nbsp; <kbd>space</kbd> jump<br>
-    <kbd>tab</kbd> dream settings &nbsp; <kbd>F</kbd> raw / dreamt &nbsp; <kbd>R</kbd> forget &nbsp; <kbd>[ ]</kbd> strength &nbsp; <kbd>H</kbd> hud &nbsp; <kbd>M</kbd> sound</span>
+    <kbd>tab</kbd> dream settings &nbsp; <kbd>1</kbd>&ndash;<kbd>6</kbd> looks &nbsp; hold <kbd>E</kbd> close your eyes &nbsp; <kbd>F</kbd> raw / dreamt &nbsp; <kbd>R</kbd> forget &nbsp; <kbd>[ ]</kbd> strength &nbsp; <kbd>H</kbd> hud &nbsp; <kbd>M</kbd> sound</span>
     <span class="tch">left thumb walks &middot; right thumb looks</span>
   </div>
   <div class="status" id="status">waking the dream engine&hellip;</div>
@@ -118,7 +121,7 @@
 <div id="toast"></div>
 <div id="gear" title="dream settings">&#x2736;</div>
 <div id="panel"><h2>the dream</h2><div class="panel-body"></div>
-  <div class="hint">tab / P panel &middot; H hud &middot; F compare &middot; R forget &middot; [ ] strength &middot; M sound</div></div>
+  <div class="hint">1&ndash;6 looks &middot; hold E close your eyes &middot; tab / P panel &middot; H hud &middot; F compare &middot; R forget &middot; [ ] strength &middot; M sound</div></div>
 <div id="err"></div>
 <script type="module" src="./src/main.js"></script>
 </body>

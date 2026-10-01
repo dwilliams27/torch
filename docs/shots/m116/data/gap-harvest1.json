@@ -1,0 +1,5078 @@
+{
+ "pairs": {
+  "all": {
+   "lpips": 0.35334385916751493,
+   "absdiff": 20.261043464537146,
+   "detail_walk": 4.88872557824893,
+   "detail_target": 6.548749701153461,
+   "n": 556
+  },
+  "zones": {
+   "atrium": {
+    "lpips": 0.3978010015355216,
+    "absdiff": 21.851438776652017,
+    "detail_walk": 4.2077065732744,
+    "detail_target": 5.643563111623128,
+    "n": 90
+   },
+   "baths": {
+    "lpips": 0.41573888919819363,
+    "absdiff": 25.781954381657744,
+    "detail_walk": 3.918860482073378,
+    "detail_target": 4.574081834705397,
+    "n": 87
+   },
+   "desert": {
+    "lpips": 0.24026328743923278,
+    "absdiff": 13.725842766534715,
+    "detail_walk": 3.3453682536170595,
+    "detail_target": 4.781742268516904,
+    "n": 105
+   },
+   "garden": {
+    "lpips": 0.39851973427308574,
+    "absdiff": 29.11916008511105,
+    "detail_walk": 8.503724626592687,
+    "detail_target": 10.689244044793618,
+    "n": 74
+   },
+   "geode": {
+    "lpips": 0.4177611172199249,
+    "absdiff": 28.500918252127512,
+    "detail_walk": 6.2843983990805485,
+    "detail_target": 9.57034809929984,
+    "n": 35
+   },
+   "nave": {
+    "lpips": 0.28136747389558764,
+    "absdiff": 13.589783963702974,
+    "detail_walk": 5.2824486664363315,
+    "detail_target": 6.421631033458407,
+    "n": 63
+   },
+   "stacks": {
+    "lpips": 0.3565242105434018,
+    "absdiff": 11.7470881477479,
+    "detail_walk": 3.4042465484911397,
+    "detail_target": 5.968489716129918,
+    "n": 62
+   },
+   "vestibule": {
+    "lpips": 0.3829353917390108,
+    "absdiff": 21.936032867431642,
+    "detail_walk": 6.353654575347901,
+    "detail_target": 8.314518392086029,
+    "n": 40
+   }
+  },
+  "passes_median": 28.0,
+  "walk": null,
+  "harvest": null,
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.1736411601305008,
+    "absdiff": 12.854203224182129,
+    "detail_walk": 5.686234474182129,
+    "detail_target": 7.085141181945801,
+    "passes": 25
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.3589675724506378,
+    "absdiff": 21.70724105834961,
+    "detail_walk": 6.329916954040527,
+    "detail_target": 10.404512405395508,
+    "passes": 23
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.27781689167022705,
+    "absdiff": 17.088685989379883,
+    "detail_walk": 6.535542011260986,
+    "detail_target": 7.82050895690918,
+    "passes": 25
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.4086345136165619,
+    "absdiff": 23.213703155517578,
+    "detail_walk": 5.698463439941406,
+    "detail_target": 8.634050369262695,
+    "passes": 23
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.31414270401000977,
+    "absdiff": 17.433063507080078,
+    "detail_walk": 6.582807540893555,
+    "detail_target": 6.705231189727783,
+    "passes": 23
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.36375364661216736,
+    "absdiff": 19.45545768737793,
+    "detail_walk": 5.523429870605469,
+    "detail_target": 9.574828147888184,
+    "passes": 22
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.3903197944164276,
+    "absdiff": 20.490631103515625,
+    "detail_walk": 6.221733093261719,
+    "detail_target": 8.884971618652344,
+    "passes": 23
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.3912510573863983,
+    "absdiff": 23.738494873046875,
+    "detail_walk": 6.541750907897949,
+    "detail_target": 10.970867156982422,
+    "passes": 22
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.3743312358856201,
+    "absdiff": 25.489376068115234,
+    "detail_walk": 7.551973342895508,
+    "detail_target": 10.671481132507324,
+    "passes": 23
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.3935016095638275,
+    "absdiff": 24.365367889404297,
+    "detail_walk": 7.434090614318848,
+    "detail_target": 8.519001960754395,
+    "passes": 22
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.444184809923172,
+    "absdiff": 30.708589553833008,
+    "detail_walk": 7.338282585144043,
+    "detail_target": 8.621145248413086,
+    "passes": 22
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.40694576501846313,
+    "absdiff": 26.49390983581543,
+    "detail_walk": 6.866768836975098,
+    "detail_target": 10.0357666015625,
+    "passes": 21
+   },
+   {
+    "pair": "0012",
+    "zone": "vestibule",
+    "lpips": 0.4614645838737488,
+    "absdiff": 29.920066833496094,
+    "detail_walk": 6.576175689697266,
+    "detail_target": 10.695456504821777,
+    "passes": 23
+   },
+   {
+    "pair": "0013",
+    "zone": "vestibule",
+    "lpips": 0.47840413451194763,
+    "absdiff": 23.040424346923828,
+    "detail_walk": 6.854691028594971,
+    "detail_target": 9.162896156311035,
+    "passes": 17
+   },
+   {
+    "pair": "0014",
+    "zone": "vestibule",
+    "lpips": 0.4136750102043152,
+    "absdiff": 24.485782623291016,
+    "detail_walk": 6.945374011993408,
+    "detail_target": 7.835399627685547,
+    "passes": 23
+   },
+   {
+    "pair": "0015",
+    "zone": "vestibule",
+    "lpips": 0.41887161135673523,
+    "absdiff": 25.81207847595215,
+    "detail_walk": 6.937595367431641,
+    "detail_target": 7.447484970092773,
+    "passes": 24
+   },
+   {
+    "pair": "0016",
+    "zone": "vestibule",
+    "lpips": 0.4084274470806122,
+    "absdiff": 25.974117279052734,
+    "detail_walk": 6.872793674468994,
+    "detail_target": 8.823591232299805,
+    "passes": 25
+   },
+   {
+    "pair": "0017",
+    "zone": "vestibule",
+    "lpips": 0.4174001216888428,
+    "absdiff": 30.55367088317871,
+    "detail_walk": 7.9409356117248535,
+    "detail_target": 9.953004837036133,
+    "passes": 24
+   },
+   {
+    "pair": "0018",
+    "zone": "vestibule",
+    "lpips": 0.4015117287635803,
+    "absdiff": 24.60769271850586,
+    "detail_walk": 8.146624565124512,
+    "detail_target": 9.318807601928711,
+    "passes": 25
+   },
+   {
+    "pair": "0019",
+    "zone": "vestibule",
+    "lpips": 0.4248809516429901,
+    "absdiff": 29.405200958251953,
+    "detail_walk": 7.001391410827637,
+    "detail_target": 8.782227516174316,
+    "passes": 25
+   },
+   {
+    "pair": "0020",
+    "zone": "vestibule",
+    "lpips": 0.4281366169452667,
+    "absdiff": 23.93277359008789,
+    "detail_walk": 5.688689231872559,
+    "detail_target": 6.6805219650268555,
+    "passes": 26
+   },
+   {
+    "pair": "0021",
+    "zone": "vestibule",
+    "lpips": 0.3391025960445404,
+    "absdiff": 24.174955368041992,
+    "detail_walk": 5.4505815505981445,
+    "detail_target": 6.610544204711914,
+    "passes": 26
+   },
+   {
+    "pair": "0022",
+    "zone": "vestibule",
+    "lpips": 0.3068692982196808,
+    "absdiff": 17.956523895263672,
+    "detail_walk": 5.8908162117004395,
+    "detail_target": 8.523553848266602,
+    "passes": 22
+   },
+   {
+    "pair": "0023",
+    "zone": "vestibule",
+    "lpips": 0.3091771602630615,
+    "absdiff": 18.912181854248047,
+    "detail_walk": 5.452142715454102,
+    "detail_target": 7.1710615158081055,
+    "passes": 20
+   },
+   {
+    "pair": "0024",
+    "zone": "vestibule",
+    "lpips": 0.30431073904037476,
+    "absdiff": 18.317319869995117,
+    "detail_walk": 5.759779930114746,
+    "detail_target": 6.922826290130615,
+    "passes": 27
+   },
+   {
+    "pair": "0025",
+    "zone": "vestibule",
+    "lpips": 0.36668816208839417,
+    "absdiff": 20.340986251831055,
+    "detail_walk": 5.6220221519470215,
+    "detail_target": 7.593680381774902,
+    "passes": 28
+   },
+   {
+    "pair": "0026",
+    "zone": "vestibule",
+    "lpips": 0.2803382873535156,
+    "absdiff": 16.62183952331543,
+    "detail_walk": 6.479116916656494,
+    "detail_target": 7.527674674987793,
+    "passes": 29
+   },
+   {
+    "pair": "0027",
+    "zone": "vestibule",
+    "lpips": 0.3416157066822052,
+    "absdiff": 18.23932647705078,
+    "detail_walk": 6.920531272888184,
+    "detail_target": 8.077359199523926,
+    "passes": 27
+   },
+   {
+    "pair": "0028",
+    "zone": "vestibule",
+    "lpips": 0.4222368001937866,
+    "absdiff": 22.500192642211914,
+    "detail_walk": 7.035200119018555,
+    "detail_target": 8.120000839233398,
+    "passes": 29
+   },
+   {
+    "pair": "0029",
+    "zone": "vestibule",
+    "lpips": 0.330867737531662,
+    "absdiff": 17.94753646850586,
+    "detail_walk": 6.609318733215332,
+    "detail_target": 7.885708808898926,
+    "passes": 28
+   },
+   {
+    "pair": "0030",
+    "zone": "vestibule",
+    "lpips": 0.39018428325653076,
+    "absdiff": 20.66299057006836,
+    "detail_walk": 6.521728038787842,
+    "detail_target": 8.164250373840332,
+    "passes": 27
+   },
+   {
+    "pair": "0031",
+    "zone": "vestibule",
+    "lpips": 0.3802397549152374,
+    "absdiff": 21.4715576171875,
+    "detail_walk": 7.26704216003418,
+    "detail_target": 8.359941482543945,
+    "passes": 28
+   },
+   {
+    "pair": "0032",
+    "zone": "vestibule",
+    "lpips": 0.39176657795906067,
+    "absdiff": 19.831850051879883,
+    "detail_walk": 6.491854667663574,
+    "detail_target": 7.975900173187256,
+    "passes": 29
+   },
+   {
+    "pair": "0033",
+    "zone": "vestibule",
+    "lpips": 0.39716964960098267,
+    "absdiff": 18.290098190307617,
+    "detail_walk": 5.358314514160156,
+    "detail_target": 7.370939254760742,
+    "passes": 28
+   },
+   {
+    "pair": "0034",
+    "zone": "vestibule",
+    "lpips": 0.4197632074356079,
+    "absdiff": 21.59314727783203,
+    "detail_walk": 5.036547660827637,
+    "detail_target": 7.896389007568359,
+    "passes": 28
+   },
+   {
+    "pair": "0035",
+    "zone": "vestibule",
+    "lpips": 0.35448315739631653,
+    "absdiff": 14.853592872619629,
+    "detail_walk": 5.5020551681518555,
+    "detail_target": 6.620086669921875,
+    "passes": 28
+   },
+   {
+    "pair": "0036",
+    "zone": "vestibule",
+    "lpips": 0.5418859720230103,
+    "absdiff": 24.813730239868164,
+    "detail_walk": 5.19158935546875,
+    "detail_target": 9.499011039733887,
+    "passes": 28
+   },
+   {
+    "pair": "0037",
+    "zone": "vestibule",
+    "lpips": 0.5107871890068054,
+    "absdiff": 21.875019073486328,
+    "detail_walk": 5.562138557434082,
+    "detail_target": 8.33625316619873,
+    "passes": 28
+   },
+   {
+    "pair": "0038",
+    "zone": "vestibule",
+    "lpips": 0.5249201655387878,
+    "absdiff": 20.317293167114258,
+    "detail_walk": 5.092118263244629,
+    "detail_target": 6.172636985778809,
+    "passes": 26
+   },
+   {
+    "pair": "0040",
+    "zone": "nave",
+    "lpips": 0.2603706419467926,
+    "absdiff": 14.554883003234863,
+    "detail_walk": 6.590603828430176,
+    "detail_target": 7.600621223449707,
+    "passes": 27
+   },
+   {
+    "pair": "0041",
+    "zone": "nave",
+    "lpips": 0.2766508460044861,
+    "absdiff": 15.668268203735352,
+    "detail_walk": 6.594881057739258,
+    "detail_target": 7.153227806091309,
+    "passes": 29
+   },
+   {
+    "pair": "0042",
+    "zone": "nave",
+    "lpips": 0.3914293050765991,
+    "absdiff": 18.665443420410156,
+    "detail_walk": 5.805242538452148,
+    "detail_target": 7.284782409667969,
+    "passes": 28
+   },
+   {
+    "pair": "0043",
+    "zone": "nave",
+    "lpips": 0.31188467144966125,
+    "absdiff": 15.766107559204102,
+    "detail_walk": 5.907342910766602,
+    "detail_target": 7.610311508178711,
+    "passes": 28
+   },
+   {
+    "pair": "0044",
+    "zone": "nave",
+    "lpips": 0.2165175974369049,
+    "absdiff": 11.363242149353027,
+    "detail_walk": 5.998218536376953,
+    "detail_target": 6.835406303405762,
+    "passes": 27
+   },
+   {
+    "pair": "0045",
+    "zone": "nave",
+    "lpips": 0.24619491398334503,
+    "absdiff": 13.204166412353516,
+    "detail_walk": 5.951803207397461,
+    "detail_target": 6.493144512176514,
+    "passes": 29
+   },
+   {
+    "pair": "0046",
+    "zone": "nave",
+    "lpips": 0.3308178782463074,
+    "absdiff": 17.350902557373047,
+    "detail_walk": 5.4388556480407715,
+    "detail_target": 6.545928955078125,
+    "passes": 27
+   },
+   {
+    "pair": "0047",
+    "zone": "nave",
+    "lpips": 0.29813313484191895,
+    "absdiff": 15.913004875183105,
+    "detail_walk": 6.25132942199707,
+    "detail_target": 5.73647403717041,
+    "passes": 27
+   },
+   {
+    "pair": "0048",
+    "zone": "nave",
+    "lpips": 0.27328333258628845,
+    "absdiff": 15.70846939086914,
+    "detail_walk": 5.600155830383301,
+    "detail_target": 6.61653995513916,
+    "passes": 28
+   },
+   {
+    "pair": "0049",
+    "zone": "nave",
+    "lpips": 0.27071353793144226,
+    "absdiff": 13.775443077087402,
+    "detail_walk": 5.649482727050781,
+    "detail_target": 6.306739807128906,
+    "passes": 28
+   },
+   {
+    "pair": "0050",
+    "zone": "nave",
+    "lpips": 0.29311782121658325,
+    "absdiff": 13.138510704040527,
+    "detail_walk": 5.8265838623046875,
+    "detail_target": 6.0686235427856445,
+    "passes": 27
+   },
+   {
+    "pair": "0051",
+    "zone": "nave",
+    "lpips": 0.23631028831005096,
+    "absdiff": 12.766282081604004,
+    "detail_walk": 5.836531162261963,
+    "detail_target": 6.003606796264648,
+    "passes": 27
+   },
+   {
+    "pair": "0052",
+    "zone": "nave",
+    "lpips": 0.19827495515346527,
+    "absdiff": 10.488285064697266,
+    "detail_walk": 5.73769474029541,
+    "detail_target": 6.098499774932861,
+    "passes": 28
+   },
+   {
+    "pair": "0053",
+    "zone": "nave",
+    "lpips": 0.29602593183517456,
+    "absdiff": 15.125752449035645,
+    "detail_walk": 5.6224470138549805,
+    "detail_target": 7.253268241882324,
+    "passes": 28
+   },
+   {
+    "pair": "0054",
+    "zone": "nave",
+    "lpips": 0.25397610664367676,
+    "absdiff": 11.527901649475098,
+    "detail_walk": 4.988860130310059,
+    "detail_target": 6.4388275146484375,
+    "passes": 27
+   },
+   {
+    "pair": "0055",
+    "zone": "nave",
+    "lpips": 0.2576829195022583,
+    "absdiff": 13.472556114196777,
+    "detail_walk": 5.456522464752197,
+    "detail_target": 7.066127777099609,
+    "passes": 27
+   },
+   {
+    "pair": "0056",
+    "zone": "nave",
+    "lpips": 0.2503265142440796,
+    "absdiff": 13.943792343139648,
+    "detail_walk": 5.867009162902832,
+    "detail_target": 7.0404253005981445,
+    "passes": 28
+   },
+   {
+    "pair": "0057",
+    "zone": "nave",
+    "lpips": 0.23424357175827026,
+    "absdiff": 12.1978759765625,
+    "detail_walk": 6.283082485198975,
+    "detail_target": 6.520174026489258,
+    "passes": 28
+   },
+   {
+    "pair": "0058",
+    "zone": "nave",
+    "lpips": 0.242230623960495,
+    "absdiff": 12.596329689025879,
+    "detail_walk": 6.2586894035339355,
+    "detail_target": 6.823394775390625,
+    "passes": 28
+   },
+   {
+    "pair": "0059",
+    "zone": "nave",
+    "lpips": 0.2510126531124115,
+    "absdiff": 13.824177742004395,
+    "detail_walk": 6.289979934692383,
+    "detail_target": 8.135249137878418,
+    "passes": 28
+   },
+   {
+    "pair": "0060",
+    "zone": "nave",
+    "lpips": 0.3337631821632385,
+    "absdiff": 18.95254898071289,
+    "detail_walk": 6.553590774536133,
+    "detail_target": 7.712303161621094,
+    "passes": 28
+   },
+   {
+    "pair": "0061",
+    "zone": "nave",
+    "lpips": 0.31610342860221863,
+    "absdiff": 17.113590240478516,
+    "detail_walk": 5.993246555328369,
+    "detail_target": 7.047568321228027,
+    "passes": 28
+   },
+   {
+    "pair": "0062",
+    "zone": "nave",
+    "lpips": 0.3574850559234619,
+    "absdiff": 17.08902359008789,
+    "detail_walk": 6.380178451538086,
+    "detail_target": 8.338886260986328,
+    "passes": 28
+   },
+   {
+    "pair": "0063",
+    "zone": "nave",
+    "lpips": 0.2761602997779846,
+    "absdiff": 11.884946823120117,
+    "detail_walk": 5.097294807434082,
+    "detail_target": 6.27057409286499,
+    "passes": 29
+   },
+   {
+    "pair": "0064",
+    "zone": "nave",
+    "lpips": 0.3289284408092499,
+    "absdiff": 16.469392776489258,
+    "detail_walk": 5.9815874099731445,
+    "detail_target": 8.467131614685059,
+    "passes": 28
+   },
+   {
+    "pair": "0065",
+    "zone": "nave",
+    "lpips": 0.29090267419815063,
+    "absdiff": 15.715700149536133,
+    "detail_walk": 7.267506122589111,
+    "detail_target": 8.027948379516602,
+    "passes": 28
+   },
+   {
+    "pair": "0066",
+    "zone": "nave",
+    "lpips": 0.26832315325737,
+    "absdiff": 15.21849536895752,
+    "detail_walk": 6.288101673126221,
+    "detail_target": 6.8471269607543945,
+    "passes": 26
+   },
+   {
+    "pair": "0067",
+    "zone": "nave",
+    "lpips": 0.32574233412742615,
+    "absdiff": 16.959508895874023,
+    "detail_walk": 5.645975112915039,
+    "detail_target": 7.35141134262085,
+    "passes": 28
+   },
+   {
+    "pair": "0068",
+    "zone": "nave",
+    "lpips": 0.2772301137447357,
+    "absdiff": 11.372971534729004,
+    "detail_walk": 6.101971626281738,
+    "detail_target": 6.4447126388549805,
+    "passes": 27
+   },
+   {
+    "pair": "0069",
+    "zone": "nave",
+    "lpips": 0.3060682415962219,
+    "absdiff": 13.024477005004883,
+    "detail_walk": 5.403428554534912,
+    "detail_target": 6.720307350158691,
+    "passes": 28
+   },
+   {
+    "pair": "0070",
+    "zone": "nave",
+    "lpips": 0.2584911584854126,
+    "absdiff": 14.363521575927734,
+    "detail_walk": 6.2752275466918945,
+    "detail_target": 8.169269561767578,
+    "passes": 27
+   },
+   {
+    "pair": "0071",
+    "zone": "nave",
+    "lpips": 0.2905864715576172,
+    "absdiff": 12.969146728515625,
+    "detail_walk": 6.365777969360352,
+    "detail_target": 7.098038673400879,
+    "passes": 27
+   },
+   {
+    "pair": "0072",
+    "zone": "nave",
+    "lpips": 0.34159764647483826,
+    "absdiff": 19.914945602416992,
+    "detail_walk": 5.94780969619751,
+    "detail_target": 7.812741279602051,
+    "passes": 27
+   },
+   {
+    "pair": "0073",
+    "zone": "nave",
+    "lpips": 0.31078454852104187,
+    "absdiff": 15.600968360900879,
+    "detail_walk": 6.066249847412109,
+    "detail_target": 7.482071876525879,
+    "passes": 27
+   },
+   {
+    "pair": "0074",
+    "zone": "nave",
+    "lpips": 0.22840134799480438,
+    "absdiff": 9.961908340454102,
+    "detail_walk": 6.6598052978515625,
+    "detail_target": 7.198014259338379,
+    "passes": 28
+   },
+   {
+    "pair": "0075",
+    "zone": "nave",
+    "lpips": 0.25614145398139954,
+    "absdiff": 12.116817474365234,
+    "detail_walk": 6.051321029663086,
+    "detail_target": 6.075625896453857,
+    "passes": 28
+   },
+   {
+    "pair": "0076",
+    "zone": "nave",
+    "lpips": 0.27381160855293274,
+    "absdiff": 11.426485061645508,
+    "detail_walk": 5.475971221923828,
+    "detail_target": 7.661246299743652,
+    "passes": 28
+   },
+   {
+    "pair": "0077",
+    "zone": "nave",
+    "lpips": 0.24108541011810303,
+    "absdiff": 14.59207534790039,
+    "detail_walk": 6.315574645996094,
+    "detail_target": 8.165410041809082,
+    "passes": 28
+   },
+   {
+    "pair": "0078",
+    "zone": "nave",
+    "lpips": 0.30548399686813354,
+    "absdiff": 13.990498542785645,
+    "detail_walk": 5.404413223266602,
+    "detail_target": 5.644061088562012,
+    "passes": 28
+   },
+   {
+    "pair": "0079",
+    "zone": "nave",
+    "lpips": 0.2331082969903946,
+    "absdiff": 10.233292579650879,
+    "detail_walk": 5.405317306518555,
+    "detail_target": 6.432334899902344,
+    "passes": 28
+   },
+   {
+    "pair": "0080",
+    "zone": "nave",
+    "lpips": 0.26693883538246155,
+    "absdiff": 9.955877304077148,
+    "detail_walk": 4.907052993774414,
+    "detail_target": 6.042641639709473,
+    "passes": 27
+   },
+   {
+    "pair": "0081",
+    "zone": "nave",
+    "lpips": 0.25902479887008667,
+    "absdiff": 14.316977500915527,
+    "detail_walk": 4.719815254211426,
+    "detail_target": 5.810739040374756,
+    "passes": 27
+   },
+   {
+    "pair": "0082",
+    "zone": "nave",
+    "lpips": 0.3200961947441101,
+    "absdiff": 16.835054397583008,
+    "detail_walk": 4.581689834594727,
+    "detail_target": 5.830029010772705,
+    "passes": 27
+   },
+   {
+    "pair": "0083",
+    "zone": "nave",
+    "lpips": 0.3440220355987549,
+    "absdiff": 16.632122039794922,
+    "detail_walk": 4.552845001220703,
+    "detail_target": 4.186259746551514,
+    "passes": 28
+   },
+   {
+    "pair": "0084",
+    "zone": "nave",
+    "lpips": 0.3089340925216675,
+    "absdiff": 13.168131828308105,
+    "detail_walk": 3.9426403045654297,
+    "detail_target": 5.0891265869140625,
+    "passes": 28
+   },
+   {
+    "pair": "0085",
+    "zone": "nave",
+    "lpips": 0.2745215594768524,
+    "absdiff": 10.394647598266602,
+    "detail_walk": 4.138594627380371,
+    "detail_target": 4.769744396209717,
+    "passes": 28
+   },
+   {
+    "pair": "0086",
+    "zone": "nave",
+    "lpips": 0.2736257016658783,
+    "absdiff": 9.696285247802734,
+    "detail_walk": 4.226755142211914,
+    "detail_target": 5.5010528564453125,
+    "passes": 28
+   },
+   {
+    "pair": "0087",
+    "zone": "nave",
+    "lpips": 0.24817386269569397,
+    "absdiff": 10.24453353881836,
+    "detail_walk": 4.2622270584106445,
+    "detail_target": 5.951059341430664,
+    "passes": 27
+   },
+   {
+    "pair": "0088",
+    "zone": "nave",
+    "lpips": 0.2070264220237732,
+    "absdiff": 12.151981353759766,
+    "detail_walk": 4.21176290512085,
+    "detail_target": 6.014413356781006,
+    "passes": 28
+   },
+   {
+    "pair": "0089",
+    "zone": "nave",
+    "lpips": 0.25896739959716797,
+    "absdiff": 18.243595123291016,
+    "detail_walk": 4.241167068481445,
+    "detail_target": 6.2867631912231445,
+    "passes": 28
+   },
+   {
+    "pair": "0090",
+    "zone": "nave",
+    "lpips": 0.1910434067249298,
+    "absdiff": 9.66323471069336,
+    "detail_walk": 4.317619800567627,
+    "detail_target": 5.286538600921631,
+    "passes": 27
+   },
+   {
+    "pair": "0091",
+    "zone": "nave",
+    "lpips": 0.22767364978790283,
+    "absdiff": 11.138442039489746,
+    "detail_walk": 4.073457717895508,
+    "detail_target": 6.02303409576416,
+    "passes": 27
+   },
+   {
+    "pair": "0092",
+    "zone": "nave",
+    "lpips": 0.26680469512939453,
+    "absdiff": 10.438977241516113,
+    "detail_walk": 4.1501288414001465,
+    "detail_target": 5.106630325317383,
+    "passes": 28
+   },
+   {
+    "pair": "0093",
+    "zone": "nave",
+    "lpips": 0.19697585701942444,
+    "absdiff": 7.962581157684326,
+    "detail_walk": 4.123910903930664,
+    "detail_target": 5.095224380493164,
+    "passes": 27
+   },
+   {
+    "pair": "0094",
+    "zone": "nave",
+    "lpips": 0.130720853805542,
+    "absdiff": 6.606404781341553,
+    "detail_walk": 4.26422119140625,
+    "detail_target": 4.980378150939941,
+    "passes": 27
+   },
+   {
+    "pair": "0095",
+    "zone": "nave",
+    "lpips": 0.16787415742874146,
+    "absdiff": 7.833197116851807,
+    "detail_walk": 4.234692096710205,
+    "detail_target": 4.94351863861084,
+    "passes": 24
+   },
+   {
+    "pair": "0096",
+    "zone": "nave",
+    "lpips": 0.2615252733230591,
+    "absdiff": 10.50877857208252,
+    "detail_walk": 4.054681777954102,
+    "detail_target": 5.184244155883789,
+    "passes": 26
+   },
+   {
+    "pair": "0097",
+    "zone": "nave",
+    "lpips": 0.3215610980987549,
+    "absdiff": 14.280330657958984,
+    "detail_walk": 3.9839882850646973,
+    "detail_target": 5.119518280029297,
+    "passes": 28
+   },
+   {
+    "pair": "0098",
+    "zone": "nave",
+    "lpips": 0.3103230595588684,
+    "absdiff": 11.627508163452148,
+    "detail_walk": 3.716642379760742,
+    "detail_target": 4.712785720825195,
+    "passes": 28
+   },
+   {
+    "pair": "0099",
+    "zone": "nave",
+    "lpips": 0.40436995029449463,
+    "absdiff": 19.42879295349121,
+    "detail_walk": 3.511457920074463,
+    "detail_target": 4.664830207824707,
+    "passes": 28
+   },
+   {
+    "pair": "0100",
+    "zone": "nave",
+    "lpips": 0.4476277232170105,
+    "absdiff": 15.38916015625,
+    "detail_walk": 2.8452534675598145,
+    "detail_target": 4.831294059753418,
+    "passes": 29
+   },
+   {
+    "pair": "0101",
+    "zone": "nave",
+    "lpips": 0.42747464776039124,
+    "absdiff": 15.018540382385254,
+    "detail_walk": 3.2655370235443115,
+    "detail_target": 5.765348434448242,
+    "passes": 28
+   },
+   {
+    "pair": "0102",
+    "zone": "nave",
+    "lpips": 0.4014494717121124,
+    "absdiff": 14.599526405334473,
+    "detail_walk": 3.8324594497680664,
+    "detail_target": 6.769423484802246,
+    "passes": 28
+   },
+   {
+    "pair": "0103",
+    "zone": "stacks",
+    "lpips": 0.4464021325111389,
+    "absdiff": 10.557169914245605,
+    "detail_walk": 3.3047380447387695,
+    "detail_target": 8.488235473632812,
+    "passes": 28
+   },
+   {
+    "pair": "0104",
+    "zone": "stacks",
+    "lpips": 0.4065386652946472,
+    "absdiff": 12.564101219177246,
+    "detail_walk": 4.315615653991699,
+    "detail_target": 8.776391983032227,
+    "passes": 28
+   },
+   {
+    "pair": "0105",
+    "zone": "stacks",
+    "lpips": 0.3299565613269806,
+    "absdiff": 10.466222763061523,
+    "detail_walk": 4.5910186767578125,
+    "detail_target": 8.204184532165527,
+    "passes": 28
+   },
+   {
+    "pair": "0106",
+    "zone": "stacks",
+    "lpips": 0.48016488552093506,
+    "absdiff": 14.280515670776367,
+    "detail_walk": 3.3944244384765625,
+    "detail_target": 7.300849914550781,
+    "passes": 29
+   },
+   {
+    "pair": "0107",
+    "zone": "stacks",
+    "lpips": 0.488681435585022,
+    "absdiff": 18.820476531982422,
+    "detail_walk": 3.900381326675415,
+    "detail_target": 7.313348770141602,
+    "passes": 28
+   },
+   {
+    "pair": "0108",
+    "zone": "stacks",
+    "lpips": 0.529595673084259,
+    "absdiff": 20.770606994628906,
+    "detail_walk": 4.887411117553711,
+    "detail_target": 8.81163215637207,
+    "passes": 28
+   },
+   {
+    "pair": "0109",
+    "zone": "stacks",
+    "lpips": 0.4645456075668335,
+    "absdiff": 18.322816848754883,
+    "detail_walk": 4.347739219665527,
+    "detail_target": 12.108776092529297,
+    "passes": 27
+   },
+   {
+    "pair": "0110",
+    "zone": "stacks",
+    "lpips": 0.354329377412796,
+    "absdiff": 15.04493236541748,
+    "detail_walk": 4.776187419891357,
+    "detail_target": 8.60191822052002,
+    "passes": 29
+   },
+   {
+    "pair": "0111",
+    "zone": "stacks",
+    "lpips": 0.35785236954689026,
+    "absdiff": 10.887693405151367,
+    "detail_walk": 5.332741737365723,
+    "detail_target": 7.037328720092773,
+    "passes": 28
+   },
+   {
+    "pair": "0112",
+    "zone": "stacks",
+    "lpips": 0.3518845736980438,
+    "absdiff": 6.836832523345947,
+    "detail_walk": 2.5948641300201416,
+    "detail_target": 4.441230773925781,
+    "passes": 28
+   },
+   {
+    "pair": "0113",
+    "zone": "stacks",
+    "lpips": 0.26991093158721924,
+    "absdiff": 6.584498882293701,
+    "detail_walk": 2.769603729248047,
+    "detail_target": 4.601607322692871,
+    "passes": 28
+   },
+   {
+    "pair": "0114",
+    "zone": "stacks",
+    "lpips": 0.20929299294948578,
+    "absdiff": 5.599935054779053,
+    "detail_walk": 2.63730525970459,
+    "detail_target": 3.8192572593688965,
+    "passes": 27
+   },
+   {
+    "pair": "0115",
+    "zone": "stacks",
+    "lpips": 0.1372896283864975,
+    "absdiff": 6.483325004577637,
+    "detail_walk": 2.8634185791015625,
+    "detail_target": 3.435415267944336,
+    "passes": 26
+   },
+   {
+    "pair": "0116",
+    "zone": "stacks",
+    "lpips": 0.303386390209198,
+    "absdiff": 9.60959243774414,
+    "detail_walk": 3.661869525909424,
+    "detail_target": 6.161852836608887,
+    "passes": 28
+   },
+   {
+    "pair": "0117",
+    "zone": "stacks",
+    "lpips": 0.29527509212493896,
+    "absdiff": 11.997316360473633,
+    "detail_walk": 4.072333335876465,
+    "detail_target": 5.820998668670654,
+    "passes": 28
+   },
+   {
+    "pair": "0118",
+    "zone": "stacks",
+    "lpips": 0.2904869019985199,
+    "absdiff": 7.7236328125,
+    "detail_walk": 3.1127090454101562,
+    "detail_target": 5.185991287231445,
+    "passes": 29
+   },
+   {
+    "pair": "0119",
+    "zone": "stacks",
+    "lpips": 0.21119073033332825,
+    "absdiff": 6.773874759674072,
+    "detail_walk": 3.257124900817871,
+    "detail_target": 5.306584358215332,
+    "passes": 28
+   },
+   {
+    "pair": "0120",
+    "zone": "stacks",
+    "lpips": 0.286502480506897,
+    "absdiff": 11.958772659301758,
+    "detail_walk": 3.303852081298828,
+    "detail_target": 5.754437446594238,
+    "passes": 28
+   },
+   {
+    "pair": "0121",
+    "zone": "stacks",
+    "lpips": 0.34176450967788696,
+    "absdiff": 13.640521049499512,
+    "detail_walk": 3.4415547847747803,
+    "detail_target": 5.710222244262695,
+    "passes": 28
+   },
+   {
+    "pair": "0122",
+    "zone": "stacks",
+    "lpips": 0.24784669280052185,
+    "absdiff": 10.12360668182373,
+    "detail_walk": 3.580531597137451,
+    "detail_target": 4.701149940490723,
+    "passes": 28
+   },
+   {
+    "pair": "0123",
+    "zone": "stacks",
+    "lpips": 0.31423065066337585,
+    "absdiff": 8.41289234161377,
+    "detail_walk": 3.459364652633667,
+    "detail_target": 3.52597975730896,
+    "passes": 27
+   },
+   {
+    "pair": "0124",
+    "zone": "stacks",
+    "lpips": 0.39243802428245544,
+    "absdiff": 10.995113372802734,
+    "detail_walk": 3.1273365020751953,
+    "detail_target": 3.7794723510742188,
+    "passes": 29
+   },
+   {
+    "pair": "0125",
+    "zone": "stacks",
+    "lpips": 0.4143047332763672,
+    "absdiff": 10.408971786499023,
+    "detail_walk": 2.41371488571167,
+    "detail_target": 5.1067399978637695,
+    "passes": 27
+   },
+   {
+    "pair": "0126",
+    "zone": "stacks",
+    "lpips": 0.4191216826438904,
+    "absdiff": 13.222963333129883,
+    "detail_walk": 2.290649890899658,
+    "detail_target": 4.806995391845703,
+    "passes": 28
+   },
+   {
+    "pair": "0127",
+    "zone": "stacks",
+    "lpips": 0.301710844039917,
+    "absdiff": 11.060674667358398,
+    "detail_walk": 2.745243549346924,
+    "detail_target": 5.463379859924316,
+    "passes": 28
+   },
+   {
+    "pair": "0128",
+    "zone": "stacks",
+    "lpips": 0.4197750389575958,
+    "absdiff": 11.43844223022461,
+    "detail_walk": 3.358879804611206,
+    "detail_target": 6.545680999755859,
+    "passes": 27
+   },
+   {
+    "pair": "0129",
+    "zone": "stacks",
+    "lpips": 0.3353079855442047,
+    "absdiff": 11.65645980834961,
+    "detail_walk": 2.9592483043670654,
+    "detail_target": 5.116879463195801,
+    "passes": 27
+   },
+   {
+    "pair": "0130",
+    "zone": "stacks",
+    "lpips": 0.3033676743507385,
+    "absdiff": 14.245770454406738,
+    "detail_walk": 3.7514266967773438,
+    "detail_target": 5.855634689331055,
+    "passes": 29
+   },
+   {
+    "pair": "0131",
+    "zone": "stacks",
+    "lpips": 0.3282460570335388,
+    "absdiff": 12.649855613708496,
+    "detail_walk": 3.835801839828491,
+    "detail_target": 5.433420658111572,
+    "passes": 28
+   },
+   {
+    "pair": "0132",
+    "zone": "stacks",
+    "lpips": 0.35138195753097534,
+    "absdiff": 10.59311294555664,
+    "detail_walk": 3.0560789108276367,
+    "detail_target": 4.775073528289795,
+    "passes": 28
+   },
+   {
+    "pair": "0133",
+    "zone": "stacks",
+    "lpips": 0.402078777551651,
+    "absdiff": 11.900830268859863,
+    "detail_walk": 1.7749742269515991,
+    "detail_target": 4.668862342834473,
+    "passes": 27
+   },
+   {
+    "pair": "0134",
+    "zone": "stacks",
+    "lpips": 0.17778098583221436,
+    "absdiff": 5.155713081359863,
+    "detail_walk": 0.7499695420265198,
+    "detail_target": 1.7653005123138428,
+    "passes": 29
+   },
+   {
+    "pair": "0135",
+    "zone": "geode",
+    "lpips": 0.4093029499053955,
+    "absdiff": 30.47496223449707,
+    "detail_walk": 3.7264039516448975,
+    "detail_target": 9.744072914123535,
+    "passes": 27
+   },
+   {
+    "pair": "0136",
+    "zone": "geode",
+    "lpips": 0.4450933337211609,
+    "absdiff": 24.60782814025879,
+    "detail_walk": 5.709403038024902,
+    "detail_target": 8.657573699951172,
+    "passes": 28
+   },
+   {
+    "pair": "0137",
+    "zone": "geode",
+    "lpips": 0.3626823425292969,
+    "absdiff": 23.556974411010742,
+    "detail_walk": 7.73293399810791,
+    "detail_target": 9.107420921325684,
+    "passes": 28
+   },
+   {
+    "pair": "0138",
+    "zone": "geode",
+    "lpips": 0.3553301692008972,
+    "absdiff": 23.179283142089844,
+    "detail_walk": 7.318439483642578,
+    "detail_target": 9.448053359985352,
+    "passes": 28
+   },
+   {
+    "pair": "0139",
+    "zone": "geode",
+    "lpips": 0.3182232677936554,
+    "absdiff": 22.596302032470703,
+    "detail_walk": 7.144397735595703,
+    "detail_target": 10.671891212463379,
+    "passes": 29
+   },
+   {
+    "pair": "0140",
+    "zone": "geode",
+    "lpips": 0.289201557636261,
+    "absdiff": 21.030561447143555,
+    "detail_walk": 7.565579891204834,
+    "detail_target": 10.952972412109375,
+    "passes": 28
+   },
+   {
+    "pair": "0141",
+    "zone": "geode",
+    "lpips": 0.3148542046546936,
+    "absdiff": 20.842580795288086,
+    "detail_walk": 6.749680042266846,
+    "detail_target": 9.623794555664062,
+    "passes": 29
+   },
+   {
+    "pair": "0142",
+    "zone": "geode",
+    "lpips": 0.31471574306488037,
+    "absdiff": 22.00699806213379,
+    "detail_walk": 6.96268367767334,
+    "detail_target": 10.877570152282715,
+    "passes": 29
+   },
+   {
+    "pair": "0143",
+    "zone": "geode",
+    "lpips": 0.3354952931404114,
+    "absdiff": 20.583932876586914,
+    "detail_walk": 6.8534393310546875,
+    "detail_target": 8.376882553100586,
+    "passes": 29
+   },
+   {
+    "pair": "0144",
+    "zone": "geode",
+    "lpips": 0.4039466381072998,
+    "absdiff": 25.555269241333008,
+    "detail_walk": 6.349806785583496,
+    "detail_target": 8.931174278259277,
+    "passes": 29
+   },
+   {
+    "pair": "0145",
+    "zone": "geode",
+    "lpips": 0.4473654627799988,
+    "absdiff": 26.231096267700195,
+    "detail_walk": 5.693117141723633,
+    "detail_target": 9.554588317871094,
+    "passes": 28
+   },
+   {
+    "pair": "0146",
+    "zone": "geode",
+    "lpips": 0.45126038789749146,
+    "absdiff": 27.290002822875977,
+    "detail_walk": 6.228818893432617,
+    "detail_target": 10.173623085021973,
+    "passes": 28
+   },
+   {
+    "pair": "0147",
+    "zone": "geode",
+    "lpips": 0.44315478205680847,
+    "absdiff": 27.462297439575195,
+    "detail_walk": 6.213245868682861,
+    "detail_target": 10.087828636169434,
+    "passes": 28
+   },
+   {
+    "pair": "0148",
+    "zone": "geode",
+    "lpips": 0.48299750685691833,
+    "absdiff": 29.67183494567871,
+    "detail_walk": 6.280984401702881,
+    "detail_target": 8.91673755645752,
+    "passes": 29
+   },
+   {
+    "pair": "0149",
+    "zone": "geode",
+    "lpips": 0.4488601088523865,
+    "absdiff": 28.33096694946289,
+    "detail_walk": 6.4955878257751465,
+    "detail_target": 8.694988250732422,
+    "passes": 29
+   },
+   {
+    "pair": "0150",
+    "zone": "geode",
+    "lpips": 0.44385167956352234,
+    "absdiff": 26.43570327758789,
+    "detail_walk": 7.328631401062012,
+    "detail_target": 9.483020782470703,
+    "passes": 28
+   },
+   {
+    "pair": "0151",
+    "zone": "geode",
+    "lpips": 0.32098981738090515,
+    "absdiff": 18.030118942260742,
+    "detail_walk": 7.524369239807129,
+    "detail_target": 9.76463508605957,
+    "passes": 29
+   },
+   {
+    "pair": "0152",
+    "zone": "geode",
+    "lpips": 0.5261511206626892,
+    "absdiff": 35.28397750854492,
+    "detail_walk": 7.263433456420898,
+    "detail_target": 11.522085189819336,
+    "passes": 28
+   },
+   {
+    "pair": "0153",
+    "zone": "geode",
+    "lpips": 0.5477880239486694,
+    "absdiff": 33.08184051513672,
+    "detail_walk": 7.171918869018555,
+    "detail_target": 9.345510482788086,
+    "passes": 28
+   },
+   {
+    "pair": "0154",
+    "zone": "geode",
+    "lpips": 0.44060251116752625,
+    "absdiff": 31.930097579956055,
+    "detail_walk": 7.311722755432129,
+    "detail_target": 10.466129302978516,
+    "passes": 29
+   },
+   {
+    "pair": "0155",
+    "zone": "geode",
+    "lpips": 0.4246937036514282,
+    "absdiff": 33.139705657958984,
+    "detail_walk": 6.962964057922363,
+    "detail_target": 10.045639038085938,
+    "passes": 27
+   },
+   {
+    "pair": "0156",
+    "zone": "geode",
+    "lpips": 0.5150630474090576,
+    "absdiff": 34.89341354370117,
+    "detail_walk": 6.7691240310668945,
+    "detail_target": 10.059370040893555,
+    "passes": 27
+   },
+   {
+    "pair": "0157",
+    "zone": "geode",
+    "lpips": 0.45921310782432556,
+    "absdiff": 32.08640670776367,
+    "detail_walk": 7.122199058532715,
+    "detail_target": 9.2461519241333,
+    "passes": 29
+   },
+   {
+    "pair": "0158",
+    "zone": "geode",
+    "lpips": 0.44799676537513733,
+    "absdiff": 29.67995262145996,
+    "detail_walk": 6.068417072296143,
+    "detail_target": 8.481485366821289,
+    "passes": 28
+   },
+   {
+    "pair": "0159",
+    "zone": "geode",
+    "lpips": 0.44074520468711853,
+    "absdiff": 34.21593475341797,
+    "detail_walk": 5.577308177947998,
+    "detail_target": 9.40456771850586,
+    "passes": 28
+   },
+   {
+    "pair": "0160",
+    "zone": "geode",
+    "lpips": 0.43518543243408203,
+    "absdiff": 35.276878356933594,
+    "detail_walk": 5.926046371459961,
+    "detail_target": 9.410979270935059,
+    "passes": 28
+   },
+   {
+    "pair": "0161",
+    "zone": "geode",
+    "lpips": 0.38075050711631775,
+    "absdiff": 30.16610336303711,
+    "detail_walk": 6.4148054122924805,
+    "detail_target": 10.180131912231445,
+    "passes": 29
+   },
+   {
+    "pair": "0162",
+    "zone": "geode",
+    "lpips": 0.4002249538898468,
+    "absdiff": 32.63801574707031,
+    "detail_walk": 6.4367594718933105,
+    "detail_target": 9.610552787780762,
+    "passes": 28
+   },
+   {
+    "pair": "0163",
+    "zone": "geode",
+    "lpips": 0.3791748881340027,
+    "absdiff": 30.0438232421875,
+    "detail_walk": 6.2177324295043945,
+    "detail_target": 10.132393836975098,
+    "passes": 26
+   },
+   {
+    "pair": "0164",
+    "zone": "geode",
+    "lpips": 0.36281418800354004,
+    "absdiff": 27.829545974731445,
+    "detail_walk": 5.7913126945495605,
+    "detail_target": 10.479543685913086,
+    "passes": 28
+   },
+   {
+    "pair": "0165",
+    "zone": "geode",
+    "lpips": 0.4426099359989166,
+    "absdiff": 33.681514739990234,
+    "detail_walk": 5.786043167114258,
+    "detail_target": 10.124268531799316,
+    "passes": 28
+   },
+   {
+    "pair": "0166",
+    "zone": "geode",
+    "lpips": 0.4535008668899536,
+    "absdiff": 30.87030029296875,
+    "detail_walk": 4.87386417388916,
+    "detail_target": 9.455970764160156,
+    "passes": 27
+   },
+   {
+    "pair": "0167",
+    "zone": "geode",
+    "lpips": 0.4330710470676422,
+    "absdiff": 30.565744400024414,
+    "detail_walk": 3.4606857299804688,
+    "detail_target": 8.312518119812012,
+    "passes": 29
+   },
+   {
+    "pair": "0168",
+    "zone": "geode",
+    "lpips": 0.45495378971099854,
+    "absdiff": 36.37425994873047,
+    "detail_walk": 4.1482625007629395,
+    "detail_target": 8.887245178222656,
+    "passes": 28
+   },
+   {
+    "pair": "0169",
+    "zone": "geode",
+    "lpips": 0.48977476358413696,
+    "absdiff": 27.887910842895508,
+    "detail_walk": 4.773821830749512,
+    "detail_target": 6.7308125495910645,
+    "passes": 28
+   },
+   {
+    "pair": "0170",
+    "zone": "stacks",
+    "lpips": 0.332294225692749,
+    "absdiff": 8.187422752380371,
+    "detail_walk": 3.558426856994629,
+    "detail_target": 6.059391021728516,
+    "passes": 28
+   },
+   {
+    "pair": "0171",
+    "zone": "stacks",
+    "lpips": 0.3090440630912781,
+    "absdiff": 9.207494735717773,
+    "detail_walk": 3.327604293823242,
+    "detail_target": 4.959629058837891,
+    "passes": 28
+   },
+   {
+    "pair": "0172",
+    "zone": "stacks",
+    "lpips": 0.21951037645339966,
+    "absdiff": 5.797082424163818,
+    "detail_walk": 3.10044264793396,
+    "detail_target": 3.3607470989227295,
+    "passes": 28
+   },
+   {
+    "pair": "0173",
+    "zone": "stacks",
+    "lpips": 0.24110494554042816,
+    "absdiff": 7.257769584655762,
+    "detail_walk": 2.8759889602661133,
+    "detail_target": 4.234710693359375,
+    "passes": 29
+   },
+   {
+    "pair": "0174",
+    "zone": "stacks",
+    "lpips": 0.2504427134990692,
+    "absdiff": 7.562678813934326,
+    "detail_walk": 2.9309682846069336,
+    "detail_target": 4.422086238861084,
+    "passes": 29
+   },
+   {
+    "pair": "0175",
+    "zone": "stacks",
+    "lpips": 0.3466080129146576,
+    "absdiff": 8.183557510375977,
+    "detail_walk": 3.0566601753234863,
+    "detail_target": 5.240159034729004,
+    "passes": 28
+   },
+   {
+    "pair": "0176",
+    "zone": "stacks",
+    "lpips": 0.347228080034256,
+    "absdiff": 10.068800926208496,
+    "detail_walk": 2.976654291152954,
+    "detail_target": 5.656903266906738,
+    "passes": 28
+   },
+   {
+    "pair": "0177",
+    "zone": "stacks",
+    "lpips": 0.2844208776950836,
+    "absdiff": 8.880895614624023,
+    "detail_walk": 3.3777308464050293,
+    "detail_target": 5.301598072052002,
+    "passes": 28
+   },
+   {
+    "pair": "0178",
+    "zone": "stacks",
+    "lpips": 0.2589452862739563,
+    "absdiff": 6.685994625091553,
+    "detail_walk": 3.0311336517333984,
+    "detail_target": 3.4988889694213867,
+    "passes": 28
+   },
+   {
+    "pair": "0179",
+    "zone": "stacks",
+    "lpips": 0.3525296449661255,
+    "absdiff": 7.865504741668701,
+    "detail_walk": 1.9923362731933594,
+    "detail_target": 4.239124774932861,
+    "passes": 29
+   },
+   {
+    "pair": "0180",
+    "zone": "stacks",
+    "lpips": 0.2505170702934265,
+    "absdiff": 5.724019527435303,
+    "detail_walk": 2.1032445430755615,
+    "detail_target": 3.0184428691864014,
+    "passes": 28
+   },
+   {
+    "pair": "0181",
+    "zone": "stacks",
+    "lpips": 0.51282799243927,
+    "absdiff": 13.29030990600586,
+    "detail_walk": 3.2089428901672363,
+    "detail_target": 8.525654792785645,
+    "passes": 28
+   },
+   {
+    "pair": "0182",
+    "zone": "stacks",
+    "lpips": 0.46454697847366333,
+    "absdiff": 14.739975929260254,
+    "detail_walk": 3.367828369140625,
+    "detail_target": 7.726379871368408,
+    "passes": 29
+   },
+   {
+    "pair": "0183",
+    "zone": "stacks",
+    "lpips": 0.32328489422798157,
+    "absdiff": 13.602472305297852,
+    "detail_walk": 4.730712890625,
+    "detail_target": 9.27756118774414,
+    "passes": 28
+   },
+   {
+    "pair": "0184",
+    "zone": "stacks",
+    "lpips": 0.3776405155658722,
+    "absdiff": 13.090509414672852,
+    "detail_walk": 5.25243616104126,
+    "detail_target": 7.267077445983887,
+    "passes": 28
+   },
+   {
+    "pair": "0185",
+    "zone": "stacks",
+    "lpips": 0.2581444978713989,
+    "absdiff": 13.841715812683105,
+    "detail_walk": 5.4463605880737305,
+    "detail_target": 9.235823631286621,
+    "passes": 29
+   },
+   {
+    "pair": "0186",
+    "zone": "stacks",
+    "lpips": 0.4592321515083313,
+    "absdiff": 18.126630783081055,
+    "detail_walk": 6.077641010284424,
+    "detail_target": 7.949932098388672,
+    "passes": 29
+   },
+   {
+    "pair": "0187",
+    "zone": "stacks",
+    "lpips": 0.34335124492645264,
+    "absdiff": 12.239951133728027,
+    "detail_walk": 5.288904190063477,
+    "detail_target": 5.617419719696045,
+    "passes": 28
+   },
+   {
+    "pair": "0188",
+    "zone": "stacks",
+    "lpips": 0.27446871995925903,
+    "absdiff": 9.626931190490723,
+    "detail_walk": 4.034712791442871,
+    "detail_target": 4.530570030212402,
+    "passes": 28
+   },
+   {
+    "pair": "0189",
+    "zone": "stacks",
+    "lpips": 0.4485231041908264,
+    "absdiff": 18.04123878479004,
+    "detail_walk": 4.23857307434082,
+    "detail_target": 7.106849193572998,
+    "passes": 28
+   },
+   {
+    "pair": "0190",
+    "zone": "stacks",
+    "lpips": 0.24806714057922363,
+    "absdiff": 10.464774131774902,
+    "detail_walk": 3.351323366165161,
+    "detail_target": 6.847447395324707,
+    "passes": 28
+   },
+   {
+    "pair": "0191",
+    "zone": "stacks",
+    "lpips": 0.4392227232456207,
+    "absdiff": 20.12786865234375,
+    "detail_walk": 4.498318672180176,
+    "detail_target": 7.453778266906738,
+    "passes": 29
+   },
+   {
+    "pair": "0192",
+    "zone": "baths",
+    "lpips": 0.2503810524940491,
+    "absdiff": 17.777387619018555,
+    "detail_walk": 5.310512542724609,
+    "detail_target": 5.890439510345459,
+    "passes": 28
+   },
+   {
+    "pair": "0193",
+    "zone": "baths",
+    "lpips": 0.28860771656036377,
+    "absdiff": 22.12899398803711,
+    "detail_walk": 5.695686340332031,
+    "detail_target": 5.946783065795898,
+    "passes": 29
+   },
+   {
+    "pair": "0194",
+    "zone": "baths",
+    "lpips": 0.2842678427696228,
+    "absdiff": 16.502838134765625,
+    "detail_walk": 5.569742202758789,
+    "detail_target": 6.78812837600708,
+    "passes": 29
+   },
+   {
+    "pair": "0195",
+    "zone": "baths",
+    "lpips": 0.2122988998889923,
+    "absdiff": 12.161179542541504,
+    "detail_walk": 5.372323036193848,
+    "detail_target": 5.556171894073486,
+    "passes": 28
+   },
+   {
+    "pair": "0196",
+    "zone": "baths",
+    "lpips": 0.1498909890651703,
+    "absdiff": 10.265897750854492,
+    "detail_walk": 5.229762077331543,
+    "detail_target": 5.994937896728516,
+    "passes": 29
+   },
+   {
+    "pair": "0197",
+    "zone": "baths",
+    "lpips": 0.24245047569274902,
+    "absdiff": 15.581042289733887,
+    "detail_walk": 5.147289276123047,
+    "detail_target": 6.239079475402832,
+    "passes": 29
+   },
+   {
+    "pair": "0198",
+    "zone": "baths",
+    "lpips": 0.2842247486114502,
+    "absdiff": 15.862557411193848,
+    "detail_walk": 5.1968512535095215,
+    "detail_target": 5.988278388977051,
+    "passes": 28
+   },
+   {
+    "pair": "0199",
+    "zone": "baths",
+    "lpips": 0.24044683575630188,
+    "absdiff": 13.58794116973877,
+    "detail_walk": 4.911707878112793,
+    "detail_target": 5.2346367835998535,
+    "passes": 29
+   },
+   {
+    "pair": "0200",
+    "zone": "baths",
+    "lpips": 0.291521817445755,
+    "absdiff": 16.4625301361084,
+    "detail_walk": 4.580517768859863,
+    "detail_target": 6.088005065917969,
+    "passes": 29
+   },
+   {
+    "pair": "0201",
+    "zone": "baths",
+    "lpips": 0.3631567656993866,
+    "absdiff": 18.77231788635254,
+    "detail_walk": 5.127668380737305,
+    "detail_target": 6.152555465698242,
+    "passes": 28
+   },
+   {
+    "pair": "0202",
+    "zone": "baths",
+    "lpips": 0.28421875834465027,
+    "absdiff": 15.779607772827148,
+    "detail_walk": 4.574105739593506,
+    "detail_target": 4.156796932220459,
+    "passes": 29
+   },
+   {
+    "pair": "0203",
+    "zone": "baths",
+    "lpips": 0.2563803493976593,
+    "absdiff": 14.108638763427734,
+    "detail_walk": 4.45030403137207,
+    "detail_target": 5.850244045257568,
+    "passes": 30
+   },
+   {
+    "pair": "0204",
+    "zone": "baths",
+    "lpips": 0.25658872723579407,
+    "absdiff": 17.41425895690918,
+    "detail_walk": 4.66786527633667,
+    "detail_target": 6.199369430541992,
+    "passes": 28
+   },
+   {
+    "pair": "0205",
+    "zone": "baths",
+    "lpips": 0.2999323010444641,
+    "absdiff": 19.948678970336914,
+    "detail_walk": 4.878925323486328,
+    "detail_target": 6.160269737243652,
+    "passes": 27
+   },
+   {
+    "pair": "0206",
+    "zone": "baths",
+    "lpips": 0.26109158992767334,
+    "absdiff": 14.45949935913086,
+    "detail_walk": 4.72298526763916,
+    "detail_target": 5.666362285614014,
+    "passes": 28
+   },
+   {
+    "pair": "0207",
+    "zone": "baths",
+    "lpips": 0.2491251826286316,
+    "absdiff": 13.430814743041992,
+    "detail_walk": 5.008583068847656,
+    "detail_target": 6.533481121063232,
+    "passes": 28
+   },
+   {
+    "pair": "0208",
+    "zone": "baths",
+    "lpips": 0.2941173315048218,
+    "absdiff": 18.39307403564453,
+    "detail_walk": 5.473296165466309,
+    "detail_target": 6.502902030944824,
+    "passes": 28
+   },
+   {
+    "pair": "0209",
+    "zone": "baths",
+    "lpips": 0.2819208800792694,
+    "absdiff": 15.452738761901855,
+    "detail_walk": 5.031148910522461,
+    "detail_target": 5.490931510925293,
+    "passes": 28
+   },
+   {
+    "pair": "0210",
+    "zone": "baths",
+    "lpips": 0.34259745478630066,
+    "absdiff": 21.547344207763672,
+    "detail_walk": 4.835090160369873,
+    "detail_target": 5.434896469116211,
+    "passes": 29
+   },
+   {
+    "pair": "0211",
+    "zone": "baths",
+    "lpips": 0.3028401732444763,
+    "absdiff": 16.107885360717773,
+    "detail_walk": 4.338451862335205,
+    "detail_target": 4.563006401062012,
+    "passes": 28
+   },
+   {
+    "pair": "0212",
+    "zone": "baths",
+    "lpips": 0.3445030450820923,
+    "absdiff": 17.32149887084961,
+    "detail_walk": 3.9514548778533936,
+    "detail_target": 4.702175140380859,
+    "passes": 26
+   },
+   {
+    "pair": "0213",
+    "zone": "baths",
+    "lpips": 0.29047974944114685,
+    "absdiff": 15.064699172973633,
+    "detail_walk": 4.036015510559082,
+    "detail_target": 4.930700302124023,
+    "passes": 27
+   },
+   {
+    "pair": "0214",
+    "zone": "baths",
+    "lpips": 0.3557094931602478,
+    "absdiff": 17.454486846923828,
+    "detail_walk": 3.786557674407959,
+    "detail_target": 5.677130699157715,
+    "passes": 28
+   },
+   {
+    "pair": "0215",
+    "zone": "baths",
+    "lpips": 0.30410540103912354,
+    "absdiff": 18.45738983154297,
+    "detail_walk": 4.272505760192871,
+    "detail_target": 5.469810485839844,
+    "passes": 29
+   },
+   {
+    "pair": "0216",
+    "zone": "baths",
+    "lpips": 0.3424070477485657,
+    "absdiff": 18.28586196899414,
+    "detail_walk": 3.80043363571167,
+    "detail_target": 5.085081100463867,
+    "passes": 28
+   },
+   {
+    "pair": "0217",
+    "zone": "baths",
+    "lpips": 0.4554353356361389,
+    "absdiff": 23.26506805419922,
+    "detail_walk": 3.8184614181518555,
+    "detail_target": 6.79348087310791,
+    "passes": 28
+   },
+   {
+    "pair": "0218",
+    "zone": "baths",
+    "lpips": 0.43674197793006897,
+    "absdiff": 21.768945693969727,
+    "detail_walk": 4.516615867614746,
+    "detail_target": 5.411114692687988,
+    "passes": 29
+   },
+   {
+    "pair": "0219",
+    "zone": "baths",
+    "lpips": 0.4824674129486084,
+    "absdiff": 26.94401741027832,
+    "detail_walk": 4.789665699005127,
+    "detail_target": 4.806212425231934,
+    "passes": 28
+   },
+   {
+    "pair": "0220",
+    "zone": "baths",
+    "lpips": 0.5657343864440918,
+    "absdiff": 33.151973724365234,
+    "detail_walk": 4.82890510559082,
+    "detail_target": 4.377129554748535,
+    "passes": 27
+   },
+   {
+    "pair": "0221",
+    "zone": "baths",
+    "lpips": 0.6139346361160278,
+    "absdiff": 38.172542572021484,
+    "detail_walk": 4.257817268371582,
+    "detail_target": 4.396954536437988,
+    "passes": 29
+   },
+   {
+    "pair": "0222",
+    "zone": "baths",
+    "lpips": 0.6003135442733765,
+    "absdiff": 35.91600799560547,
+    "detail_walk": 3.9475748538970947,
+    "detail_target": 3.97507381439209,
+    "passes": 28
+   },
+   {
+    "pair": "0223",
+    "zone": "baths",
+    "lpips": 0.4980698227882385,
+    "absdiff": 33.167381286621094,
+    "detail_walk": 4.403985977172852,
+    "detail_target": 4.249058246612549,
+    "passes": 26
+   },
+   {
+    "pair": "0224",
+    "zone": "baths",
+    "lpips": 0.48650169372558594,
+    "absdiff": 31.087499618530273,
+    "detail_walk": 4.075300216674805,
+    "detail_target": 3.7225165367126465,
+    "passes": 28
+   },
+   {
+    "pair": "0225",
+    "zone": "baths",
+    "lpips": 0.4641006290912628,
+    "absdiff": 28.467947006225586,
+    "detail_walk": 4.215649127960205,
+    "detail_target": 4.619950294494629,
+    "passes": 28
+   },
+   {
+    "pair": "0226",
+    "zone": "baths",
+    "lpips": 0.4213055670261383,
+    "absdiff": 30.55122947692871,
+    "detail_walk": 4.530092716217041,
+    "detail_target": 4.032872200012207,
+    "passes": 28
+   },
+   {
+    "pair": "0227",
+    "zone": "baths",
+    "lpips": 0.3977159857749939,
+    "absdiff": 26.595529556274414,
+    "detail_walk": 4.140809535980225,
+    "detail_target": 4.153887748718262,
+    "passes": 29
+   },
+   {
+    "pair": "0228",
+    "zone": "baths",
+    "lpips": 0.4055096209049225,
+    "absdiff": 22.31171989440918,
+    "detail_walk": 4.253515243530273,
+    "detail_target": 3.7345025539398193,
+    "passes": 29
+   },
+   {
+    "pair": "0229",
+    "zone": "baths",
+    "lpips": 0.4975963234901428,
+    "absdiff": 28.96196746826172,
+    "detail_walk": 4.381420612335205,
+    "detail_target": 4.436046600341797,
+    "passes": 29
+   },
+   {
+    "pair": "0230",
+    "zone": "baths",
+    "lpips": 0.4089530110359192,
+    "absdiff": 20.64221954345703,
+    "detail_walk": 4.013801574707031,
+    "detail_target": 3.9296741485595703,
+    "passes": 29
+   },
+   {
+    "pair": "0231",
+    "zone": "baths",
+    "lpips": 0.4068511426448822,
+    "absdiff": 25.57106590270996,
+    "detail_walk": 3.6315932273864746,
+    "detail_target": 3.7278859615325928,
+    "passes": 28
+   },
+   {
+    "pair": "0232",
+    "zone": "baths",
+    "lpips": 0.48843449354171753,
+    "absdiff": 30.47368812561035,
+    "detail_walk": 3.69425630569458,
+    "detail_target": 4.635931968688965,
+    "passes": 28
+   },
+   {
+    "pair": "0233",
+    "zone": "baths",
+    "lpips": 0.5966252088546753,
+    "absdiff": 33.13881301879883,
+    "detail_walk": 3.7254951000213623,
+    "detail_target": 4.188572883605957,
+    "passes": 28
+   },
+   {
+    "pair": "0234",
+    "zone": "baths",
+    "lpips": 0.599625825881958,
+    "absdiff": 30.87688636779785,
+    "detail_walk": 3.7271296977996826,
+    "detail_target": 3.819276809692383,
+    "passes": 29
+   },
+   {
+    "pair": "0236",
+    "zone": "garden",
+    "lpips": 0.5272796154022217,
+    "absdiff": 35.60179901123047,
+    "detail_walk": 6.5890936851501465,
+    "detail_target": 10.20716667175293,
+    "passes": 28
+   },
+   {
+    "pair": "0237",
+    "zone": "garden",
+    "lpips": 0.4268481135368347,
+    "absdiff": 27.375951766967773,
+    "detail_walk": 7.461839199066162,
+    "detail_target": 9.545988082885742,
+    "passes": 28
+   },
+   {
+    "pair": "0238",
+    "zone": "garden",
+    "lpips": 0.43523716926574707,
+    "absdiff": 33.95529556274414,
+    "detail_walk": 9.419137954711914,
+    "detail_target": 10.134282112121582,
+    "passes": 27
+   },
+   {
+    "pair": "0239",
+    "zone": "garden",
+    "lpips": 0.4010457694530487,
+    "absdiff": 30.83864974975586,
+    "detail_walk": 9.163749694824219,
+    "detail_target": 11.687082290649414,
+    "passes": 28
+   },
+   {
+    "pair": "0240",
+    "zone": "garden",
+    "lpips": 0.3570713698863983,
+    "absdiff": 27.806821823120117,
+    "detail_walk": 8.918233871459961,
+    "detail_target": 10.84384536743164,
+    "passes": 27
+   },
+   {
+    "pair": "0241",
+    "zone": "garden",
+    "lpips": 0.36647382378578186,
+    "absdiff": 29.31475067138672,
+    "detail_walk": 9.033845901489258,
+    "detail_target": 10.477493286132812,
+    "passes": 28
+   },
+   {
+    "pair": "0242",
+    "zone": "garden",
+    "lpips": 0.3834322392940521,
+    "absdiff": 30.8533878326416,
+    "detail_walk": 8.757169723510742,
+    "detail_target": 11.480405807495117,
+    "passes": 28
+   },
+   {
+    "pair": "0243",
+    "zone": "garden",
+    "lpips": 0.41894692182540894,
+    "absdiff": 33.39170455932617,
+    "detail_walk": 8.402137756347656,
+    "detail_target": 11.830564498901367,
+    "passes": 29
+   },
+   {
+    "pair": "0244",
+    "zone": "garden",
+    "lpips": 0.37563472986221313,
+    "absdiff": 29.1680965423584,
+    "detail_walk": 8.98303508758545,
+    "detail_target": 11.785558700561523,
+    "passes": 27
+   },
+   {
+    "pair": "0245",
+    "zone": "garden",
+    "lpips": 0.39483335614204407,
+    "absdiff": 30.0054931640625,
+    "detail_walk": 8.558788299560547,
+    "detail_target": 12.495684623718262,
+    "passes": 28
+   },
+   {
+    "pair": "0246",
+    "zone": "garden",
+    "lpips": 0.3946187496185303,
+    "absdiff": 30.92719268798828,
+    "detail_walk": 8.71500301361084,
+    "detail_target": 12.134254455566406,
+    "passes": 28
+   },
+   {
+    "pair": "0247",
+    "zone": "garden",
+    "lpips": 0.39499321579933167,
+    "absdiff": 28.357566833496094,
+    "detail_walk": 8.7966890335083,
+    "detail_target": 10.76539421081543,
+    "passes": 29
+   },
+   {
+    "pair": "0248",
+    "zone": "garden",
+    "lpips": 0.40582650899887085,
+    "absdiff": 29.042898178100586,
+    "detail_walk": 9.30830192565918,
+    "detail_target": 10.549196243286133,
+    "passes": 28
+   },
+   {
+    "pair": "0249",
+    "zone": "garden",
+    "lpips": 0.3675295114517212,
+    "absdiff": 27.475791931152344,
+    "detail_walk": 9.399765014648438,
+    "detail_target": 11.4061279296875,
+    "passes": 29
+   },
+   {
+    "pair": "0250",
+    "zone": "garden",
+    "lpips": 0.39681345224380493,
+    "absdiff": 28.9085636138916,
+    "detail_walk": 9.093971252441406,
+    "detail_target": 11.42026138305664,
+    "passes": 28
+   },
+   {
+    "pair": "0251",
+    "zone": "garden",
+    "lpips": 0.46806472539901733,
+    "absdiff": 36.70538330078125,
+    "detail_walk": 8.775106430053711,
+    "detail_target": 12.493087768554688,
+    "passes": 29
+   },
+   {
+    "pair": "0252",
+    "zone": "garden",
+    "lpips": 0.485300749540329,
+    "absdiff": 37.03874588012695,
+    "detail_walk": 10.022391319274902,
+    "detail_target": 13.062894821166992,
+    "passes": 28
+   },
+   {
+    "pair": "0253",
+    "zone": "garden",
+    "lpips": 0.4833594560623169,
+    "absdiff": 37.336612701416016,
+    "detail_walk": 9.692249298095703,
+    "detail_target": 11.73057746887207,
+    "passes": 28
+   },
+   {
+    "pair": "0254",
+    "zone": "garden",
+    "lpips": 0.49912047386169434,
+    "absdiff": 37.693092346191406,
+    "detail_walk": 8.937721252441406,
+    "detail_target": 11.798181533813477,
+    "passes": 28
+   },
+   {
+    "pair": "0255",
+    "zone": "garden",
+    "lpips": 0.5355006456375122,
+    "absdiff": 40.542198181152344,
+    "detail_walk": 8.539727210998535,
+    "detail_target": 11.335097312927246,
+    "passes": 28
+   },
+   {
+    "pair": "0256",
+    "zone": "garden",
+    "lpips": 0.475045770406723,
+    "absdiff": 34.19076919555664,
+    "detail_walk": 8.214325904846191,
+    "detail_target": 11.301322937011719,
+    "passes": 29
+   },
+   {
+    "pair": "0257",
+    "zone": "garden",
+    "lpips": 0.4072641134262085,
+    "absdiff": 32.351280212402344,
+    "detail_walk": 8.790756225585938,
+    "detail_target": 10.800909996032715,
+    "passes": 28
+   },
+   {
+    "pair": "0258",
+    "zone": "garden",
+    "lpips": 0.4026343822479248,
+    "absdiff": 27.945215225219727,
+    "detail_walk": 8.757438659667969,
+    "detail_target": 10.512890815734863,
+    "passes": 30
+   },
+   {
+    "pair": "0259",
+    "zone": "garden",
+    "lpips": 0.37279021739959717,
+    "absdiff": 26.243974685668945,
+    "detail_walk": 8.632859230041504,
+    "detail_target": 9.995748519897461,
+    "passes": 28
+   },
+   {
+    "pair": "0260",
+    "zone": "garden",
+    "lpips": 0.32732367515563965,
+    "absdiff": 21.575519561767578,
+    "detail_walk": 8.957292556762695,
+    "detail_target": 9.856367111206055,
+    "passes": 28
+   },
+   {
+    "pair": "0261",
+    "zone": "garden",
+    "lpips": 0.2766796350479126,
+    "absdiff": 19.1658992767334,
+    "detail_walk": 9.498064041137695,
+    "detail_target": 9.805768966674805,
+    "passes": 29
+   },
+   {
+    "pair": "0262",
+    "zone": "garden",
+    "lpips": 0.19962634146213531,
+    "absdiff": 16.489091873168945,
+    "detail_walk": 9.019408226013184,
+    "detail_target": 9.489758491516113,
+    "passes": 28
+   },
+   {
+    "pair": "0263",
+    "zone": "garden",
+    "lpips": 0.20036929845809937,
+    "absdiff": 16.143798828125,
+    "detail_walk": 8.865323066711426,
+    "detail_target": 9.505308151245117,
+    "passes": 28
+   },
+   {
+    "pair": "0264",
+    "zone": "garden",
+    "lpips": 0.22150935232639313,
+    "absdiff": 16.554418563842773,
+    "detail_walk": 8.338783264160156,
+    "detail_target": 8.926767349243164,
+    "passes": 29
+   },
+   {
+    "pair": "0265",
+    "zone": "garden",
+    "lpips": 0.30125799775123596,
+    "absdiff": 22.002241134643555,
+    "detail_walk": 8.405179977416992,
+    "detail_target": 9.469096183776855,
+    "passes": 29
+   },
+   {
+    "pair": "0266",
+    "zone": "garden",
+    "lpips": 0.38455674052238464,
+    "absdiff": 25.345129013061523,
+    "detail_walk": 8.462791442871094,
+    "detail_target": 10.51300048828125,
+    "passes": 29
+   },
+   {
+    "pair": "0267",
+    "zone": "garden",
+    "lpips": 0.4673389196395874,
+    "absdiff": 32.61867141723633,
+    "detail_walk": 8.752689361572266,
+    "detail_target": 11.428504943847656,
+    "passes": 28
+   },
+   {
+    "pair": "0268",
+    "zone": "garden",
+    "lpips": 0.45188313722610474,
+    "absdiff": 34.16132736206055,
+    "detail_walk": 8.912492752075195,
+    "detail_target": 10.887123107910156,
+    "passes": 29
+   },
+   {
+    "pair": "0269",
+    "zone": "garden",
+    "lpips": 0.4345031678676605,
+    "absdiff": 32.22721862792969,
+    "detail_walk": 8.88055419921875,
+    "detail_target": 10.454782485961914,
+    "passes": 29
+   },
+   {
+    "pair": "0270",
+    "zone": "garden",
+    "lpips": 0.3882167935371399,
+    "absdiff": 30.582677841186523,
+    "detail_walk": 8.750017166137695,
+    "detail_target": 10.641534805297852,
+    "passes": 28
+   },
+   {
+    "pair": "0271",
+    "zone": "garden",
+    "lpips": 0.36681726574897766,
+    "absdiff": 25.455533981323242,
+    "detail_walk": 9.779607772827148,
+    "detail_target": 11.678805351257324,
+    "passes": 29
+   },
+   {
+    "pair": "0272",
+    "zone": "garden",
+    "lpips": 0.3391510546207428,
+    "absdiff": 24.624643325805664,
+    "detail_walk": 9.769067764282227,
+    "detail_target": 12.430347442626953,
+    "passes": 29
+   },
+   {
+    "pair": "0273",
+    "zone": "garden",
+    "lpips": 0.3201323449611664,
+    "absdiff": 22.71946144104004,
+    "detail_walk": 9.894962310791016,
+    "detail_target": 12.322202682495117,
+    "passes": 28
+   },
+   {
+    "pair": "0274",
+    "zone": "garden",
+    "lpips": 0.3165605068206787,
+    "absdiff": 22.6500301361084,
+    "detail_walk": 10.014204025268555,
+    "detail_target": 13.385993003845215,
+    "passes": 28
+   },
+   {
+    "pair": "0275",
+    "zone": "garden",
+    "lpips": 0.34556370973587036,
+    "absdiff": 25.94945526123047,
+    "detail_walk": 10.435855865478516,
+    "detail_target": 13.893575668334961,
+    "passes": 28
+   },
+   {
+    "pair": "0276",
+    "zone": "garden",
+    "lpips": 0.34678536653518677,
+    "absdiff": 26.97186851501465,
+    "detail_walk": 10.378894805908203,
+    "detail_target": 12.26296615600586,
+    "passes": 28
+   },
+   {
+    "pair": "0277",
+    "zone": "garden",
+    "lpips": 0.3365073502063751,
+    "absdiff": 29.28291893005371,
+    "detail_walk": 9.555424690246582,
+    "detail_target": 11.717910766601562,
+    "passes": 28
+   },
+   {
+    "pair": "0278",
+    "zone": "garden",
+    "lpips": 0.3529044985771179,
+    "absdiff": 27.48848533630371,
+    "detail_walk": 9.620946884155273,
+    "detail_target": 12.31475830078125,
+    "passes": 28
+   },
+   {
+    "pair": "0279",
+    "zone": "garden",
+    "lpips": 0.28448522090911865,
+    "absdiff": 23.776147842407227,
+    "detail_walk": 9.56315803527832,
+    "detail_target": 10.85743522644043,
+    "passes": 29
+   },
+   {
+    "pair": "0280",
+    "zone": "garden",
+    "lpips": 0.3567941188812256,
+    "absdiff": 30.10976219177246,
+    "detail_walk": 8.06676197052002,
+    "detail_target": 10.802314758300781,
+    "passes": 29
+   },
+   {
+    "pair": "0281",
+    "zone": "garden",
+    "lpips": 0.3565981090068817,
+    "absdiff": 30.16764259338379,
+    "detail_walk": 8.101670265197754,
+    "detail_target": 10.013849258422852,
+    "passes": 28
+   },
+   {
+    "pair": "0282",
+    "zone": "garden",
+    "lpips": 0.4262486696243286,
+    "absdiff": 37.7961540222168,
+    "detail_walk": 8.196259498596191,
+    "detail_target": 10.753416061401367,
+    "passes": 28
+   },
+   {
+    "pair": "0283",
+    "zone": "garden",
+    "lpips": 0.3734881579875946,
+    "absdiff": 27.71721839904785,
+    "detail_walk": 8.154824256896973,
+    "detail_target": 10.988157272338867,
+    "passes": 27
+   },
+   {
+    "pair": "0284",
+    "zone": "garden",
+    "lpips": 0.38793158531188965,
+    "absdiff": 28.903047561645508,
+    "detail_walk": 9.289310455322266,
+    "detail_target": 11.595785140991211,
+    "passes": 27
+   },
+   {
+    "pair": "0285",
+    "zone": "garden",
+    "lpips": 0.4118648171424866,
+    "absdiff": 31.058168411254883,
+    "detail_walk": 9.212724685668945,
+    "detail_target": 12.895198822021484,
+    "passes": 27
+   },
+   {
+    "pair": "0286",
+    "zone": "garden",
+    "lpips": 0.37240248918533325,
+    "absdiff": 31.78875160217285,
+    "detail_walk": 9.180765151977539,
+    "detail_target": 13.498695373535156,
+    "passes": 28
+   },
+   {
+    "pair": "0287",
+    "zone": "garden",
+    "lpips": 0.32061323523521423,
+    "absdiff": 27.497671127319336,
+    "detail_walk": 9.765671730041504,
+    "detail_target": 12.29844856262207,
+    "passes": 27
+   },
+   {
+    "pair": "0288",
+    "zone": "garden",
+    "lpips": 0.32280147075653076,
+    "absdiff": 27.05451202392578,
+    "detail_walk": 9.429487228393555,
+    "detail_target": 12.218490600585938,
+    "passes": 27
+   },
+   {
+    "pair": "0289",
+    "zone": "garden",
+    "lpips": 0.37352246046066284,
+    "absdiff": 29.08219337463379,
+    "detail_walk": 8.995819091796875,
+    "detail_target": 12.553215026855469,
+    "passes": 28
+   },
+   {
+    "pair": "0290",
+    "zone": "garden",
+    "lpips": 0.3745919466018677,
+    "absdiff": 30.873823165893555,
+    "detail_walk": 9.309441566467285,
+    "detail_target": 11.674783706665039,
+    "passes": 27
+   },
+   {
+    "pair": "0291",
+    "zone": "garden",
+    "lpips": 0.41766661405563354,
+    "absdiff": 31.195690155029297,
+    "detail_walk": 9.395279884338379,
+    "detail_target": 12.649934768676758,
+    "passes": 28
+   },
+   {
+    "pair": "0292",
+    "zone": "garden",
+    "lpips": 0.40132665634155273,
+    "absdiff": 28.61871910095215,
+    "detail_walk": 9.22195816040039,
+    "detail_target": 12.243825912475586,
+    "passes": 27
+   },
+   {
+    "pair": "0293",
+    "zone": "garden",
+    "lpips": 0.3796835243701935,
+    "absdiff": 28.335521697998047,
+    "detail_walk": 9.080629348754883,
+    "detail_target": 10.871726989746094,
+    "passes": 28
+   },
+   {
+    "pair": "0294",
+    "zone": "garden",
+    "lpips": 0.4747873544692993,
+    "absdiff": 39.07933044433594,
+    "detail_walk": 8.564563751220703,
+    "detail_target": 11.005680084228516,
+    "passes": 28
+   },
+   {
+    "pair": "0295",
+    "zone": "garden",
+    "lpips": 0.4677661061286926,
+    "absdiff": 37.894588470458984,
+    "detail_walk": 7.723631858825684,
+    "detail_target": 10.49806022644043,
+    "passes": 29
+   },
+   {
+    "pair": "0296",
+    "zone": "garden",
+    "lpips": 0.4591185450553894,
+    "absdiff": 33.46596145629883,
+    "detail_walk": 7.171452522277832,
+    "detail_target": 8.405738830566406,
+    "passes": 28
+   },
+   {
+    "pair": "0297",
+    "zone": "garden",
+    "lpips": 0.43428438901901245,
+    "absdiff": 30.549562454223633,
+    "detail_walk": 7.108537197113037,
+    "detail_target": 8.891855239868164,
+    "passes": 28
+   },
+   {
+    "pair": "0298",
+    "zone": "garden",
+    "lpips": 0.4599608778953552,
+    "absdiff": 31.71752166748047,
+    "detail_walk": 7.521902084350586,
+    "detail_target": 9.4840087890625,
+    "passes": 28
+   },
+   {
+    "pair": "0299",
+    "zone": "garden",
+    "lpips": 0.4115379750728607,
+    "absdiff": 30.47472381591797,
+    "detail_walk": 7.200537204742432,
+    "detail_target": 9.517991065979004,
+    "passes": 28
+   },
+   {
+    "pair": "0300",
+    "zone": "garden",
+    "lpips": 0.3740607500076294,
+    "absdiff": 23.493446350097656,
+    "detail_walk": 7.12430477142334,
+    "detail_target": 8.49344253540039,
+    "passes": 28
+   },
+   {
+    "pair": "0301",
+    "zone": "garden",
+    "lpips": 0.3549483120441437,
+    "absdiff": 25.220245361328125,
+    "detail_walk": 7.587741851806641,
+    "detail_target": 10.012964248657227,
+    "passes": 29
+   },
+   {
+    "pair": "0302",
+    "zone": "garden",
+    "lpips": 0.31863999366760254,
+    "absdiff": 18.850635528564453,
+    "detail_walk": 8.657456398010254,
+    "detail_target": 7.6593451499938965,
+    "passes": 28
+   },
+   {
+    "pair": "0303",
+    "zone": "garden",
+    "lpips": 0.422111451625824,
+    "absdiff": 27.891878128051758,
+    "detail_walk": 7.4652533531188965,
+    "detail_target": 9.039966583251953,
+    "passes": 28
+   },
+   {
+    "pair": "0304",
+    "zone": "garden",
+    "lpips": 0.463074266910553,
+    "absdiff": 30.974510192871094,
+    "detail_walk": 7.064922332763672,
+    "detail_target": 9.809635162353516,
+    "passes": 27
+   },
+   {
+    "pair": "0305",
+    "zone": "garden",
+    "lpips": 0.4860397279262543,
+    "absdiff": 28.936941146850586,
+    "detail_walk": 6.4574761390686035,
+    "detail_target": 8.007966995239258,
+    "passes": 27
+   },
+   {
+    "pair": "0306",
+    "zone": "garden",
+    "lpips": 0.59356689453125,
+    "absdiff": 32.86087417602539,
+    "detail_walk": 5.690829277038574,
+    "detail_target": 6.7947587966918945,
+    "passes": 27
+   },
+   {
+    "pair": "0307",
+    "zone": "garden",
+    "lpips": 0.5346688032150269,
+    "absdiff": 30.761974334716797,
+    "detail_walk": 5.070398330688477,
+    "detail_target": 5.428272247314453,
+    "passes": 28
+   },
+   {
+    "pair": "0308",
+    "zone": "garden",
+    "lpips": 0.6373266577720642,
+    "absdiff": 28.88811492919922,
+    "detail_walk": 3.944638729095459,
+    "detail_target": 6.164669990539551,
+    "passes": 28
+   },
+   {
+    "pair": "0309",
+    "zone": "garden",
+    "lpips": 0.48519691824913025,
+    "absdiff": 24.70288848876953,
+    "detail_walk": 2.7033181190490723,
+    "detail_target": 5.095837593078613,
+    "passes": 27
+   },
+   {
+    "pair": "0310",
+    "zone": "baths",
+    "lpips": 0.2664453089237213,
+    "absdiff": 15.68799877166748,
+    "detail_walk": 1.1761255264282227,
+    "detail_target": 2.6142990589141846,
+    "passes": 28
+   },
+   {
+    "pair": "0311",
+    "zone": "baths",
+    "lpips": 0.37241414189338684,
+    "absdiff": 24.355932235717773,
+    "detail_walk": 4.200843811035156,
+    "detail_target": 4.967460632324219,
+    "passes": 27
+   },
+   {
+    "pair": "0312",
+    "zone": "baths",
+    "lpips": 0.38285329937934875,
+    "absdiff": 22.757490158081055,
+    "detail_walk": 4.818731307983398,
+    "detail_target": 5.863988399505615,
+    "passes": 28
+   },
+   {
+    "pair": "0313",
+    "zone": "baths",
+    "lpips": 0.44052648544311523,
+    "absdiff": 24.60628890991211,
+    "detail_walk": 4.918215274810791,
+    "detail_target": 6.9881134033203125,
+    "passes": 29
+   },
+   {
+    "pair": "0314",
+    "zone": "baths",
+    "lpips": 0.37734895944595337,
+    "absdiff": 22.583356857299805,
+    "detail_walk": 5.024393081665039,
+    "detail_target": 5.699923038482666,
+    "passes": 28
+   },
+   {
+    "pair": "0315",
+    "zone": "baths",
+    "lpips": 0.39397409558296204,
+    "absdiff": 23.242074966430664,
+    "detail_walk": 5.239742279052734,
+    "detail_target": 5.188729286193848,
+    "passes": 28
+   },
+   {
+    "pair": "0316",
+    "zone": "baths",
+    "lpips": 0.482333242893219,
+    "absdiff": 32.280494689941406,
+    "detail_walk": 5.276900291442871,
+    "detail_target": 5.146218776702881,
+    "passes": 28
+   },
+   {
+    "pair": "0317",
+    "zone": "baths",
+    "lpips": 0.5277537703514099,
+    "absdiff": 34.45988464355469,
+    "detail_walk": 5.063132286071777,
+    "detail_target": 5.268862724304199,
+    "passes": 28
+   },
+   {
+    "pair": "0318",
+    "zone": "baths",
+    "lpips": 0.5256540775299072,
+    "absdiff": 31.93633460998535,
+    "detail_walk": 4.880615234375,
+    "detail_target": 5.039966106414795,
+    "passes": 27
+   },
+   {
+    "pair": "0319",
+    "zone": "baths",
+    "lpips": 0.44826504588127136,
+    "absdiff": 32.00783157348633,
+    "detail_walk": 4.543705940246582,
+    "detail_target": 4.580080986022949,
+    "passes": 29
+   },
+   {
+    "pair": "0320",
+    "zone": "baths",
+    "lpips": 0.4674987196922302,
+    "absdiff": 30.344709396362305,
+    "detail_walk": 4.981809139251709,
+    "detail_target": 5.377799987792969,
+    "passes": 28
+   },
+   {
+    "pair": "0321",
+    "zone": "baths",
+    "lpips": 0.5695107579231262,
+    "absdiff": 35.07569122314453,
+    "detail_walk": 4.291301727294922,
+    "detail_target": 3.864823341369629,
+    "passes": 28
+   },
+   {
+    "pair": "0322",
+    "zone": "baths",
+    "lpips": 0.4759076237678528,
+    "absdiff": 26.92011833190918,
+    "detail_walk": 4.138245582580566,
+    "detail_target": 4.449502468109131,
+    "passes": 28
+   },
+   {
+    "pair": "0323",
+    "zone": "baths",
+    "lpips": 0.6147759556770325,
+    "absdiff": 30.632274627685547,
+    "detail_walk": 3.7436318397521973,
+    "detail_target": 3.5612926483154297,
+    "passes": 29
+   },
+   {
+    "pair": "0324",
+    "zone": "baths",
+    "lpips": 0.47675836086273193,
+    "absdiff": 33.91151809692383,
+    "detail_walk": 2.589747905731201,
+    "detail_target": 3.4916491508483887,
+    "passes": 28
+   },
+   {
+    "pair": "0325",
+    "zone": "baths",
+    "lpips": 0.4995928406715393,
+    "absdiff": 23.984569549560547,
+    "detail_walk": 2.170497179031372,
+    "detail_target": 3.2630128860473633,
+    "passes": 29
+   },
+   {
+    "pair": "0326",
+    "zone": "baths",
+    "lpips": 0.5283949375152588,
+    "absdiff": 25.703094482421875,
+    "detail_walk": 2.7937302589416504,
+    "detail_target": 3.6718907356262207,
+    "passes": 28
+   },
+   {
+    "pair": "0327",
+    "zone": "baths",
+    "lpips": 0.5318475961685181,
+    "absdiff": 26.680551528930664,
+    "detail_walk": 2.803471565246582,
+    "detail_target": 4.981199264526367,
+    "passes": 27
+   },
+   {
+    "pair": "0328",
+    "zone": "baths",
+    "lpips": 0.5422660112380981,
+    "absdiff": 29.390317916870117,
+    "detail_walk": 2.7193474769592285,
+    "detail_target": 4.968460559844971,
+    "passes": 27
+   },
+   {
+    "pair": "0329",
+    "zone": "baths",
+    "lpips": 0.4678723216056824,
+    "absdiff": 28.65019416809082,
+    "detail_walk": 2.8853659629821777,
+    "detail_target": 4.820819854736328,
+    "passes": 27
+   },
+   {
+    "pair": "0330",
+    "zone": "baths",
+    "lpips": 0.4572625756263733,
+    "absdiff": 25.879981994628906,
+    "detail_walk": 2.8368935585021973,
+    "detail_target": 3.227071762084961,
+    "passes": 27
+   },
+   {
+    "pair": "0331",
+    "zone": "baths",
+    "lpips": 0.32505062222480774,
+    "absdiff": 21.23341941833496,
+    "detail_walk": 2.5741662979125977,
+    "detail_target": 3.5486667156219482,
+    "passes": 28
+   },
+   {
+    "pair": "0332",
+    "zone": "baths",
+    "lpips": 0.42764586210250854,
+    "absdiff": 35.304447174072266,
+    "detail_walk": 2.2507426738739014,
+    "detail_target": 3.0681540966033936,
+    "passes": 28
+   },
+   {
+    "pair": "0333",
+    "zone": "baths",
+    "lpips": 0.4152296781539917,
+    "absdiff": 41.71760177612305,
+    "detail_walk": 2.7856624126434326,
+    "detail_target": 3.4037270545959473,
+    "passes": 28
+   },
+   {
+    "pair": "0334",
+    "zone": "baths",
+    "lpips": 0.4798944294452667,
+    "absdiff": 44.39364242553711,
+    "detail_walk": 2.4105381965637207,
+    "detail_target": 3.465524673461914,
+    "passes": 28
+   },
+   {
+    "pair": "0335",
+    "zone": "baths",
+    "lpips": 0.5208774209022522,
+    "absdiff": 48.2374267578125,
+    "detail_walk": 2.6436214447021484,
+    "detail_target": 3.118272542953491,
+    "passes": 26
+   },
+   {
+    "pair": "0336",
+    "zone": "baths",
+    "lpips": 0.5617960095405579,
+    "absdiff": 49.09833908081055,
+    "detail_walk": 2.729965925216675,
+    "detail_target": 3.262582778930664,
+    "passes": 26
+   },
+   {
+    "pair": "0337",
+    "zone": "baths",
+    "lpips": 0.5276572704315186,
+    "absdiff": 46.48469924926758,
+    "detail_walk": 2.8331658840179443,
+    "detail_target": 3.361823797225952,
+    "passes": 27
+   },
+   {
+    "pair": "0338",
+    "zone": "baths",
+    "lpips": 0.5240589380264282,
+    "absdiff": 35.13059997558594,
+    "detail_walk": 3.118499755859375,
+    "detail_target": 3.4183244705200195,
+    "passes": 26
+   },
+   {
+    "pair": "0339",
+    "zone": "baths",
+    "lpips": 0.3783320188522339,
+    "absdiff": 23.105676651000977,
+    "detail_walk": 3.136901617050171,
+    "detail_target": 3.3504648208618164,
+    "passes": 18
+   },
+   {
+    "pair": "0340",
+    "zone": "baths",
+    "lpips": 0.38173118233680725,
+    "absdiff": 22.26429557800293,
+    "detail_walk": 2.963658332824707,
+    "detail_target": 4.218458652496338,
+    "passes": 21
+   },
+   {
+    "pair": "0341",
+    "zone": "baths",
+    "lpips": 0.386008620262146,
+    "absdiff": 23.537456512451172,
+    "detail_walk": 2.860044002532959,
+    "detail_target": 4.037725448608398,
+    "passes": 27
+   },
+   {
+    "pair": "0342",
+    "zone": "baths",
+    "lpips": 0.4567449390888214,
+    "absdiff": 34.10717010498047,
+    "detail_walk": 2.9944045543670654,
+    "detail_target": 4.299056529998779,
+    "passes": 26
+   },
+   {
+    "pair": "0343",
+    "zone": "baths",
+    "lpips": 0.5322984457015991,
+    "absdiff": 41.4755744934082,
+    "detail_walk": 3.0737574100494385,
+    "detail_target": 3.953504800796509,
+    "passes": 28
+   },
+   {
+    "pair": "0344",
+    "zone": "baths",
+    "lpips": 0.5078570246696472,
+    "absdiff": 31.524812698364258,
+    "detail_walk": 3.0872929096221924,
+    "detail_target": 3.1670145988464355,
+    "passes": 28
+   },
+   {
+    "pair": "0345",
+    "zone": "baths",
+    "lpips": 0.4907214045524597,
+    "absdiff": 30.364458084106445,
+    "detail_walk": 2.9806056022644043,
+    "detail_target": 3.391411304473877,
+    "passes": 27
+   },
+   {
+    "pair": "0346",
+    "zone": "baths",
+    "lpips": 0.41217291355133057,
+    "absdiff": 26.77730941772461,
+    "detail_walk": 3.0521445274353027,
+    "detail_target": 3.130828857421875,
+    "passes": 28
+   },
+   {
+    "pair": "0347",
+    "zone": "baths",
+    "lpips": 0.46842101216316223,
+    "absdiff": 23.227275848388672,
+    "detail_walk": 2.9663119316101074,
+    "detail_target": 3.291799545288086,
+    "passes": 28
+   },
+   {
+    "pair": "0348",
+    "zone": "baths",
+    "lpips": 0.4554930627346039,
+    "absdiff": 27.654417037963867,
+    "detail_walk": 2.857861280441284,
+    "detail_target": 3.6115589141845703,
+    "passes": 28
+   },
+   {
+    "pair": "0349",
+    "zone": "baths",
+    "lpips": 0.45400121808052063,
+    "absdiff": 27.23801612854004,
+    "detail_walk": 2.975738525390625,
+    "detail_target": 3.7482376098632812,
+    "passes": 29
+   },
+   {
+    "pair": "0350",
+    "zone": "baths",
+    "lpips": 0.5245078802108765,
+    "absdiff": 27.66026496887207,
+    "detail_walk": 2.871757984161377,
+    "detail_target": 3.4385862350463867,
+    "passes": 28
+   },
+   {
+    "pair": "0351",
+    "zone": "baths",
+    "lpips": 0.43906235694885254,
+    "absdiff": 27.6982479095459,
+    "detail_walk": 2.4951891899108887,
+    "detail_target": 3.3782992362976074,
+    "passes": 28
+   },
+   {
+    "pair": "0352",
+    "zone": "baths",
+    "lpips": 0.3746497631072998,
+    "absdiff": 22.31389808654785,
+    "detail_walk": 2.7072532176971436,
+    "detail_target": 3.1395151615142822,
+    "passes": 28
+   },
+   {
+    "pair": "0353",
+    "zone": "baths",
+    "lpips": 0.3766339123249054,
+    "absdiff": 17.996606826782227,
+    "detail_walk": 2.553257465362549,
+    "detail_target": 2.7941012382507324,
+    "passes": 27
+   },
+   {
+    "pair": "0355",
+    "zone": "stacks",
+    "lpips": 0.3579227030277252,
+    "absdiff": 12.384623527526855,
+    "detail_walk": 3.0691614151000977,
+    "detail_target": 5.548304557800293,
+    "passes": 28
+   },
+   {
+    "pair": "0356",
+    "zone": "stacks",
+    "lpips": 0.4168453812599182,
+    "absdiff": 13.218595504760742,
+    "detail_walk": 3.3478665351867676,
+    "detail_target": 4.1922197341918945,
+    "passes": 28
+   },
+   {
+    "pair": "0357",
+    "zone": "stacks",
+    "lpips": 0.427675724029541,
+    "absdiff": 13.933355331420898,
+    "detail_walk": 2.7674560546875,
+    "detail_target": 4.763784885406494,
+    "passes": 29
+   },
+   {
+    "pair": "0358",
+    "zone": "stacks",
+    "lpips": 0.5119632482528687,
+    "absdiff": 20.129840850830078,
+    "detail_walk": 2.5399818420410156,
+    "detail_target": 6.96315860748291,
+    "passes": 27
+   },
+   {
+    "pair": "0359",
+    "zone": "stacks",
+    "lpips": 0.5848533511161804,
+    "absdiff": 20.63083267211914,
+    "detail_walk": 2.4161839485168457,
+    "detail_target": 7.9001898765563965,
+    "passes": 27
+   },
+   {
+    "pair": "0360",
+    "zone": "stacks",
+    "lpips": 0.5394487977027893,
+    "absdiff": 16.33484649658203,
+    "detail_walk": 2.927518367767334,
+    "detail_target": 7.816523551940918,
+    "passes": 27
+   },
+   {
+    "pair": "0361",
+    "zone": "stacks",
+    "lpips": 0.5263649225234985,
+    "absdiff": 15.521783828735352,
+    "detail_walk": 2.223653793334961,
+    "detail_target": 7.965777397155762,
+    "passes": 28
+   },
+   {
+    "pair": "0362",
+    "zone": "stacks",
+    "lpips": 0.43482962250709534,
+    "absdiff": 12.76474380493164,
+    "detail_walk": 2.2764058113098145,
+    "detail_target": 4.941396236419678,
+    "passes": 29
+   },
+   {
+    "pair": "0363",
+    "zone": "atrium",
+    "lpips": 0.575721800327301,
+    "absdiff": 19.03001594543457,
+    "detail_walk": 3.985085964202881,
+    "detail_target": 4.208670616149902,
+    "passes": 27
+   },
+   {
+    "pair": "0364",
+    "zone": "atrium",
+    "lpips": 0.4932975471019745,
+    "absdiff": 28.77703094482422,
+    "detail_walk": 3.7707011699676514,
+    "detail_target": 4.120990753173828,
+    "passes": 26
+   },
+   {
+    "pair": "0365",
+    "zone": "atrium",
+    "lpips": 0.42966902256011963,
+    "absdiff": 26.172395706176758,
+    "detail_walk": 3.583237648010254,
+    "detail_target": 4.452793598175049,
+    "passes": 28
+   },
+   {
+    "pair": "0366",
+    "zone": "atrium",
+    "lpips": 0.3312494158744812,
+    "absdiff": 23.40454864501953,
+    "detail_walk": 4.245140552520752,
+    "detail_target": 5.086372375488281,
+    "passes": 27
+   },
+   {
+    "pair": "0367",
+    "zone": "atrium",
+    "lpips": 0.31005486845970154,
+    "absdiff": 18.486059188842773,
+    "detail_walk": 4.585120677947998,
+    "detail_target": 5.205296993255615,
+    "passes": 27
+   },
+   {
+    "pair": "0368",
+    "zone": "atrium",
+    "lpips": 0.259858101606369,
+    "absdiff": 17.801616668701172,
+    "detail_walk": 4.479166030883789,
+    "detail_target": 5.600278854370117,
+    "passes": 28
+   },
+   {
+    "pair": "0369",
+    "zone": "atrium",
+    "lpips": 0.274273157119751,
+    "absdiff": 15.05916976928711,
+    "detail_walk": 4.394776344299316,
+    "detail_target": 5.0323920249938965,
+    "passes": 27
+   },
+   {
+    "pair": "0370",
+    "zone": "atrium",
+    "lpips": 0.2771533727645874,
+    "absdiff": 17.96742820739746,
+    "detail_walk": 4.2467546463012695,
+    "detail_target": 4.461480140686035,
+    "passes": 27
+   },
+   {
+    "pair": "0371",
+    "zone": "atrium",
+    "lpips": 0.347564160823822,
+    "absdiff": 20.857776641845703,
+    "detail_walk": 4.157472610473633,
+    "detail_target": 4.2842278480529785,
+    "passes": 27
+   },
+   {
+    "pair": "0372",
+    "zone": "atrium",
+    "lpips": 0.325491338968277,
+    "absdiff": 15.307259559631348,
+    "detail_walk": 3.562143087387085,
+    "detail_target": 5.743730068206787,
+    "passes": 28
+   },
+   {
+    "pair": "0373",
+    "zone": "atrium",
+    "lpips": 0.38169920444488525,
+    "absdiff": 20.368915557861328,
+    "detail_walk": 4.121593475341797,
+    "detail_target": 6.3226399421691895,
+    "passes": 26
+   },
+   {
+    "pair": "0374",
+    "zone": "atrium",
+    "lpips": 0.42447030544281006,
+    "absdiff": 16.696809768676758,
+    "detail_walk": 3.4118571281433105,
+    "detail_target": 5.596131801605225,
+    "passes": 27
+   },
+   {
+    "pair": "0375",
+    "zone": "atrium",
+    "lpips": 0.4778015911579132,
+    "absdiff": 21.66289520263672,
+    "detail_walk": 3.216339349746704,
+    "detail_target": 7.32125186920166,
+    "passes": 28
+   },
+   {
+    "pair": "0376",
+    "zone": "atrium",
+    "lpips": 0.5049211382865906,
+    "absdiff": 26.69632339477539,
+    "detail_walk": 3.290829658508301,
+    "detail_target": 8.462995529174805,
+    "passes": 28
+   },
+   {
+    "pair": "0377",
+    "zone": "atrium",
+    "lpips": 0.5064853429794312,
+    "absdiff": 25.784780502319336,
+    "detail_walk": 3.295961618423462,
+    "detail_target": 9.991886138916016,
+    "passes": 28
+   },
+   {
+    "pair": "0378",
+    "zone": "atrium",
+    "lpips": 0.5210682153701782,
+    "absdiff": 24.085847854614258,
+    "detail_walk": 3.468296527862549,
+    "detail_target": 9.51524829864502,
+    "passes": 27
+   },
+   {
+    "pair": "0379",
+    "zone": "atrium",
+    "lpips": 0.4132973849773407,
+    "absdiff": 24.013051986694336,
+    "detail_walk": 3.426964044570923,
+    "detail_target": 6.609630584716797,
+    "passes": 28
+   },
+   {
+    "pair": "0380",
+    "zone": "atrium",
+    "lpips": 0.4248480200767517,
+    "absdiff": 22.570528030395508,
+    "detail_walk": 3.470350503921509,
+    "detail_target": 7.403228759765625,
+    "passes": 28
+   },
+   {
+    "pair": "0381",
+    "zone": "atrium",
+    "lpips": 0.4202970862388611,
+    "absdiff": 23.36931037902832,
+    "detail_walk": 3.004361629486084,
+    "detail_target": 7.018187999725342,
+    "passes": 28
+   },
+   {
+    "pair": "0382",
+    "zone": "atrium",
+    "lpips": 0.36973732709884644,
+    "absdiff": 23.377044677734375,
+    "detail_walk": 3.180532455444336,
+    "detail_target": 6.455345153808594,
+    "passes": 28
+   },
+   {
+    "pair": "0383",
+    "zone": "atrium",
+    "lpips": 0.4224734902381897,
+    "absdiff": 25.08614158630371,
+    "detail_walk": 3.002810478210449,
+    "detail_target": 6.929103374481201,
+    "passes": 28
+   },
+   {
+    "pair": "0384",
+    "zone": "atrium",
+    "lpips": 0.4642452001571655,
+    "absdiff": 27.67559814453125,
+    "detail_walk": 3.448760509490967,
+    "detail_target": 7.376700401306152,
+    "passes": 28
+   },
+   {
+    "pair": "0385",
+    "zone": "atrium",
+    "lpips": 0.438183069229126,
+    "absdiff": 26.320613861083984,
+    "detail_walk": 3.9049530029296875,
+    "detail_target": 8.16154670715332,
+    "passes": 28
+   },
+   {
+    "pair": "0386",
+    "zone": "atrium",
+    "lpips": 0.4703701138496399,
+    "absdiff": 29.613147735595703,
+    "detail_walk": 4.389496803283691,
+    "detail_target": 7.260218620300293,
+    "passes": 29
+   },
+   {
+    "pair": "0387",
+    "zone": "atrium",
+    "lpips": 0.5241339802742004,
+    "absdiff": 26.06517219543457,
+    "detail_walk": 3.964578628540039,
+    "detail_target": 5.878564834594727,
+    "passes": 28
+   },
+   {
+    "pair": "0388",
+    "zone": "atrium",
+    "lpips": 0.5441354513168335,
+    "absdiff": 27.88376808166504,
+    "detail_walk": 3.811627149581909,
+    "detail_target": 5.814077854156494,
+    "passes": 28
+   },
+   {
+    "pair": "0389",
+    "zone": "atrium",
+    "lpips": 0.5037098526954651,
+    "absdiff": 25.20793914794922,
+    "detail_walk": 4.039117813110352,
+    "detail_target": 6.306075572967529,
+    "passes": 28
+   },
+   {
+    "pair": "0390",
+    "zone": "atrium",
+    "lpips": 0.5089755058288574,
+    "absdiff": 23.17165756225586,
+    "detail_walk": 3.7122292518615723,
+    "detail_target": 6.56613826751709,
+    "passes": 28
+   },
+   {
+    "pair": "0391",
+    "zone": "atrium",
+    "lpips": 0.47111570835113525,
+    "absdiff": 21.126365661621094,
+    "detail_walk": 3.6474647521972656,
+    "detail_target": 6.324806213378906,
+    "passes": 29
+   },
+   {
+    "pair": "0392",
+    "zone": "atrium",
+    "lpips": 0.3187764883041382,
+    "absdiff": 18.106868743896484,
+    "detail_walk": 4.494936943054199,
+    "detail_target": 4.780036449432373,
+    "passes": 28
+   },
+   {
+    "pair": "0393",
+    "zone": "atrium",
+    "lpips": 0.44362303614616394,
+    "absdiff": 19.832082748413086,
+    "detail_walk": 4.881913185119629,
+    "detail_target": 5.459725379943848,
+    "passes": 28
+   },
+   {
+    "pair": "0394",
+    "zone": "atrium",
+    "lpips": 0.30542856454849243,
+    "absdiff": 18.21205711364746,
+    "detail_walk": 3.858137845993042,
+    "detail_target": 4.296494483947754,
+    "passes": 28
+   },
+   {
+    "pair": "0395",
+    "zone": "atrium",
+    "lpips": 0.3040001392364502,
+    "absdiff": 16.707963943481445,
+    "detail_walk": 4.4568634033203125,
+    "detail_target": 5.3518967628479,
+    "passes": 28
+   },
+   {
+    "pair": "0396",
+    "zone": "atrium",
+    "lpips": 0.2827838659286499,
+    "absdiff": 18.528650283813477,
+    "detail_walk": 3.94268798828125,
+    "detail_target": 4.502002239227295,
+    "passes": 28
+   },
+   {
+    "pair": "0397",
+    "zone": "atrium",
+    "lpips": 0.378630131483078,
+    "absdiff": 21.71660804748535,
+    "detail_walk": 4.095886707305908,
+    "detail_target": 6.441163063049316,
+    "passes": 28
+   },
+   {
+    "pair": "0398",
+    "zone": "atrium",
+    "lpips": 0.36151471734046936,
+    "absdiff": 20.19235610961914,
+    "detail_walk": 4.510675430297852,
+    "detail_target": 6.092499732971191,
+    "passes": 28
+   },
+   {
+    "pair": "0399",
+    "zone": "atrium",
+    "lpips": 0.3082636892795563,
+    "absdiff": 14.665283203125,
+    "detail_walk": 4.186246395111084,
+    "detail_target": 4.272472381591797,
+    "passes": 29
+   },
+   {
+    "pair": "0400",
+    "zone": "atrium",
+    "lpips": 0.48744767904281616,
+    "absdiff": 27.023555755615234,
+    "detail_walk": 4.358373641967773,
+    "detail_target": 5.318905830383301,
+    "passes": 28
+   },
+   {
+    "pair": "0401",
+    "zone": "atrium",
+    "lpips": 0.4670890271663666,
+    "absdiff": 28.80132484436035,
+    "detail_walk": 4.587973594665527,
+    "detail_target": 5.427923202514648,
+    "passes": 28
+   },
+   {
+    "pair": "0402",
+    "zone": "atrium",
+    "lpips": 0.4142017960548401,
+    "absdiff": 23.603811264038086,
+    "detail_walk": 5.719170570373535,
+    "detail_target": 6.448705196380615,
+    "passes": 29
+   },
+   {
+    "pair": "0403",
+    "zone": "atrium",
+    "lpips": 0.3230598568916321,
+    "absdiff": 20.93531036376953,
+    "detail_walk": 5.295162677764893,
+    "detail_target": 5.746100425720215,
+    "passes": 28
+   },
+   {
+    "pair": "0404",
+    "zone": "atrium",
+    "lpips": 0.2793383002281189,
+    "absdiff": 17.729738235473633,
+    "detail_walk": 5.3403120040893555,
+    "detail_target": 5.400894641876221,
+    "passes": 27
+   },
+   {
+    "pair": "0405",
+    "zone": "atrium",
+    "lpips": 0.28008005023002625,
+    "absdiff": 19.48166847229004,
+    "detail_walk": 5.612768173217773,
+    "detail_target": 5.759505271911621,
+    "passes": 28
+   },
+   {
+    "pair": "0406",
+    "zone": "atrium",
+    "lpips": 0.31074365973472595,
+    "absdiff": 20.485647201538086,
+    "detail_walk": 5.327905654907227,
+    "detail_target": 6.34912633895874,
+    "passes": 27
+   },
+   {
+    "pair": "0407",
+    "zone": "atrium",
+    "lpips": 0.2691175937652588,
+    "absdiff": 19.12206268310547,
+    "detail_walk": 5.099879741668701,
+    "detail_target": 5.708897590637207,
+    "passes": 27
+   },
+   {
+    "pair": "0408",
+    "zone": "atrium",
+    "lpips": 0.29053688049316406,
+    "absdiff": 17.109689712524414,
+    "detail_walk": 5.0598649978637695,
+    "detail_target": 5.85282039642334,
+    "passes": 28
+   },
+   {
+    "pair": "0409",
+    "zone": "atrium",
+    "lpips": 0.5024088621139526,
+    "absdiff": 25.2625732421875,
+    "detail_walk": 4.844879150390625,
+    "detail_target": 5.185495376586914,
+    "passes": 28
+   },
+   {
+    "pair": "0410",
+    "zone": "atrium",
+    "lpips": 0.5834029912948608,
+    "absdiff": 27.761898040771484,
+    "detail_walk": 3.9348673820495605,
+    "detail_target": 5.144512176513672,
+    "passes": 28
+   },
+   {
+    "pair": "0411",
+    "zone": "atrium",
+    "lpips": 0.5543093681335449,
+    "absdiff": 28.727319717407227,
+    "detail_walk": 4.408916473388672,
+    "detail_target": 5.296971321105957,
+    "passes": 28
+   },
+   {
+    "pair": "0412",
+    "zone": "atrium",
+    "lpips": 0.4631161391735077,
+    "absdiff": 19.88695526123047,
+    "detail_walk": 4.036900520324707,
+    "detail_target": 5.54056453704834,
+    "passes": 28
+   },
+   {
+    "pair": "0413",
+    "zone": "atrium",
+    "lpips": 0.4049398899078369,
+    "absdiff": 20.63272476196289,
+    "detail_walk": 4.714920997619629,
+    "detail_target": 4.847983360290527,
+    "passes": 28
+   },
+   {
+    "pair": "0414",
+    "zone": "atrium",
+    "lpips": 0.4486697316169739,
+    "absdiff": 24.06715202331543,
+    "detail_walk": 4.044572353363037,
+    "detail_target": 4.4260053634643555,
+    "passes": 28
+   },
+   {
+    "pair": "0415",
+    "zone": "atrium",
+    "lpips": 0.3505606949329376,
+    "absdiff": 22.815950393676758,
+    "detail_walk": 4.050737380981445,
+    "detail_target": 4.732285499572754,
+    "passes": 28
+   },
+   {
+    "pair": "0416",
+    "zone": "atrium",
+    "lpips": 0.27033668756484985,
+    "absdiff": 14.527901649475098,
+    "detail_walk": 4.219722747802734,
+    "detail_target": 5.6881818771362305,
+    "passes": 28
+   },
+   {
+    "pair": "0417",
+    "zone": "atrium",
+    "lpips": 0.20390461385250092,
+    "absdiff": 14.264571189880371,
+    "detail_walk": 5.0529656410217285,
+    "detail_target": 4.763515949249268,
+    "passes": 29
+   },
+   {
+    "pair": "0418",
+    "zone": "atrium",
+    "lpips": 0.24622012674808502,
+    "absdiff": 15.821651458740234,
+    "detail_walk": 4.1378703117370605,
+    "detail_target": 4.450409889221191,
+    "passes": 27
+   },
+   {
+    "pair": "0419",
+    "zone": "atrium",
+    "lpips": 0.3762560188770294,
+    "absdiff": 21.203371047973633,
+    "detail_walk": 3.917848587036133,
+    "detail_target": 5.310400485992432,
+    "passes": 28
+   },
+   {
+    "pair": "0420",
+    "zone": "atrium",
+    "lpips": 0.376069575548172,
+    "absdiff": 17.838199615478516,
+    "detail_walk": 3.92690372467041,
+    "detail_target": 4.859416961669922,
+    "passes": 28
+   },
+   {
+    "pair": "0421",
+    "zone": "atrium",
+    "lpips": 0.2636377513408661,
+    "absdiff": 13.706246376037598,
+    "detail_walk": 4.642046928405762,
+    "detail_target": 5.148027420043945,
+    "passes": 28
+   },
+   {
+    "pair": "0422",
+    "zone": "atrium",
+    "lpips": 0.39106059074401855,
+    "absdiff": 18.19511604309082,
+    "detail_walk": 5.112524032592773,
+    "detail_target": 4.667689800262451,
+    "passes": 27
+   },
+   {
+    "pair": "0423",
+    "zone": "atrium",
+    "lpips": 0.4273110628128052,
+    "absdiff": 23.8294677734375,
+    "detail_walk": 4.5006890296936035,
+    "detail_target": 5.347254753112793,
+    "passes": 29
+   },
+   {
+    "pair": "0424",
+    "zone": "atrium",
+    "lpips": 0.3537130057811737,
+    "absdiff": 20.45475196838379,
+    "detail_walk": 4.932659149169922,
+    "detail_target": 5.042086601257324,
+    "passes": 28
+   },
+   {
+    "pair": "0425",
+    "zone": "atrium",
+    "lpips": 0.42313018441200256,
+    "absdiff": 25.49054718017578,
+    "detail_walk": 4.932675361633301,
+    "detail_target": 4.879729270935059,
+    "passes": 28
+   },
+   {
+    "pair": "0426",
+    "zone": "atrium",
+    "lpips": 0.46175071597099304,
+    "absdiff": 23.558929443359375,
+    "detail_walk": 5.263737201690674,
+    "detail_target": 6.217102527618408,
+    "passes": 29
+   },
+   {
+    "pair": "0427",
+    "zone": "atrium",
+    "lpips": 0.4612795412540436,
+    "absdiff": 27.111265182495117,
+    "detail_walk": 4.70643424987793,
+    "detail_target": 5.030118942260742,
+    "passes": 28
+   },
+   {
+    "pair": "0428",
+    "zone": "atrium",
+    "lpips": 0.4002329707145691,
+    "absdiff": 19.575458526611328,
+    "detail_walk": 4.406135559082031,
+    "detail_target": 5.906274318695068,
+    "passes": 28
+   },
+   {
+    "pair": "0429",
+    "zone": "atrium",
+    "lpips": 0.39793911576271057,
+    "absdiff": 22.43967056274414,
+    "detail_walk": 4.656101226806641,
+    "detail_target": 5.380895614624023,
+    "passes": 28
+   },
+   {
+    "pair": "0430",
+    "zone": "atrium",
+    "lpips": 0.3663187026977539,
+    "absdiff": 24.529592514038086,
+    "detail_walk": 4.538039207458496,
+    "detail_target": 4.915349960327148,
+    "passes": 29
+   },
+   {
+    "pair": "0431",
+    "zone": "atrium",
+    "lpips": 0.345302939414978,
+    "absdiff": 22.825109481811523,
+    "detail_walk": 4.357294082641602,
+    "detail_target": 5.027365684509277,
+    "passes": 29
+   },
+   {
+    "pair": "0432",
+    "zone": "atrium",
+    "lpips": 0.46041226387023926,
+    "absdiff": 23.227745056152344,
+    "detail_walk": 3.556551218032837,
+    "detail_target": 3.9101672172546387,
+    "passes": 28
+   },
+   {
+    "pair": "0433",
+    "zone": "atrium",
+    "lpips": 0.43728959560394287,
+    "absdiff": 15.061859130859375,
+    "detail_walk": 3.0566463470458984,
+    "detail_target": 5.3623151779174805,
+    "passes": 28
+   },
+   {
+    "pair": "0434",
+    "zone": "atrium",
+    "lpips": 0.41964995861053467,
+    "absdiff": 23.212276458740234,
+    "detail_walk": 3.4194109439849854,
+    "detail_target": 8.293155670166016,
+    "passes": 28
+   },
+   {
+    "pair": "0435",
+    "zone": "atrium",
+    "lpips": 0.44268614053726196,
+    "absdiff": 29.650779724121094,
+    "detail_walk": 3.1338820457458496,
+    "detail_target": 6.170958518981934,
+    "passes": 29
+   },
+   {
+    "pair": "0436",
+    "zone": "atrium",
+    "lpips": 0.5295016765594482,
+    "absdiff": 18.446687698364258,
+    "detail_walk": 3.5629210472106934,
+    "detail_target": 6.77610969543457,
+    "passes": 28
+   },
+   {
+    "pair": "0437",
+    "zone": "atrium",
+    "lpips": 0.5167300701141357,
+    "absdiff": 25.07683753967285,
+    "detail_walk": 3.7358789443969727,
+    "detail_target": 6.034786701202393,
+    "passes": 29
+   },
+   {
+    "pair": "0438",
+    "zone": "atrium",
+    "lpips": 0.47159695625305176,
+    "absdiff": 23.143596649169922,
+    "detail_walk": 3.808009624481201,
+    "detail_target": 5.510826110839844,
+    "passes": 28
+   },
+   {
+    "pair": "0439",
+    "zone": "atrium",
+    "lpips": 0.4193604588508606,
+    "absdiff": 26.770105361938477,
+    "detail_walk": 3.9993338584899902,
+    "detail_target": 5.101346492767334,
+    "passes": 28
+   },
+   {
+    "pair": "0440",
+    "zone": "atrium",
+    "lpips": 0.4407699704170227,
+    "absdiff": 28.066028594970703,
+    "detail_walk": 4.1575703620910645,
+    "detail_target": 4.7642107009887695,
+    "passes": 28
+   },
+   {
+    "pair": "0441",
+    "zone": "atrium",
+    "lpips": 0.33016109466552734,
+    "absdiff": 17.75505828857422,
+    "detail_walk": 4.391711235046387,
+    "detail_target": 4.770048141479492,
+    "passes": 29
+   },
+   {
+    "pair": "0442",
+    "zone": "atrium",
+    "lpips": 0.40687015652656555,
+    "absdiff": 26.214323043823242,
+    "detail_walk": 3.8047752380371094,
+    "detail_target": 5.477011680603027,
+    "passes": 27
+   },
+   {
+    "pair": "0443",
+    "zone": "atrium",
+    "lpips": 0.3962315320968628,
+    "absdiff": 22.96449851989746,
+    "detail_walk": 4.472762107849121,
+    "detail_target": 4.915907859802246,
+    "passes": 28
+   },
+   {
+    "pair": "0444",
+    "zone": "atrium",
+    "lpips": 0.36426886916160583,
+    "absdiff": 18.237483978271484,
+    "detail_walk": 4.6970319747924805,
+    "detail_target": 5.393270492553711,
+    "passes": 28
+   },
+   {
+    "pair": "0445",
+    "zone": "atrium",
+    "lpips": 0.4912189841270447,
+    "absdiff": 25.181665420532227,
+    "detail_walk": 5.030946731567383,
+    "detail_target": 4.952912330627441,
+    "passes": 29
+   },
+   {
+    "pair": "0446",
+    "zone": "atrium",
+    "lpips": 0.44910570979118347,
+    "absdiff": 25.82158851623535,
+    "detail_walk": 4.19295597076416,
+    "detail_target": 5.263575077056885,
+    "passes": 28
+   },
+   {
+    "pair": "0447",
+    "zone": "atrium",
+    "lpips": 0.3473193347454071,
+    "absdiff": 20.0909423828125,
+    "detail_walk": 4.289961338043213,
+    "detail_target": 5.225869178771973,
+    "passes": 29
+   },
+   {
+    "pair": "0448",
+    "zone": "atrium",
+    "lpips": 0.31740790605545044,
+    "absdiff": 22.123945236206055,
+    "detail_walk": 4.225071907043457,
+    "detail_target": 5.750557899475098,
+    "passes": 28
+   },
+   {
+    "pair": "0449",
+    "zone": "atrium",
+    "lpips": 0.3032844662666321,
+    "absdiff": 23.823862075805664,
+    "detail_walk": 4.743880271911621,
+    "detail_target": 5.332347869873047,
+    "passes": 28
+   },
+   {
+    "pair": "0450",
+    "zone": "atrium",
+    "lpips": 0.31160932779312134,
+    "absdiff": 16.281381607055664,
+    "detail_walk": 4.5190935134887695,
+    "detail_target": 4.856348037719727,
+    "passes": 28
+   },
+   {
+    "pair": "0451",
+    "zone": "atrium",
+    "lpips": 0.3305898904800415,
+    "absdiff": 17.549638748168945,
+    "detail_walk": 4.581211090087891,
+    "detail_target": 4.6048078536987305,
+    "passes": 27
+   },
+   {
+    "pair": "0452",
+    "zone": "atrium",
+    "lpips": 0.3032182455062866,
+    "absdiff": 17.50887107849121,
+    "detail_walk": 4.328062057495117,
+    "detail_target": 4.927329063415527,
+    "passes": 28
+   },
+   {
+    "pair": "0454",
+    "zone": "desert",
+    "lpips": 0.41066280007362366,
+    "absdiff": 20.07416343688965,
+    "detail_walk": 2.8095011711120605,
+    "detail_target": 3.2558400630950928,
+    "passes": 28
+   },
+   {
+    "pair": "0455",
+    "zone": "desert",
+    "lpips": 0.47901758551597595,
+    "absdiff": 18.29068946838379,
+    "detail_walk": 2.5951895713806152,
+    "detail_target": 4.354745388031006,
+    "passes": 28
+   },
+   {
+    "pair": "0456",
+    "zone": "desert",
+    "lpips": 0.5501375198364258,
+    "absdiff": 25.836572647094727,
+    "detail_walk": 2.127525568008423,
+    "detail_target": 2.5033278465270996,
+    "passes": 28
+   },
+   {
+    "pair": "0457",
+    "zone": "desert",
+    "lpips": 0.6657705307006836,
+    "absdiff": 29.49998664855957,
+    "detail_walk": 1.5479234457015991,
+    "detail_target": 3.6048684120178223,
+    "passes": 28
+   },
+   {
+    "pair": "0458",
+    "zone": "desert",
+    "lpips": 0.45835548639297485,
+    "absdiff": 19.97711753845215,
+    "detail_walk": 1.631431221961975,
+    "detail_target": 2.3308863639831543,
+    "passes": 28
+   },
+   {
+    "pair": "0459",
+    "zone": "desert",
+    "lpips": 0.4476943612098694,
+    "absdiff": 21.16251564025879,
+    "detail_walk": 2.2293241024017334,
+    "detail_target": 4.596839904785156,
+    "passes": 28
+   },
+   {
+    "pair": "0460",
+    "zone": "desert",
+    "lpips": 0.27364131808280945,
+    "absdiff": 15.378619194030762,
+    "detail_walk": 3.037947177886963,
+    "detail_target": 4.364290237426758,
+    "passes": 28
+   },
+   {
+    "pair": "0461",
+    "zone": "desert",
+    "lpips": 0.19928739964962006,
+    "absdiff": 15.056443214416504,
+    "detail_walk": 3.4079854488372803,
+    "detail_target": 5.2486114501953125,
+    "passes": 27
+   },
+   {
+    "pair": "0462",
+    "zone": "desert",
+    "lpips": 0.25515711307525635,
+    "absdiff": 14.505521774291992,
+    "detail_walk": 4.144089698791504,
+    "detail_target": 4.961730480194092,
+    "passes": 26
+   },
+   {
+    "pair": "0463",
+    "zone": "desert",
+    "lpips": 0.2923851013183594,
+    "absdiff": 17.44081687927246,
+    "detail_walk": 4.74821662902832,
+    "detail_target": 5.721164226531982,
+    "passes": 28
+   },
+   {
+    "pair": "0464",
+    "zone": "desert",
+    "lpips": 0.25292032957077026,
+    "absdiff": 15.5699462890625,
+    "detail_walk": 4.363302230834961,
+    "detail_target": 4.764052867889404,
+    "passes": 28
+   },
+   {
+    "pair": "0465",
+    "zone": "desert",
+    "lpips": 0.2497563660144806,
+    "absdiff": 15.104679107666016,
+    "detail_walk": 4.1462788581848145,
+    "detail_target": 5.0856733322143555,
+    "passes": 29
+   },
+   {
+    "pair": "0466",
+    "zone": "desert",
+    "lpips": 0.2661569118499756,
+    "absdiff": 15.50495433807373,
+    "detail_walk": 3.693984270095825,
+    "detail_target": 4.285761833190918,
+    "passes": 28
+   },
+   {
+    "pair": "0467",
+    "zone": "desert",
+    "lpips": 0.3084186017513275,
+    "absdiff": 18.014575958251953,
+    "detail_walk": 3.483424663543701,
+    "detail_target": 3.678500175476074,
+    "passes": 28
+   },
+   {
+    "pair": "0468",
+    "zone": "desert",
+    "lpips": 0.19406910240650177,
+    "absdiff": 10.927681922912598,
+    "detail_walk": 3.5516581535339355,
+    "detail_target": 3.665189027786255,
+    "passes": 28
+   },
+   {
+    "pair": "0469",
+    "zone": "desert",
+    "lpips": 0.17998820543289185,
+    "absdiff": 9.498120307922363,
+    "detail_walk": 3.764826774597168,
+    "detail_target": 4.1604695320129395,
+    "passes": 28
+   },
+   {
+    "pair": "0470",
+    "zone": "desert",
+    "lpips": 0.14450007677078247,
+    "absdiff": 8.651864051818848,
+    "detail_walk": 3.994709014892578,
+    "detail_target": 3.715806722640991,
+    "passes": 27
+   },
+   {
+    "pair": "0471",
+    "zone": "desert",
+    "lpips": 0.19613660871982574,
+    "absdiff": 8.218405723571777,
+    "detail_walk": 4.0542707443237305,
+    "detail_target": 3.8763632774353027,
+    "passes": 29
+   },
+   {
+    "pair": "0472",
+    "zone": "desert",
+    "lpips": 0.20291493833065033,
+    "absdiff": 11.984549522399902,
+    "detail_walk": 4.422187328338623,
+    "detail_target": 5.185788154602051,
+    "passes": 28
+   },
+   {
+    "pair": "0473",
+    "zone": "desert",
+    "lpips": 0.18323011696338654,
+    "absdiff": 13.073805809020996,
+    "detail_walk": 3.9480690956115723,
+    "detail_target": 4.1966047286987305,
+    "passes": 28
+   },
+   {
+    "pair": "0474",
+    "zone": "desert",
+    "lpips": 0.1773529350757599,
+    "absdiff": 7.813706398010254,
+    "detail_walk": 3.498812675476074,
+    "detail_target": 4.454449653625488,
+    "passes": 28
+   },
+   {
+    "pair": "0475",
+    "zone": "desert",
+    "lpips": 0.2857484817504883,
+    "absdiff": 20.56044578552246,
+    "detail_walk": 3.949516534805298,
+    "detail_target": 4.056978225708008,
+    "passes": 28
+   },
+   {
+    "pair": "0476",
+    "zone": "desert",
+    "lpips": 0.24020054936408997,
+    "absdiff": 17.605140686035156,
+    "detail_walk": 3.6124095916748047,
+    "detail_target": 4.819974422454834,
+    "passes": 29
+   },
+   {
+    "pair": "0477",
+    "zone": "desert",
+    "lpips": 0.2708667516708374,
+    "absdiff": 12.39426040649414,
+    "detail_walk": 4.120116233825684,
+    "detail_target": 4.717616081237793,
+    "passes": 28
+   },
+   {
+    "pair": "0478",
+    "zone": "desert",
+    "lpips": 0.22593988478183746,
+    "absdiff": 14.187909126281738,
+    "detail_walk": 3.975775957107544,
+    "detail_target": 4.479770660400391,
+    "passes": 29
+   },
+   {
+    "pair": "0479",
+    "zone": "desert",
+    "lpips": 0.3066712021827698,
+    "absdiff": 14.351187705993652,
+    "detail_walk": 3.691372871398926,
+    "detail_target": 4.577453136444092,
+    "passes": 28
+   },
+   {
+    "pair": "0480",
+    "zone": "desert",
+    "lpips": 0.27812761068344116,
+    "absdiff": 12.029630661010742,
+    "detail_walk": 3.440107583999634,
+    "detail_target": 4.585268020629883,
+    "passes": 28
+   },
+   {
+    "pair": "0481",
+    "zone": "desert",
+    "lpips": 0.22616524994373322,
+    "absdiff": 13.193490028381348,
+    "detail_walk": 4.101388931274414,
+    "detail_target": 4.7555012702941895,
+    "passes": 27
+   },
+   {
+    "pair": "0482",
+    "zone": "desert",
+    "lpips": 0.16608409583568573,
+    "absdiff": 7.86517333984375,
+    "detail_walk": 4.2554216384887695,
+    "detail_target": 4.11917781829834,
+    "passes": 28
+   },
+   {
+    "pair": "0483",
+    "zone": "desert",
+    "lpips": 0.11269884556531906,
+    "absdiff": 8.015828132629395,
+    "detail_walk": 4.479275226593018,
+    "detail_target": 4.928042888641357,
+    "passes": 27
+   },
+   {
+    "pair": "0484",
+    "zone": "desert",
+    "lpips": 0.1309468299150467,
+    "absdiff": 7.300282955169678,
+    "detail_walk": 4.701966762542725,
+    "detail_target": 4.406987190246582,
+    "passes": 28
+   },
+   {
+    "pair": "0485",
+    "zone": "desert",
+    "lpips": 0.08676595985889435,
+    "absdiff": 7.668286323547363,
+    "detail_walk": 4.516499996185303,
+    "detail_target": 5.151977062225342,
+    "passes": 29
+   },
+   {
+    "pair": "0486",
+    "zone": "desert",
+    "lpips": 0.2584283947944641,
+    "absdiff": 16.672189712524414,
+    "detail_walk": 4.770913124084473,
+    "detail_target": 5.121526718139648,
+    "passes": 28
+   },
+   {
+    "pair": "0487",
+    "zone": "desert",
+    "lpips": 0.27033719420433044,
+    "absdiff": 16.735483169555664,
+    "detail_walk": 4.176862716674805,
+    "detail_target": 5.62803840637207,
+    "passes": 28
+   },
+   {
+    "pair": "0488",
+    "zone": "desert",
+    "lpips": 0.3045071065425873,
+    "absdiff": 17.61092185974121,
+    "detail_walk": 4.280576705932617,
+    "detail_target": 5.089719295501709,
+    "passes": 28
+   },
+   {
+    "pair": "0489",
+    "zone": "desert",
+    "lpips": 0.32935184240341187,
+    "absdiff": 17.629581451416016,
+    "detail_walk": 3.8389272689819336,
+    "detail_target": 5.0421977043151855,
+    "passes": 28
+   },
+   {
+    "pair": "0490",
+    "zone": "desert",
+    "lpips": 0.26517972350120544,
+    "absdiff": 11.467694282531738,
+    "detail_walk": 3.8912336826324463,
+    "detail_target": 3.931765079498291,
+    "passes": 28
+   },
+   {
+    "pair": "0491",
+    "zone": "desert",
+    "lpips": 0.18994250893592834,
+    "absdiff": 8.125360488891602,
+    "detail_walk": 3.4759325981140137,
+    "detail_target": 3.0778393745422363,
+    "passes": 28
+   },
+   {
+    "pair": "0492",
+    "zone": "desert",
+    "lpips": 0.14202381670475006,
+    "absdiff": 8.318367958068848,
+    "detail_walk": 2.9238247871398926,
+    "detail_target": 3.3977742195129395,
+    "passes": 28
+   },
+   {
+    "pair": "0493",
+    "zone": "desert",
+    "lpips": 0.1180649846792221,
+    "absdiff": 8.967622756958008,
+    "detail_walk": 2.9499621391296387,
+    "detail_target": 3.8041558265686035,
+    "passes": 28
+   },
+   {
+    "pair": "0494",
+    "zone": "desert",
+    "lpips": 0.13645051419734955,
+    "absdiff": 7.765527248382568,
+    "detail_walk": 2.9399285316467285,
+    "detail_target": 3.4301135540008545,
+    "passes": 27
+   },
+   {
+    "pair": "0495",
+    "zone": "desert",
+    "lpips": 0.24527226388454437,
+    "absdiff": 12.238824844360352,
+    "detail_walk": 2.7502288818359375,
+    "detail_target": 3.7320055961608887,
+    "passes": 28
+   },
+   {
+    "pair": "0496",
+    "zone": "desert",
+    "lpips": 0.2612026631832123,
+    "absdiff": 16.264902114868164,
+    "detail_walk": 2.6576855182647705,
+    "detail_target": 4.079652309417725,
+    "passes": 28
+   },
+   {
+    "pair": "0497",
+    "zone": "desert",
+    "lpips": 0.2409689724445343,
+    "absdiff": 15.006649017333984,
+    "detail_walk": 2.905487537384033,
+    "detail_target": 5.084875583648682,
+    "passes": 28
+   },
+   {
+    "pair": "0498",
+    "zone": "desert",
+    "lpips": 0.23691532015800476,
+    "absdiff": 15.781168937683105,
+    "detail_walk": 2.7313342094421387,
+    "detail_target": 3.718888759613037,
+    "passes": 28
+   },
+   {
+    "pair": "0499",
+    "zone": "desert",
+    "lpips": 0.23846179246902466,
+    "absdiff": 17.240713119506836,
+    "detail_walk": 2.952484130859375,
+    "detail_target": 3.8707821369171143,
+    "passes": 28
+   },
+   {
+    "pair": "0500",
+    "zone": "desert",
+    "lpips": 0.2648313045501709,
+    "absdiff": 16.62325668334961,
+    "detail_walk": 2.93593692779541,
+    "detail_target": 3.6454358100891113,
+    "passes": 29
+   },
+   {
+    "pair": "0501",
+    "zone": "desert",
+    "lpips": 0.18570861220359802,
+    "absdiff": 9.237890243530273,
+    "detail_walk": 2.9165854454040527,
+    "detail_target": 3.7597105503082275,
+    "passes": 28
+   },
+   {
+    "pair": "0502",
+    "zone": "desert",
+    "lpips": 0.19801363348960876,
+    "absdiff": 12.188797950744629,
+    "detail_walk": 3.2326698303222656,
+    "detail_target": 5.742514610290527,
+    "passes": 29
+   },
+   {
+    "pair": "0503",
+    "zone": "desert",
+    "lpips": 0.22482696175575256,
+    "absdiff": 15.05721664428711,
+    "detail_walk": 3.7119171619415283,
+    "detail_target": 5.747189044952393,
+    "passes": 27
+   },
+   {
+    "pair": "0504",
+    "zone": "desert",
+    "lpips": 0.260407030582428,
+    "absdiff": 15.696353912353516,
+    "detail_walk": 3.3960609436035156,
+    "detail_target": 6.475484848022461,
+    "passes": 27
+   },
+   {
+    "pair": "0505",
+    "zone": "desert",
+    "lpips": 0.2672301232814789,
+    "absdiff": 15.088448524475098,
+    "detail_walk": 3.7386724948883057,
+    "detail_target": 7.00278377532959,
+    "passes": 27
+   },
+   {
+    "pair": "0506",
+    "zone": "desert",
+    "lpips": 0.20704573392868042,
+    "absdiff": 12.645658493041992,
+    "detail_walk": 3.848822593688965,
+    "detail_target": 5.94965934753418,
+    "passes": 28
+   },
+   {
+    "pair": "0507",
+    "zone": "desert",
+    "lpips": 0.22143037617206573,
+    "absdiff": 10.431705474853516,
+    "detail_walk": 3.9042062759399414,
+    "detail_target": 4.933962821960449,
+    "passes": 28
+   },
+   {
+    "pair": "0508",
+    "zone": "desert",
+    "lpips": 0.1713647097349167,
+    "absdiff": 9.757513046264648,
+    "detail_walk": 3.807555913925171,
+    "detail_target": 4.1984124183654785,
+    "passes": 29
+   },
+   {
+    "pair": "0509",
+    "zone": "desert",
+    "lpips": 0.21948422491550446,
+    "absdiff": 12.022371292114258,
+    "detail_walk": 3.449039936065674,
+    "detail_target": 4.711094856262207,
+    "passes": 28
+   },
+   {
+    "pair": "0510",
+    "zone": "desert",
+    "lpips": 0.23998302221298218,
+    "absdiff": 15.374337196350098,
+    "detail_walk": 3.4522480964660645,
+    "detail_target": 4.786325454711914,
+    "passes": 29
+   },
+   {
+    "pair": "0511",
+    "zone": "desert",
+    "lpips": 0.23014602065086365,
+    "absdiff": 12.797330856323242,
+    "detail_walk": 3.712714672088623,
+    "detail_target": 4.745413303375244,
+    "passes": 28
+   },
+   {
+    "pair": "0512",
+    "zone": "desert",
+    "lpips": 0.22746223211288452,
+    "absdiff": 12.701834678649902,
+    "detail_walk": 3.256535053253174,
+    "detail_target": 4.61501932144165,
+    "passes": 28
+   },
+   {
+    "pair": "0513",
+    "zone": "desert",
+    "lpips": 0.21593865752220154,
+    "absdiff": 12.841337203979492,
+    "detail_walk": 3.183866024017334,
+    "detail_target": 5.728474140167236,
+    "passes": 28
+   },
+   {
+    "pair": "0514",
+    "zone": "desert",
+    "lpips": 0.19684556126594543,
+    "absdiff": 13.762131690979004,
+    "detail_walk": 3.4878993034362793,
+    "detail_target": 5.756355285644531,
+    "passes": 29
+   },
+   {
+    "pair": "0515",
+    "zone": "desert",
+    "lpips": 0.227026104927063,
+    "absdiff": 14.271746635437012,
+    "detail_walk": 3.682732105255127,
+    "detail_target": 5.548668384552002,
+    "passes": 28
+   },
+   {
+    "pair": "0516",
+    "zone": "desert",
+    "lpips": 0.24417473375797272,
+    "absdiff": 14.49470043182373,
+    "detail_walk": 4.002147197723389,
+    "detail_target": 6.451936721801758,
+    "passes": 28
+   },
+   {
+    "pair": "0517",
+    "zone": "desert",
+    "lpips": 0.2748875021934509,
+    "absdiff": 14.582830429077148,
+    "detail_walk": 4.02803897857666,
+    "detail_target": 5.171230792999268,
+    "passes": 28
+   },
+   {
+    "pair": "0518",
+    "zone": "desert",
+    "lpips": 0.29580217599868774,
+    "absdiff": 15.670615196228027,
+    "detail_walk": 3.5038652420043945,
+    "detail_target": 6.252636909484863,
+    "passes": 28
+   },
+   {
+    "pair": "0519",
+    "zone": "desert",
+    "lpips": 0.23694661259651184,
+    "absdiff": 14.096232414245605,
+    "detail_walk": 3.686282157897949,
+    "detail_target": 5.391578674316406,
+    "passes": 28
+   },
+   {
+    "pair": "0520",
+    "zone": "desert",
+    "lpips": 0.1705426573753357,
+    "absdiff": 13.926318168640137,
+    "detail_walk": 4.023408889770508,
+    "detail_target": 4.9291672706604,
+    "passes": 29
+   },
+   {
+    "pair": "0521",
+    "zone": "desert",
+    "lpips": 0.1250080168247223,
+    "absdiff": 9.198626518249512,
+    "detail_walk": 4.275604724884033,
+    "detail_target": 4.444976329803467,
+    "passes": 28
+   },
+   {
+    "pair": "0522",
+    "zone": "desert",
+    "lpips": 0.2223525196313858,
+    "absdiff": 15.899828910827637,
+    "detail_walk": 3.7031679153442383,
+    "detail_target": 4.649435520172119,
+    "passes": 28
+   },
+   {
+    "pair": "0523",
+    "zone": "desert",
+    "lpips": 0.26141276955604553,
+    "absdiff": 17.84400177001953,
+    "detail_walk": 3.5396347045898438,
+    "detail_target": 4.503518104553223,
+    "passes": 28
+   },
+   {
+    "pair": "0524",
+    "zone": "desert",
+    "lpips": 0.2802010476589203,
+    "absdiff": 16.573528289794922,
+    "detail_walk": 2.9933009147644043,
+    "detail_target": 5.150547504425049,
+    "passes": 29
+   },
+   {
+    "pair": "0525",
+    "zone": "desert",
+    "lpips": 0.25700002908706665,
+    "absdiff": 15.089646339416504,
+    "detail_walk": 3.50229549407959,
+    "detail_target": 4.32274055480957,
+    "passes": 28
+   },
+   {
+    "pair": "0526",
+    "zone": "desert",
+    "lpips": 0.328567773103714,
+    "absdiff": 18.367088317871094,
+    "detail_walk": 3.915104627609253,
+    "detail_target": 6.463418006896973,
+    "passes": 28
+   },
+   {
+    "pair": "0527",
+    "zone": "desert",
+    "lpips": 0.39712440967559814,
+    "absdiff": 19.890003204345703,
+    "detail_walk": 3.6390011310577393,
+    "detail_target": 7.354119777679443,
+    "passes": 28
+   },
+   {
+    "pair": "0528",
+    "zone": "desert",
+    "lpips": 0.36261793971061707,
+    "absdiff": 19.3919620513916,
+    "detail_walk": 3.6669762134552,
+    "detail_target": 5.819113731384277,
+    "passes": 28
+   },
+   {
+    "pair": "0529",
+    "zone": "desert",
+    "lpips": 0.330628365278244,
+    "absdiff": 17.314430236816406,
+    "detail_walk": 3.7909998893737793,
+    "detail_target": 4.100526809692383,
+    "passes": 27
+   },
+   {
+    "pair": "0530",
+    "zone": "desert",
+    "lpips": 0.3363460898399353,
+    "absdiff": 15.4677734375,
+    "detail_walk": 3.1011781692504883,
+    "detail_target": 3.4679369926452637,
+    "passes": 28
+   },
+   {
+    "pair": "0531",
+    "zone": "desert",
+    "lpips": 0.27632179856300354,
+    "absdiff": 10.426570892333984,
+    "detail_walk": 2.449650287628174,
+    "detail_target": 3.830379009246826,
+    "passes": 27
+   },
+   {
+    "pair": "0532",
+    "zone": "desert",
+    "lpips": 0.2670307159423828,
+    "absdiff": 13.601312637329102,
+    "detail_walk": 2.4576518535614014,
+    "detail_target": 3.7089409828186035,
+    "passes": 28
+   },
+   {
+    "pair": "0533",
+    "zone": "desert",
+    "lpips": 0.2746049165725708,
+    "absdiff": 13.215191841125488,
+    "detail_walk": 2.5975394248962402,
+    "detail_target": 4.632966041564941,
+    "passes": 28
+   },
+   {
+    "pair": "0534",
+    "zone": "desert",
+    "lpips": 0.18435436487197876,
+    "absdiff": 8.545650482177734,
+    "detail_walk": 2.332494020462036,
+    "detail_target": 3.2987465858459473,
+    "passes": 29
+   },
+   {
+    "pair": "0535",
+    "zone": "desert",
+    "lpips": 0.21772673726081848,
+    "absdiff": 9.07673168182373,
+    "detail_walk": 2.2548413276672363,
+    "detail_target": 4.3354878425598145,
+    "passes": 28
+   },
+   {
+    "pair": "0536",
+    "zone": "desert",
+    "lpips": 0.23085899651050568,
+    "absdiff": 11.798779487609863,
+    "detail_walk": 2.5082900524139404,
+    "detail_target": 5.440375328063965,
+    "passes": 28
+   },
+   {
+    "pair": "0537",
+    "zone": "desert",
+    "lpips": 0.20834264159202576,
+    "absdiff": 12.576202392578125,
+    "detail_walk": 2.8158154487609863,
+    "detail_target": 5.756076812744141,
+    "passes": 28
+   },
+   {
+    "pair": "0538",
+    "zone": "desert",
+    "lpips": 0.2006964385509491,
+    "absdiff": 12.527132034301758,
+    "detail_walk": 2.90926456451416,
+    "detail_target": 5.687436103820801,
+    "passes": 28
+   },
+   {
+    "pair": "0539",
+    "zone": "desert",
+    "lpips": 0.17747560143470764,
+    "absdiff": 11.578564643859863,
+    "detail_walk": 3.029808521270752,
+    "detail_target": 5.326071739196777,
+    "passes": 28
+   },
+   {
+    "pair": "0540",
+    "zone": "desert",
+    "lpips": 0.17307500541210175,
+    "absdiff": 11.446958541870117,
+    "detail_walk": 2.875454902648926,
+    "detail_target": 4.7602219581604,
+    "passes": 28
+   },
+   {
+    "pair": "0541",
+    "zone": "desert",
+    "lpips": 0.1604454517364502,
+    "absdiff": 9.058856010437012,
+    "detail_walk": 2.672226667404175,
+    "detail_target": 4.3971123695373535,
+    "passes": 29
+   },
+   {
+    "pair": "0542",
+    "zone": "desert",
+    "lpips": 0.18090762197971344,
+    "absdiff": 11.009220123291016,
+    "detail_walk": 2.670391082763672,
+    "detail_target": 5.238651275634766,
+    "passes": 28
+   },
+   {
+    "pair": "0543",
+    "zone": "desert",
+    "lpips": 0.2061287760734558,
+    "absdiff": 11.182374954223633,
+    "detail_walk": 2.6999011039733887,
+    "detail_target": 5.463565349578857,
+    "passes": 29
+   },
+   {
+    "pair": "0544",
+    "zone": "desert",
+    "lpips": 0.23500055074691772,
+    "absdiff": 11.86237621307373,
+    "detail_walk": 2.5130271911621094,
+    "detail_target": 5.827466011047363,
+    "passes": 28
+   },
+   {
+    "pair": "0545",
+    "zone": "desert",
+    "lpips": 0.21726128458976746,
+    "absdiff": 12.24013900756836,
+    "detail_walk": 2.425769329071045,
+    "detail_target": 5.152824878692627,
+    "passes": 29
+   },
+   {
+    "pair": "0546",
+    "zone": "desert",
+    "lpips": 0.21084319055080414,
+    "absdiff": 11.897072792053223,
+    "detail_walk": 2.353287696838379,
+    "detail_target": 5.5680317878723145,
+    "passes": 29
+   },
+   {
+    "pair": "0547",
+    "zone": "desert",
+    "lpips": 0.2558961510658264,
+    "absdiff": 13.530939102172852,
+    "detail_walk": 2.214500665664673,
+    "detail_target": 5.773715972900391,
+    "passes": 29
+   },
+   {
+    "pair": "0548",
+    "zone": "desert",
+    "lpips": 0.2619643211364746,
+    "absdiff": 15.185663223266602,
+    "detail_walk": 2.1855688095092773,
+    "detail_target": 4.878533363342285,
+    "passes": 28
+   },
+   {
+    "pair": "0549",
+    "zone": "desert",
+    "lpips": 0.1845676600933075,
+    "absdiff": 14.225899696350098,
+    "detail_walk": 2.6927714347839355,
+    "detail_target": 5.039984703063965,
+    "passes": 29
+   },
+   {
+    "pair": "0550",
+    "zone": "desert",
+    "lpips": 0.23321713507175446,
+    "absdiff": 14.373113632202148,
+    "detail_walk": 2.688941478729248,
+    "detail_target": 6.425782680511475,
+    "passes": 29
+   },
+   {
+    "pair": "0551",
+    "zone": "desert",
+    "lpips": 0.18151307106018066,
+    "absdiff": 14.34784984588623,
+    "detail_walk": 3.1215901374816895,
+    "detail_target": 5.539705276489258,
+    "passes": 28
+   },
+   {
+    "pair": "0552",
+    "zone": "desert",
+    "lpips": 0.12523594498634338,
+    "absdiff": 12.082131385803223,
+    "detail_walk": 3.169278621673584,
+    "detail_target": 5.065465450286865,
+    "passes": 29
+   },
+   {
+    "pair": "0553",
+    "zone": "desert",
+    "lpips": 0.13355611264705658,
+    "absdiff": 10.59130859375,
+    "detail_walk": 3.0746986865997314,
+    "detail_target": 5.141751289367676,
+    "passes": 28
+   },
+   {
+    "pair": "0554",
+    "zone": "desert",
+    "lpips": 0.14267107844352722,
+    "absdiff": 12.062857627868652,
+    "detail_walk": 2.971036434173584,
+    "detail_target": 5.424901008605957,
+    "passes": 28
+   },
+   {
+    "pair": "0555",
+    "zone": "desert",
+    "lpips": 0.18398147821426392,
+    "absdiff": 11.474713325500488,
+    "detail_walk": 3.232900381088257,
+    "detail_target": 7.21669340133667,
+    "passes": 28
+   },
+   {
+    "pair": "0556",
+    "zone": "desert",
+    "lpips": 0.21699127554893494,
+    "absdiff": 15.136417388916016,
+    "detail_walk": 3.327035903930664,
+    "detail_target": 5.2774658203125,
+    "passes": 28
+   },
+   {
+    "pair": "0557",
+    "zone": "desert",
+    "lpips": 0.1365666389465332,
+    "absdiff": 11.704156875610352,
+    "detail_walk": 3.5547256469726562,
+    "detail_target": 4.171940803527832,
+    "passes": 28
+   },
+   {
+    "pair": "0558",
+    "zone": "desert",
+    "lpips": 0.11417730152606964,
+    "absdiff": 9.568411827087402,
+    "detail_walk": 3.0868449211120605,
+    "detail_target": 4.264211654663086,
+    "passes": 28
+   },
+   {
+    "pair": "0559",
+    "zone": "vestibule",
+    "lpips": 0.2547462582588196,
+    "absdiff": 17.950641632080078,
+    "detail_walk": 5.628020763397217,
+    "detail_target": 7.126021385192871,
+    "passes": 27
+   }
+  ]
+ }
+}

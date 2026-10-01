@@ -1,0 +1,54 @@
+{
+ "date": "2026-09-30T07:22:35.802Z",
+ "browser": "chromium",
+ "device": null,
+ "size": [
+  1920,
+  1080
+ ],
+ "speed": 3.4,
+ "settle": 5,
+ "params": "",
+ "engine": {
+  "engine": "torch-sd-turbo",
+  "model": "stabilityai/sd-turbo",
+  "width": 384,
+  "height": 384,
+  "flexible": true,
+  "xframe": true,
+  "device": "mps"
+ },
+ "perf": {
+  "frames": 753,
+  "fps": 37.6,
+  "p50": 1.2,
+  "p95": 3,
+  "p99": 4.3,
+  "max": 19.9,
+  "worst": [
+   {
+    "ms": 19.9,
+    "at": 0.94
+   },
+   {
+    "ms": 6.7,
+    "at": 6.57
+   },
+   {
+    "ms": 6.3,
+    "at": 6.5
+   },
+   {
+    "ms": 5.1,
+    "at": 18.81
+   },
+   {
+    "ms": 4.9,
+    "at": 2.12
+   }
+  ],
+  "lastPerf": "log: [perf] fps=13.4 cpu=1.71ms res=1920x1080 scale=1.00 dream=5.3/s lat=88ms enc=195.7ms paint=0.93ms caps=158 res=158 drop=0",
+  "errors": []
+ },
+ "dcReuseAfter": 0.646
+}

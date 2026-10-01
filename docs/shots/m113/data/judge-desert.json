@@ -1,0 +1,12 @@
+{
+ "date": "2026-09-29",
+ "zone": "desert",
+ "method": "blind: P = the previous prompt ('colossal sandstone arches receding across an endless desert'), Q = prompt naming the staircase, tower and walls (adopted); walk1-3, rest and an 8-frame walking strip each, current build, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "coherence": "Q",
+ "fewer_ghosts": "about even (P: a flat smeared slab across every frame; Q: stairs fading into a see-through panel on the right; both: a see-through box with window marks at the top)",
+ "beauty": "P as a screenshot; 'I'd rather walk through Q, because the steps you see match the climbing you do'",
+ "steadiness": "Q",
+ "sharpness": "P, slightly",
+ "recommendation": "Q"
+}

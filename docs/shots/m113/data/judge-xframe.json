@@ -1,0 +1,91 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: X = current build (cross-frame attention on, per-stream DeepCache), Y = same client with server --engine-arg xframe=0; walking filmstrips, all 8 zones, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "grades_detail_steadiness_1_to_5": {
+  "on": {
+   "vestibule": [
+    5,
+    3
+   ],
+   "nave": [
+    3,
+    4
+   ],
+   "stacks": [
+    2,
+    4
+   ],
+   "geode": [
+    4,
+    4
+   ],
+   "baths": [
+    2,
+    5
+   ],
+   "garden": [
+    4,
+    4
+   ],
+   "atrium": [
+    3,
+    4
+   ],
+   "desert": [
+    2,
+    4
+   ]
+  },
+  "off": {
+   "vestibule": [
+    3,
+    4
+   ],
+   "nave": [
+    4,
+    2
+   ],
+   "stacks": [
+    3,
+    3
+   ],
+   "geode": [
+    4,
+    4
+   ],
+   "baths": [
+    4,
+    4
+   ],
+   "garden": [
+    4,
+    3
+   ],
+   "atrium": [
+    3,
+    3
+   ],
+   "desert": [
+    3,
+    3
+   ]
+  }
+ },
+ "mean_grades": {
+  "on": [
+   3.1,
+   4.0
+  ],
+  "off": [
+   3.5,
+   3.25
+  ]
+ },
+ "notes": [
+  "baths: with cross-frame attention the walls stay bare stucco; without, a Roman-bath arcade with piers and tiled benches",
+  "vestibule: richer with cross-frame attention (gilt portraits, carved balustrades)",
+  "much of the extra detail without it pops in and out between frames"
+ ],
+ "summary": "I'd rather walk through X [on]. It keeps things the same in six of eight zones and has the richer vestibule, while much of Y's extra detail pops in and out. The detail gap is small overall and changes direction by zone; it is large only in the baths (Y) and the vestibule (X)."
+}

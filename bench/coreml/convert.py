@@ -5,6 +5,7 @@ Produces fixed-shape fp16 ML Programs and compiles them to .mlmodelc:
 
   <out>/<model>_unet_<res>_<attn>.mlmodelc   sample(1,4,h,w) f32, timestep(1,) f32,
                                                encoder_hidden_states(1,77,C) f32
+                                               [, depth(1,1,h,w) f32 with --depth-graft]
                                                -> noise_pred(1,4,h,w)
   <out>/taesd_enc_<res>.mlmodelc              image(1,3,H,W) in [0,1] -> latent(1,4,h,w)
   <out>/taesd_dec_<res>.mlmodelc              latent(1,4,h,w) -> image(1,3,H,W) in [0,255]
@@ -208,10 +209,12 @@ class UNetWrap(nn.Module):
         self.unet = unet
         self.ane_layout = ane_layout
 
-    def forward(self, sample, timestep, encoder_hidden_states):
+    def forward(self, sample, timestep, encoder_hidden_states, depth=None):
         ehs = encoder_hidden_states
         if self.ane_layout:
             ehs = ehs.transpose(1, 2).unsqueeze(2)  # (B, C, 1, 77)
+        if depth is not None:  # a depth-grafted UNet: the fifth input channel
+            sample = torch.cat([sample, depth], 1)
         return self.unet(sample, timestep, ehs, return_dict=False)[0]
 
 
@@ -329,12 +332,18 @@ def size_tag(w, h):
     return str(w) if w == h else f"{w}x{h}"
 
 
-def convert_unet(model_key, w, h, attn, out_dir, target, suffix="", w8=False, a8=False):
+def convert_unet(model_key, w, h, attn, out_dir, target, suffix="", w8=False, a8=False, graft=0.0):
     import coremltools as ct
     from diffusers import UNet2DConditionModel
     repo = REPOS[model_key]
     kw = {"variant": "fp16"} if model_key == "sdturbo" else {}
     unet = UNet2DConditionModel.from_pretrained(repo, subfolder="unet", torch_dtype=torch.float32, **kw).eval()
+    if graft > 0:  # the served torch_turbo's depth graft, same function, so both engines hold the same weights
+        assert model_key == "sdturbo" and not a8, "the depth graft is for sd-turbo, without --a8"
+        sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "server"))
+        from engines.torch_turbo import graft_depth
+        graft_depth(unet, graft)
+        print(f"  depth graft {graft:g}: conv_in takes {unet.conv_in.in_channels} channels", flush=True)
     if attn == "plain":
         from diffusers.models.attention_processor import AttnProcessor
         unet.set_attn_processor(AttnProcessor())
@@ -346,6 +355,8 @@ def convert_unet(model_key, w, h, attn, out_dir, target, suffix="", w8=False, a8
     lh, lw = h // 8, w // 8
     ctx_dim = unet.config.cross_attention_dim
     ex = (torch.randn(1, 4, lh, lw), torch.tensor([499.0]), torch.randn(1, 77, ctx_dim))
+    if graft > 0:
+        ex += (torch.rand(1, 1, lh, lw) * 2 - 1,)
     with torch.no_grad():
         ref = wrap(*ex)
     print(f"  torch ref out std {ref.std().item():.4f}", flush=True)
@@ -353,13 +364,13 @@ def convert_unet(model_key, w, h, attn, out_dir, target, suffix="", w8=False, a8
         ct.TensorType(name="sample", shape=(1, 4, lh, lw), dtype=np.float32),
         ct.TensorType(name="timestep", shape=(1,), dtype=np.float32),
         ct.TensorType(name="encoder_hidden_states", shape=(1, 77, ctx_dim), dtype=np.float32),
-    ]
+    ] + ([ct.TensorType(name="depth", shape=(1, 1, lh, lw), dtype=np.float32)] if graft > 0 else [])
     name = f"{model_key}_unet_{size_tag(w, h)}_{attn}{suffix}"
     a8_data = calibration_data(model_key, w, h) if a8 else None
     pkg = to_coreml(wrap, ex, specs, ["noise_pred"], os.path.join(out_dir, name + ".mlpackage"), target, w8=w8,
                     a8_data=a8_data)
     np.savez(os.path.join(out_dir, name + "_ref.npz"), sample=ex[0].numpy(), timestep=ex[1].numpy(),
-             ehs=ex[2].numpy(), out=ref.numpy())
+             ehs=ex[2].numpy(), out=ref.numpy(), **({"depth": ex[3].numpy()} if graft > 0 else {}))
     return compile_mlpackage(pkg, out_dir)
 
 
@@ -403,6 +414,8 @@ def main():
     ap.add_argument("--kv-down-min-s", type=int, default=2048, help="apply kv-down where query len >= this")
     ap.add_argument("--kv-down-where", default="all", choices=["all", "up_blocks", "down_blocks"])
     ap.add_argument("--suffix", default="", help="name suffix for experimental variants")
+    ap.add_argument("--depth-graft", type=float, default=0.0,
+                    help="sd-turbo + this x (SD2-depth - SD2-base) with a depth input, as torch_turbo serves (0.8)")
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--target", default="macOS15", choices=["macOS14", "macOS15"])
     a = ap.parse_args()
@@ -415,8 +428,9 @@ def main():
         w, h = parse_size(tok)
         assert w % 64 == 0 and h % 64 == 0, "sizes must be multiples of 64"
         if a.model in REPOS:
-            print(f"== UNet {a.model} {w}x{h} attn={a.attn} chunk={a.chunk} w8={a.w8} kv_down={a.kv_down}", flush=True)
-            print("  ->", convert_unet(a.model, w, h, a.attn, a.out, target, a.suffix, a.w8, a.a8), flush=True)
+            print(f"== UNet {a.model} {w}x{h} attn={a.attn} chunk={a.chunk} w8={a.w8} kv_down={a.kv_down} "
+                  f"graft={a.depth_graft:g}", flush=True)
+            print("  ->", convert_unet(a.model, w, h, a.attn, a.out, target, a.suffix, a.w8, a.a8, a.depth_graft), flush=True)
         if a.vae != "none":
             print(f"== TAESD ({a.vae}) {w}x{h}", flush=True)
             repo = "IDKiro/sdxs-512-0.9" if a.vae == "sdxs" else "madebyollin/taesd"

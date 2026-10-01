@@ -16,7 +16,10 @@ def _norm(v):
 
 
 def nave(w=512, h=512, cam=(0.0, 1.6, 0.0), yaw=0.0, pitch=0.08, fov=75.0,
-         lights=None, palette="blue", seed=0):
+         lights=None, palette="blue", seed=0, with_depth=False):
+    """uint8 (h, w, 3); with_depth: also a depth channel shaped like the client's (latent size
+    (h/8, w/8), [-1, 1], near = 1), but min-max scaled inverse ray distance, where the client sends
+    the 2nd-98th percentile of inverse view depth in 8 bits."""
     rng = np.random.default_rng(seed)
     W, Hc, Zf, SP, PR, PX = 4.0, 9.0, 60.0, 6.0, 0.45, 2.6  # half-width, ceiling, far wall, spacing, pillar r, pillar x
     if lights is None:
@@ -117,7 +120,13 @@ def nave(w=512, h=512, cam=(0.0, 1.6, 0.0), yaw=0.0, pitch=0.08, fov=75.0,
     col = col * f + np.array(fogc) * (1 - f)
     col = col / (1 + col)  # reinhard
     img = np.clip(col, 0, 1) ** (1 / 2.2)
-    return (img * 255 + 0.5).astype(np.uint8)
+    img = (img * 255 + 0.5).astype(np.uint8)
+    if not with_depth:
+        return img
+    inv = 1.0 / np.maximum(np.minimum(best, 200.0), 0.1)
+    inv = inv[: h // 8 * 8, : w // 8 * 8].reshape(h // 8, 8, w // 8, 8).mean((1, 3))
+    lo, hi = float(inv.min()), float(inv.max())
+    return img, ((inv - lo) / max(hi - lo, 1e-6) * 2 - 1).astype(np.float32)
 
 
 def walk(n=24, w=512, h=512, palette="blue"):
@@ -135,12 +144,12 @@ def turn(n=24, w=512, h=512, palette="amber", rate=0.12):
     return [nave(w, h, cam=(0.0, 1.6, 6.0), yaw=-0.8 + rate * i, pitch=0.1, palette=palette, seed=i) for i in range(n)]
 
 
-def test_set(w=512, h=512):
-    """Three stills with distinct palettes/views for quality contact sheets."""
+def test_set(w=512, h=512, with_depth=False):
+    """Three stills with distinct palettes/views for quality contact sheets (with_depth: (img, depth) pairs)."""
     return [
-        nave(w, h, palette="blue"),
-        nave(w, h, cam=(-1.5, 1.6, 8.0), yaw=0.7, pitch=0.25, palette="amber", seed=1),
-        nave(w, h, cam=(1.0, 1.6, 20.0), yaw=-0.4, pitch=0.35, fov=90, palette="violet", seed=2),
+        nave(w, h, palette="blue", with_depth=with_depth),
+        nave(w, h, cam=(-1.5, 1.6, 8.0), yaw=0.7, pitch=0.25, palette="amber", seed=1, with_depth=with_depth),
+        nave(w, h, cam=(1.0, 1.6, 20.0), yaw=-0.4, pitch=0.35, fov=90, palette="violet", seed=2, with_depth=with_depth),
     ]
 
 

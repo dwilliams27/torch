@@ -50,7 +50,7 @@ def main():
 
     frames = scenes.walk(24, 512, 512, palette="amber") if a.seq == "walk" else scenes.turn(24, 512, 512)
     seq = [resize(f, a.size, a.size) for f in frames]
-    eng = tt.create_engine(width=a.size, height=a.size, morph=0, deepcache=a.deepcache, dc_thresh=99,
+    eng = tt.create_engine(width=a.size, height=a.size, morph=0, depth_graft=0, deepcache=a.deepcache, dc_thresh=99,
                            dc_motion=bool(a.motion), dc_branch=a.branch, dc_max_shift=a.max_shift)
     E_in = [edges(f) for f in seq]
     rows = []

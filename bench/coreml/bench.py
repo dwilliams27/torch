@@ -65,7 +65,10 @@ def unet_inputs(path):
     ref = path.replace(".mlmodelc", "_ref.npz")
     if os.path.exists(ref):
         r = np.load(ref)
-        return {"sample": r["sample"], "timestep": r["timestep"], "encoder_hidden_states": r["ehs"]}, r["out"]
+        feed = {"sample": r["sample"], "timestep": r["timestep"], "encoder_hidden_states": r["ehs"]}
+        if "depth" in r.files:   # a depth-grafted UNet (convert.py --depth-graft)
+            feed["depth"] = r["depth"]
+        return feed, r["out"]
     raise SystemExit(f"missing {ref}")
 
 

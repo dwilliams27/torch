@@ -1,0 +1,2661 @@
+{
+ "p0-waking": {
+  "all": {
+   "lpips": 0.3386810488741973,
+   "absdiff": 15.106028466389096,
+   "detail_walk": 5.076712772764009,
+   "detail_target": 6.62451354388533,
+   "n": 58
+  },
+  "zones": {
+   "nave": {
+    "lpips": 0.30212967868508966,
+    "absdiff": 14.205182963404162,
+    "detail_walk": 5.52901475182895,
+    "detail_target": 6.542958448673117,
+    "n": 29
+   },
+   "stacks": {
+    "lpips": 0.3413626352945964,
+    "absdiff": 11.290467739105225,
+    "detail_walk": 3.2332655588785806,
+    "detail_target": 5.947547833124797,
+    "n": 15
+   },
+   "vestibule": {
+    "lpips": 0.4115214731012072,
+    "absdiff": 21.060166358947754,
+    "detail_walk": 6.114923545292446,
+    "detail_target": 7.5187695026397705,
+    "n": 14
+   }
+  },
+  "passes_median": 28.0,
+  "walk": {
+   "seconds": 44.86,
+   "kept": 58,
+   "results": 507,
+   "dreamsPerSecond": 11.30182790905038
+  },
+  "harvest": {
+   "engine": "torch-sd-turbo",
+   "depth_graft": 0.8,
+   "xframe": true,
+   "held_only": "deepcache",
+   "lora": null,
+   "speed": 3.4,
+   "every": 6,
+   "hold": 5,
+   "params": "",
+   "date": "2026-09-30T12:47:09.281Z"
+  },
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.41879338026046753,
+    "absdiff": 29.57292938232422,
+    "detail_walk": 6.339028358459473,
+    "detail_target": 10.264994621276855,
+    "passes": 28
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.39048606157302856,
+    "absdiff": 23.27425765991211,
+    "detail_walk": 7.473956108093262,
+    "detail_target": 9.145772933959961,
+    "passes": 28
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.380938857793808,
+    "absdiff": 21.542322158813477,
+    "detail_walk": 6.321988582611084,
+    "detail_target": 7.555432319641113,
+    "passes": 29
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.35390639305114746,
+    "absdiff": 25.01360511779785,
+    "detail_walk": 7.584120750427246,
+    "detail_target": 8.74698257446289,
+    "passes": 28
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.2363463044166565,
+    "absdiff": 17.802509307861328,
+    "detail_walk": 6.994165420532227,
+    "detail_target": 6.8533406257629395,
+    "passes": 28
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.5369184017181396,
+    "absdiff": 23.815183639526367,
+    "detail_walk": 5.314882278442383,
+    "detail_target": 7.1552734375,
+    "passes": 28
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.41949397325515747,
+    "absdiff": 19.21320152282715,
+    "detail_walk": 5.333521842956543,
+    "detail_target": 6.510248184204102,
+    "passes": 29
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.45232611894607544,
+    "absdiff": 20.619104385375977,
+    "detail_walk": 5.5952677726745605,
+    "detail_target": 6.617133140563965,
+    "passes": 29
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.4439842104911804,
+    "absdiff": 22.9913330078125,
+    "detail_walk": 6.223402976989746,
+    "detail_target": 7.341832160949707,
+    "passes": 29
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.3601638078689575,
+    "absdiff": 18.2842960357666,
+    "detail_walk": 5.693753719329834,
+    "detail_target": 8.33376407623291,
+    "passes": 29
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.47306835651397705,
+    "absdiff": 21.094158172607422,
+    "detail_walk": 5.446695327758789,
+    "detail_target": 7.01434326171875,
+    "passes": 29
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.31245455145835876,
+    "absdiff": 14.67876148223877,
+    "detail_walk": 5.999924182891846,
+    "detail_target": 7.726149082183838,
+    "passes": 26
+   },
+   {
+    "pair": "0012",
+    "zone": "vestibule",
+    "lpips": 0.5249347686767578,
+    "absdiff": 21.488197326660156,
+    "detail_walk": 5.848339557647705,
+    "detail_target": 7.703798294067383,
+    "passes": 28
+   },
+   {
+    "pair": "0013",
+    "zone": "vestibule",
+    "lpips": 0.4574854373931885,
+    "absdiff": 15.452469825744629,
+    "detail_walk": 5.439882755279541,
+    "detail_target": 4.293708324432373,
+    "passes": 27
+   },
+   {
+    "pair": "0014",
+    "zone": "nave",
+    "lpips": 0.24961361289024353,
+    "absdiff": 13.995487213134766,
+    "detail_walk": 5.934615135192871,
+    "detail_target": 7.951991558074951,
+    "passes": 28
+   },
+   {
+    "pair": "0015",
+    "zone": "nave",
+    "lpips": 0.23910044133663177,
+    "absdiff": 12.947979927062988,
+    "detail_walk": 6.264264106750488,
+    "detail_target": 6.281546592712402,
+    "passes": 28
+   },
+   {
+    "pair": "0016",
+    "zone": "nave",
+    "lpips": 0.2805277705192566,
+    "absdiff": 13.180069923400879,
+    "detail_walk": 6.707243919372559,
+    "detail_target": 6.058743476867676,
+    "passes": 27
+   },
+   {
+    "pair": "0017",
+    "zone": "nave",
+    "lpips": 0.32183778285980225,
+    "absdiff": 15.696486473083496,
+    "detail_walk": 5.592095375061035,
+    "detail_target": 5.888157844543457,
+    "passes": 28
+   },
+   {
+    "pair": "0018",
+    "zone": "nave",
+    "lpips": 0.343796968460083,
+    "absdiff": 18.95574951171875,
+    "detail_walk": 5.752573490142822,
+    "detail_target": 5.878466606140137,
+    "passes": 28
+   },
+   {
+    "pair": "0019",
+    "zone": "nave",
+    "lpips": 0.3212726414203644,
+    "absdiff": 16.373443603515625,
+    "detail_walk": 5.95775032043457,
+    "detail_target": 6.395087718963623,
+    "passes": 27
+   },
+   {
+    "pair": "0020",
+    "zone": "nave",
+    "lpips": 0.3454688489437103,
+    "absdiff": 15.687270164489746,
+    "detail_walk": 5.651300430297852,
+    "detail_target": 5.775393962860107,
+    "passes": 28
+   },
+   {
+    "pair": "0021",
+    "zone": "nave",
+    "lpips": 0.22363746166229248,
+    "absdiff": 10.209151268005371,
+    "detail_walk": 5.591032028198242,
+    "detail_target": 6.981911659240723,
+    "passes": 29
+   },
+   {
+    "pair": "0022",
+    "zone": "nave",
+    "lpips": 0.22882457077503204,
+    "absdiff": 11.152254104614258,
+    "detail_walk": 6.065036773681641,
+    "detail_target": 6.623917579650879,
+    "passes": 28
+   },
+   {
+    "pair": "0023",
+    "zone": "nave",
+    "lpips": 0.29005342721939087,
+    "absdiff": 16.515880584716797,
+    "detail_walk": 5.804710388183594,
+    "detail_target": 7.358109474182129,
+    "passes": 28
+   },
+   {
+    "pair": "0024",
+    "zone": "nave",
+    "lpips": 0.3017555773258209,
+    "absdiff": 14.706640243530273,
+    "detail_walk": 6.253804683685303,
+    "detail_target": 7.410235404968262,
+    "passes": 26
+   },
+   {
+    "pair": "0025",
+    "zone": "nave",
+    "lpips": 0.36672350764274597,
+    "absdiff": 17.304485321044922,
+    "detail_walk": 5.9069695472717285,
+    "detail_target": 7.597460746765137,
+    "passes": 28
+   },
+   {
+    "pair": "0026",
+    "zone": "nave",
+    "lpips": 0.37641197443008423,
+    "absdiff": 19.895511627197266,
+    "detail_walk": 7.172175407409668,
+    "detail_target": 6.433863639831543,
+    "passes": 29
+   },
+   {
+    "pair": "0027",
+    "zone": "nave",
+    "lpips": 0.30316516757011414,
+    "absdiff": 12.070003509521484,
+    "detail_walk": 6.5670318603515625,
+    "detail_target": 6.50393009185791,
+    "passes": 27
+   },
+   {
+    "pair": "0028",
+    "zone": "nave",
+    "lpips": 0.26775386929512024,
+    "absdiff": 13.199381828308105,
+    "detail_walk": 6.352229595184326,
+    "detail_target": 7.496906280517578,
+    "passes": 29
+   },
+   {
+    "pair": "0029",
+    "zone": "nave",
+    "lpips": 0.3927580714225769,
+    "absdiff": 19.25517463684082,
+    "detail_walk": 6.0048723220825195,
+    "detail_target": 8.616804122924805,
+    "passes": 28
+   },
+   {
+    "pair": "0030",
+    "zone": "nave",
+    "lpips": 0.32287153601646423,
+    "absdiff": 13.844223976135254,
+    "detail_walk": 6.226105690002441,
+    "detail_target": 7.410557270050049,
+    "passes": 28
+   },
+   {
+    "pair": "0031",
+    "zone": "nave",
+    "lpips": 0.37457090616226196,
+    "absdiff": 18.0552921295166,
+    "detail_walk": 5.525825500488281,
+    "detail_target": 7.998674392700195,
+    "passes": 28
+   },
+   {
+    "pair": "0032",
+    "zone": "nave",
+    "lpips": 0.24155111610889435,
+    "absdiff": 12.819815635681152,
+    "detail_walk": 6.606573581695557,
+    "detail_target": 6.831422805786133,
+    "passes": 28
+   },
+   {
+    "pair": "0033",
+    "zone": "nave",
+    "lpips": 0.28058165311813354,
+    "absdiff": 12.3568115234375,
+    "detail_walk": 5.387723922729492,
+    "detail_target": 6.264420509338379,
+    "passes": 29
+   },
+   {
+    "pair": "0034",
+    "zone": "nave",
+    "lpips": 0.22212743759155273,
+    "absdiff": 10.754891395568848,
+    "detail_walk": 5.358036041259766,
+    "detail_target": 6.431873321533203,
+    "passes": 29
+   },
+   {
+    "pair": "0035",
+    "zone": "nave",
+    "lpips": 0.34071263670921326,
+    "absdiff": 15.685394287109375,
+    "detail_walk": 5.012753486633301,
+    "detail_target": 5.941082000732422,
+    "passes": 27
+   },
+   {
+    "pair": "0036",
+    "zone": "nave",
+    "lpips": 0.3204251825809479,
+    "absdiff": 13.188946723937988,
+    "detail_walk": 4.339595794677734,
+    "detail_target": 6.163128852844238,
+    "passes": 28
+   },
+   {
+    "pair": "0037",
+    "zone": "nave",
+    "lpips": 0.2561091482639313,
+    "absdiff": 14.737927436828613,
+    "detail_walk": 4.066641807556152,
+    "detail_target": 4.853695392608643,
+    "passes": 29
+   },
+   {
+    "pair": "0038",
+    "zone": "nave",
+    "lpips": 0.2721835970878601,
+    "absdiff": 11.306559562683105,
+    "detail_walk": 3.8984084129333496,
+    "detail_target": 5.767685890197754,
+    "passes": 28
+   },
+   {
+    "pair": "0039",
+    "zone": "nave",
+    "lpips": 0.3319476842880249,
+    "absdiff": 13.325875282287598,
+    "detail_walk": 4.703967094421387,
+    "detail_target": 6.709236145019531,
+    "passes": 29
+   },
+   {
+    "pair": "0040",
+    "zone": "nave",
+    "lpips": 0.2923195958137512,
+    "absdiff": 13.41668701171875,
+    "detail_walk": 5.03106689453125,
+    "detail_target": 5.827849864959717,
+    "passes": 27
+   },
+   {
+    "pair": "0041",
+    "zone": "nave",
+    "lpips": 0.21053148806095123,
+    "absdiff": 8.948057174682617,
+    "detail_walk": 3.087766647338867,
+    "detail_target": 3.98826003074646,
+    "passes": 28
+   },
+   {
+    "pair": "0042",
+    "zone": "nave",
+    "lpips": 0.44312700629234314,
+    "absdiff": 12.364853858947754,
+    "detail_walk": 3.5192575454711914,
+    "detail_target": 6.305381774902344,
+    "passes": 28
+   },
+   {
+    "pair": "0043",
+    "zone": "stacks",
+    "lpips": 0.44020384550094604,
+    "absdiff": 12.704567909240723,
+    "detail_walk": 3.5631351470947266,
+    "detail_target": 9.191082954406738,
+    "passes": 29
+   },
+   {
+    "pair": "0044",
+    "zone": "stacks",
+    "lpips": 0.2936673164367676,
+    "absdiff": 11.16537094116211,
+    "detail_walk": 4.483692169189453,
+    "detail_target": 7.940313816070557,
+    "passes": 28
+   },
+   {
+    "pair": "0045",
+    "zone": "stacks",
+    "lpips": 0.46529412269592285,
+    "absdiff": 18.321020126342773,
+    "detail_walk": 4.029269695281982,
+    "detail_target": 7.13664436340332,
+    "passes": 27
+   },
+   {
+    "pair": "0046",
+    "zone": "stacks",
+    "lpips": 0.3537386953830719,
+    "absdiff": 14.460797309875488,
+    "detail_walk": 4.67020845413208,
+    "detail_target": 10.121545791625977,
+    "passes": 28
+   },
+   {
+    "pair": "0047",
+    "zone": "stacks",
+    "lpips": 0.22864776849746704,
+    "absdiff": 6.562715530395508,
+    "detail_walk": 3.1883034706115723,
+    "detail_target": 4.359882831573486,
+    "passes": 27
+   },
+   {
+    "pair": "0048",
+    "zone": "stacks",
+    "lpips": 0.3016124963760376,
+    "absdiff": 6.393208980560303,
+    "detail_walk": 2.3586528301239014,
+    "detail_target": 3.7578749656677246,
+    "passes": 29
+   },
+   {
+    "pair": "0049",
+    "zone": "stacks",
+    "lpips": 0.2405921220779419,
+    "absdiff": 7.916489601135254,
+    "detail_walk": 2.341935157775879,
+    "detail_target": 3.085651159286499,
+    "passes": 29
+   },
+   {
+    "pair": "0050",
+    "zone": "stacks",
+    "lpips": 0.2648226320743561,
+    "absdiff": 9.404854774475098,
+    "detail_walk": 3.4510836601257324,
+    "detail_target": 4.173456192016602,
+    "passes": 29
+   },
+   {
+    "pair": "0051",
+    "zone": "stacks",
+    "lpips": 0.4177732467651367,
+    "absdiff": 12.857486724853516,
+    "detail_walk": 3.031282663345337,
+    "detail_target": 6.666363716125488,
+    "passes": 28
+   },
+   {
+    "pair": "0052",
+    "zone": "stacks",
+    "lpips": 0.3303826153278351,
+    "absdiff": 10.719929695129395,
+    "detail_walk": 3.1342544555664062,
+    "detail_target": 5.9294281005859375,
+    "passes": 28
+   },
+   {
+    "pair": "0053",
+    "zone": "stacks",
+    "lpips": 0.30282437801361084,
+    "absdiff": 10.099248886108398,
+    "detail_walk": 2.968451738357544,
+    "detail_target": 4.666257381439209,
+    "passes": 28
+   },
+   {
+    "pair": "0054",
+    "zone": "stacks",
+    "lpips": 0.4454162120819092,
+    "absdiff": 12.124215126037598,
+    "detail_walk": 2.83713698387146,
+    "detail_target": 4.5011887550354,
+    "passes": 28
+   },
+   {
+    "pair": "0055",
+    "zone": "stacks",
+    "lpips": 0.2748250961303711,
+    "absdiff": 9.246747016906738,
+    "detail_walk": 2.506432056427002,
+    "detail_target": 5.416265487670898,
+    "passes": 29
+   },
+   {
+    "pair": "0056",
+    "zone": "stacks",
+    "lpips": 0.40584543347358704,
+    "absdiff": 15.845194816589355,
+    "detail_walk": 2.8334193229675293,
+    "detail_target": 6.862360000610352,
+    "passes": 27
+   },
+   {
+    "pair": "0057",
+    "zone": "stacks",
+    "lpips": 0.3547935485839844,
+    "absdiff": 11.535168647766113,
+    "detail_walk": 3.1017255783081055,
+    "detail_target": 5.40490198135376,
+    "passes": 29
+   }
+  ]
+ },
+ "p1-noxframe": {
+  "all": {
+   "lpips": 0.3303962315906558,
+   "absdiff": 15.21388150098031,
+   "detail_walk": 5.130877645392167,
+   "detail_target": 6.895251592000325,
+   "n": 57
+  },
+  "zones": {
+   "nave": {
+    "lpips": 0.2893477775927248,
+    "absdiff": 13.822640780744882,
+    "detail_walk": 5.462540182574042,
+    "detail_target": 6.740179538726807,
+    "n": 29
+   },
+   "stacks": {
+    "lpips": 0.38044837436505724,
+    "absdiff": 13.219331434794835,
+    "detail_walk": 3.3569695268358504,
+    "detail_target": 6.484444345746722,
+    "n": 14
+   },
+   "vestibule": {
+    "lpips": 0.3653730292405401,
+    "absdiff": 20.090287344796316,
+    "detail_walk": 6.217770508357456,
+    "detail_target": 7.62727952003479,
+    "n": 14
+   }
+  },
+  "passes_median": 29.0,
+  "walk": {
+   "seconds": 44.886,
+   "kept": 59,
+   "results": 508,
+   "dreamsPerSecond": 11.317560040992737
+  },
+  "harvest": {
+   "engine": "torch-sd-turbo",
+   "depth_graft": 0.8,
+   "xframe": false,
+   "held_only": false,
+   "lora": null,
+   "speed": 3.4,
+   "every": 6,
+   "hold": 5,
+   "params": null,
+   "date": "2026-09-30T10:57:00.899Z"
+  },
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.4369696378707886,
+    "absdiff": 26.664884567260742,
+    "detail_walk": 6.499847412109375,
+    "detail_target": 9.184259414672852,
+    "passes": 28
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.23544886708259583,
+    "absdiff": 17.207767486572266,
+    "detail_walk": 7.568089485168457,
+    "detail_target": 7.894322872161865,
+    "passes": 29
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.3595370650291443,
+    "absdiff": 20.637989044189453,
+    "detail_walk": 6.995573043823242,
+    "detail_target": 8.951289176940918,
+    "passes": 29
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.49547630548477173,
+    "absdiff": 26.401453018188477,
+    "detail_walk": 7.201445579528809,
+    "detail_target": 8.129072189331055,
+    "passes": 29
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.43290185928344727,
+    "absdiff": 27.43370246887207,
+    "detail_walk": 6.456264495849609,
+    "detail_target": 6.6616082191467285,
+    "passes": 29
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.4229245185852051,
+    "absdiff": 21.005807876586914,
+    "detail_walk": 5.2522478103637695,
+    "detail_target": 7.531008720397949,
+    "passes": 29
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.4098578095436096,
+    "absdiff": 23.368675231933594,
+    "detail_walk": 5.965904235839844,
+    "detail_target": 6.233349800109863,
+    "passes": 29
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.24284861981868744,
+    "absdiff": 14.675838470458984,
+    "detail_walk": 5.950477600097656,
+    "detail_target": 6.951503753662109,
+    "passes": 29
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.30411699414253235,
+    "absdiff": 13.845711708068848,
+    "detail_walk": 6.1412482261657715,
+    "detail_target": 6.288784980773926,
+    "passes": 28
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.3052023947238922,
+    "absdiff": 18.33498191833496,
+    "detail_walk": 5.3332319259643555,
+    "detail_target": 9.236902236938477,
+    "passes": 29
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.26229798793792725,
+    "absdiff": 15.418882369995117,
+    "detail_walk": 6.2883148193359375,
+    "detail_target": 9.217673301696777,
+    "passes": 30
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.22601506114006042,
+    "absdiff": 13.88780689239502,
+    "detail_walk": 6.374372959136963,
+    "detail_target": 7.962480545043945,
+    "passes": 29
+   },
+   {
+    "pair": "0012",
+    "zone": "vestibule",
+    "lpips": 0.4175232946872711,
+    "absdiff": 21.28682518005371,
+    "detail_walk": 5.3320465087890625,
+    "detail_target": 7.065430164337158,
+    "passes": 29
+   },
+   {
+    "pair": "0013",
+    "zone": "vestibule",
+    "lpips": 0.5641019940376282,
+    "absdiff": 21.09369659423828,
+    "detail_walk": 5.689723014831543,
+    "detail_target": 5.4742279052734375,
+    "passes": 28
+   },
+   {
+    "pair": "0015",
+    "zone": "nave",
+    "lpips": 0.21805289387702942,
+    "absdiff": 14.475091934204102,
+    "detail_walk": 7.2098894119262695,
+    "detail_target": 7.457667350769043,
+    "passes": 29
+   },
+   {
+    "pair": "0016",
+    "zone": "nave",
+    "lpips": 0.31455692648887634,
+    "absdiff": 15.051526069641113,
+    "detail_walk": 6.289234638214111,
+    "detail_target": 7.481733322143555,
+    "passes": 28
+   },
+   {
+    "pair": "0017",
+    "zone": "nave",
+    "lpips": 0.263534814119339,
+    "absdiff": 12.061822891235352,
+    "detail_walk": 5.0815629959106445,
+    "detail_target": 5.631467819213867,
+    "passes": 29
+   },
+   {
+    "pair": "0018",
+    "zone": "nave",
+    "lpips": 0.33984941244125366,
+    "absdiff": 17.22711181640625,
+    "detail_walk": 6.171313285827637,
+    "detail_target": 6.297720909118652,
+    "passes": 29
+   },
+   {
+    "pair": "0019",
+    "zone": "nave",
+    "lpips": 0.16883960366249084,
+    "absdiff": 8.790579795837402,
+    "detail_walk": 5.831658363342285,
+    "detail_target": 6.333043575286865,
+    "passes": 29
+   },
+   {
+    "pair": "0020",
+    "zone": "nave",
+    "lpips": 0.25329047441482544,
+    "absdiff": 12.367158889770508,
+    "detail_walk": 5.716580390930176,
+    "detail_target": 5.587533473968506,
+    "passes": 28
+   },
+   {
+    "pair": "0021",
+    "zone": "nave",
+    "lpips": 0.3977876901626587,
+    "absdiff": 19.412010192871094,
+    "detail_walk": 5.716011047363281,
+    "detail_target": 6.559600830078125,
+    "passes": 29
+   },
+   {
+    "pair": "0022",
+    "zone": "nave",
+    "lpips": 0.3509128987789154,
+    "absdiff": 18.36147689819336,
+    "detail_walk": 5.789429664611816,
+    "detail_target": 7.040619373321533,
+    "passes": 29
+   },
+   {
+    "pair": "0023",
+    "zone": "nave",
+    "lpips": 0.1682559847831726,
+    "absdiff": 8.225038528442383,
+    "detail_walk": 5.74910831451416,
+    "detail_target": 6.5601725578308105,
+    "passes": 27
+   },
+   {
+    "pair": "0024",
+    "zone": "nave",
+    "lpips": 0.2914191484451294,
+    "absdiff": 14.78954029083252,
+    "detail_walk": 5.943892478942871,
+    "detail_target": 6.5518574714660645,
+    "passes": 29
+   },
+   {
+    "pair": "0025",
+    "zone": "nave",
+    "lpips": 0.26693037152290344,
+    "absdiff": 12.479575157165527,
+    "detail_walk": 5.885439872741699,
+    "detail_target": 7.1816277503967285,
+    "passes": 29
+   },
+   {
+    "pair": "0026",
+    "zone": "nave",
+    "lpips": 0.32449889183044434,
+    "absdiff": 16.97915267944336,
+    "detail_walk": 6.381808757781982,
+    "detail_target": 9.177507400512695,
+    "passes": 29
+   },
+   {
+    "pair": "0027",
+    "zone": "nave",
+    "lpips": 0.12570366263389587,
+    "absdiff": 7.5353617668151855,
+    "detail_walk": 6.032120704650879,
+    "detail_target": 6.628610610961914,
+    "passes": 29
+   },
+   {
+    "pair": "0028",
+    "zone": "nave",
+    "lpips": 0.2769659459590912,
+    "absdiff": 12.20322036743164,
+    "detail_walk": 6.168121814727783,
+    "detail_target": 7.266660690307617,
+    "passes": 29
+   },
+   {
+    "pair": "0029",
+    "zone": "nave",
+    "lpips": 0.15308231115341187,
+    "absdiff": 7.9728474617004395,
+    "detail_walk": 6.006845474243164,
+    "detail_target": 7.377658843994141,
+    "passes": 30
+   },
+   {
+    "pair": "0030",
+    "zone": "nave",
+    "lpips": 0.2803325951099396,
+    "absdiff": 14.85750961303711,
+    "detail_walk": 5.885707855224609,
+    "detail_target": 8.137508392333984,
+    "passes": 29
+   },
+   {
+    "pair": "0031",
+    "zone": "nave",
+    "lpips": 0.2535860538482666,
+    "absdiff": 11.474406242370605,
+    "detail_walk": 6.025765419006348,
+    "detail_target": 7.548940181732178,
+    "passes": 28
+   },
+   {
+    "pair": "0032",
+    "zone": "nave",
+    "lpips": 0.24216057360172272,
+    "absdiff": 11.292057037353516,
+    "detail_walk": 5.7522687911987305,
+    "detail_target": 6.353638172149658,
+    "passes": 28
+   },
+   {
+    "pair": "0033",
+    "zone": "nave",
+    "lpips": 0.2607491910457611,
+    "absdiff": 14.499942779541016,
+    "detail_walk": 5.466080665588379,
+    "detail_target": 7.236140251159668,
+    "passes": 28
+   },
+   {
+    "pair": "0034",
+    "zone": "nave",
+    "lpips": 0.2908006012439728,
+    "absdiff": 12.788470268249512,
+    "detail_walk": 5.0816240310668945,
+    "detail_target": 6.497729301452637,
+    "passes": 29
+   },
+   {
+    "pair": "0035",
+    "zone": "nave",
+    "lpips": 0.3376754820346832,
+    "absdiff": 17.325916290283203,
+    "detail_walk": 4.894690990447998,
+    "detail_target": 7.225916862487793,
+    "passes": 29
+   },
+   {
+    "pair": "0036",
+    "zone": "nave",
+    "lpips": 0.31184864044189453,
+    "absdiff": 14.215744972229004,
+    "detail_walk": 4.8518218994140625,
+    "detail_target": 6.054318904876709,
+    "passes": 30
+   },
+   {
+    "pair": "0037",
+    "zone": "nave",
+    "lpips": 0.3183087706565857,
+    "absdiff": 12.770599365234375,
+    "detail_walk": 4.546822547912598,
+    "detail_target": 6.316910743713379,
+    "passes": 29
+   },
+   {
+    "pair": "0038",
+    "zone": "nave",
+    "lpips": 0.24694126844406128,
+    "absdiff": 13.416194915771484,
+    "detail_walk": 3.8650639057159424,
+    "detail_target": 5.7700886726379395,
+    "passes": 28
+   },
+   {
+    "pair": "0039",
+    "zone": "nave",
+    "lpips": 0.29690036177635193,
+    "absdiff": 12.550411224365234,
+    "detail_walk": 3.945862054824829,
+    "detail_target": 5.390836715698242,
+    "passes": 29
+   },
+   {
+    "pair": "0040",
+    "zone": "nave",
+    "lpips": 0.3211945593357086,
+    "absdiff": 16.17331314086914,
+    "detail_walk": 4.410872459411621,
+    "detail_target": 6.236741065979004,
+    "passes": 29
+   },
+   {
+    "pair": "0041",
+    "zone": "nave",
+    "lpips": 0.38031134009361267,
+    "absdiff": 17.27741813659668,
+    "detail_walk": 5.673137664794922,
+    "detail_target": 7.163724899291992,
+    "passes": 29
+   },
+   {
+    "pair": "0042",
+    "zone": "nave",
+    "lpips": 0.5089266300201416,
+    "absdiff": 19.32362937927246,
+    "detail_walk": 4.385921001434326,
+    "detail_target": 6.455463886260986,
+    "passes": 29
+   },
+   {
+    "pair": "0043",
+    "zone": "nave",
+    "lpips": 0.4276684522628784,
+    "absdiff": 14.959454536437988,
+    "detail_walk": 3.6550087928771973,
+    "detail_target": 5.9437665939331055,
+    "passes": 29
+   },
+   {
+    "pair": "0045",
+    "zone": "stacks",
+    "lpips": 0.41639232635498047,
+    "absdiff": 15.855712890625,
+    "detail_walk": 4.655375957489014,
+    "detail_target": 9.2843656539917,
+    "passes": 29
+   },
+   {
+    "pair": "0046",
+    "zone": "stacks",
+    "lpips": 0.4432070851325989,
+    "absdiff": 11.135343551635742,
+    "detail_walk": 3.2723984718322754,
+    "detail_target": 6.51723575592041,
+    "passes": 29
+   },
+   {
+    "pair": "0047",
+    "zone": "stacks",
+    "lpips": 0.5839447975158691,
+    "absdiff": 23.28458595275879,
+    "detail_walk": 4.460920333862305,
+    "detail_target": 11.557814598083496,
+    "passes": 29
+   },
+   {
+    "pair": "0048",
+    "zone": "stacks",
+    "lpips": 0.37445902824401855,
+    "absdiff": 14.487282752990723,
+    "detail_walk": 4.419874668121338,
+    "detail_target": 7.1940083503723145,
+    "passes": 29
+   },
+   {
+    "pair": "0049",
+    "zone": "stacks",
+    "lpips": 0.3311755061149597,
+    "absdiff": 6.723317623138428,
+    "detail_walk": 2.318920135498047,
+    "detail_target": 4.639638423919678,
+    "passes": 29
+   },
+   {
+    "pair": "0050",
+    "zone": "stacks",
+    "lpips": 0.23706841468811035,
+    "absdiff": 9.524523735046387,
+    "detail_walk": 2.1672255992889404,
+    "detail_target": 3.6640172004699707,
+    "passes": 28
+   },
+   {
+    "pair": "0051",
+    "zone": "stacks",
+    "lpips": 0.3241109251976013,
+    "absdiff": 12.215867042541504,
+    "detail_walk": 3.2009317874908447,
+    "detail_target": 6.383880615234375,
+    "passes": 29
+   },
+   {
+    "pair": "0052",
+    "zone": "stacks",
+    "lpips": 0.3135279417037964,
+    "absdiff": 12.055082321166992,
+    "detail_walk": 3.8030173778533936,
+    "detail_target": 5.87063455581665,
+    "passes": 29
+   },
+   {
+    "pair": "0053",
+    "zone": "stacks",
+    "lpips": 0.2461259961128235,
+    "absdiff": 9.933917045593262,
+    "detail_walk": 3.1948282718658447,
+    "detail_target": 5.722499847412109,
+    "passes": 28
+   },
+   {
+    "pair": "0054",
+    "zone": "stacks",
+    "lpips": 0.22622813284397125,
+    "absdiff": 9.449847221374512,
+    "detail_walk": 3.0078134536743164,
+    "detail_target": 5.25172233581543,
+    "passes": 26
+   },
+   {
+    "pair": "0055",
+    "zone": "stacks",
+    "lpips": 0.35236674547195435,
+    "absdiff": 9.217473983764648,
+    "detail_walk": 3.076019763946533,
+    "detail_target": 4.023796081542969,
+    "passes": 29
+   },
+   {
+    "pair": "0056",
+    "zone": "stacks",
+    "lpips": 0.5866150856018066,
+    "absdiff": 19.5568790435791,
+    "detail_walk": 2.263655185699463,
+    "detail_target": 5.085081100463867,
+    "passes": 29
+   },
+   {
+    "pair": "0057",
+    "zone": "stacks",
+    "lpips": 0.479030966758728,
+    "absdiff": 17.049402236938477,
+    "detail_walk": 3.366670608520508,
+    "detail_target": 8.201262474060059,
+    "passes": 29
+   },
+   {
+    "pair": "0058",
+    "zone": "stacks",
+    "lpips": 0.41202428936958313,
+    "absdiff": 14.581404685974121,
+    "detail_walk": 3.789921760559082,
+    "detail_target": 7.386263847351074,
+    "passes": 29
+   }
+  ]
+ },
+ "p2-nodeepcache": {
+  "all": {
+   "lpips": 0.2676255491375923,
+   "absdiff": 13.473812227249146,
+   "detail_walk": 5.169041533470153,
+   "detail_target": 6.85697238445282,
+   "n": 50
+  },
+  "zones": {
+   "nave": {
+    "lpips": 0.23841549570743853,
+    "absdiff": 11.969311640812801,
+    "detail_walk": 5.46139669418335,
+    "detail_target": 6.594727387795081,
+    "n": 26
+   },
+   "stacks": {
+    "lpips": 0.2981085640688737,
+    "absdiff": 10.018946210543314,
+    "detail_walk": 3.1216559211413064,
+    "detail_target": 6.054371535778046,
+    "n": 12
+   },
+   "vestibule": {
+    "lpips": 0.3004309833049774,
+    "absdiff": 20.18842951456706,
+    "detail_walk": 6.582990964253743,
+    "detail_target": 8.227770725886026,
+    "n": 12
+   }
+  },
+  "passes_median": 18.0,
+  "walk": {
+   "seconds": 44.847,
+   "kept": 52,
+   "results": 336,
+   "dreamsPerSecond": 7.492139942471068
+  },
+  "harvest": {
+   "engine": "torch-sd-turbo",
+   "depth_graft": 0.8,
+   "xframe": true,
+   "held_only": "",
+   "lora": null,
+   "speed": 3.4,
+   "every": 6,
+   "hold": 5,
+   "params": null,
+   "date": "2026-09-30T11:03:57.397Z"
+  },
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.3164825439453125,
+    "absdiff": 25.068214416503906,
+    "detail_walk": 7.264504432678223,
+    "detail_target": 10.510308265686035,
+    "passes": 18
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.24313640594482422,
+    "absdiff": 18.1547794342041,
+    "detail_walk": 7.303956031799316,
+    "detail_target": 7.143994331359863,
+    "passes": 18
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.40082257986068726,
+    "absdiff": 30.632251739501953,
+    "detail_walk": 8.44491195678711,
+    "detail_target": 9.943592071533203,
+    "passes": 18
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.30800074338912964,
+    "absdiff": 24.624074935913086,
+    "detail_walk": 8.487483978271484,
+    "detail_target": 8.032806396484375,
+    "passes": 18
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.27570587396621704,
+    "absdiff": 19.6039981842041,
+    "detail_walk": 6.874730110168457,
+    "detail_target": 7.159019470214844,
+    "passes": 18
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.2616949677467346,
+    "absdiff": 18.804594039916992,
+    "detail_walk": 6.109368324279785,
+    "detail_target": 8.217490196228027,
+    "passes": 18
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.28019484877586365,
+    "absdiff": 16.677101135253906,
+    "detail_walk": 5.77167272567749,
+    "detail_target": 8.069019317626953,
+    "passes": 18
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.27697673439979553,
+    "absdiff": 16.674671173095703,
+    "detail_walk": 5.858708381652832,
+    "detail_target": 7.23843240737915,
+    "passes": 18
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.19908657670021057,
+    "absdiff": 13.0933837890625,
+    "detail_walk": 5.671990871429443,
+    "detail_target": 7.713651180267334,
+    "passes": 18
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.2635957896709442,
+    "absdiff": 17.750530242919922,
+    "detail_walk": 5.6782073974609375,
+    "detail_target": 7.253170967102051,
+    "passes": 19
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.3346831500530243,
+    "absdiff": 20.652862548828125,
+    "detail_walk": 5.8123779296875,
+    "detail_target": 8.7933931350708,
+    "passes": 18
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.4447915852069855,
+    "absdiff": 20.52469253540039,
+    "detail_walk": 5.717979431152344,
+    "detail_target": 8.658370971679688,
+    "passes": 19
+   },
+   {
+    "pair": "0013",
+    "zone": "nave",
+    "lpips": 0.18003001809120178,
+    "absdiff": 11.24600601196289,
+    "detail_walk": 5.849090099334717,
+    "detail_target": 6.756050109863281,
+    "passes": 17
+   },
+   {
+    "pair": "0014",
+    "zone": "nave",
+    "lpips": 0.241301491856575,
+    "absdiff": 12.348575592041016,
+    "detail_walk": 6.316679954528809,
+    "detail_target": 7.515328407287598,
+    "passes": 18
+   },
+   {
+    "pair": "0015",
+    "zone": "nave",
+    "lpips": 0.16449615359306335,
+    "absdiff": 8.301896095275879,
+    "detail_walk": 5.352503299713135,
+    "detail_target": 5.4928083419799805,
+    "passes": 18
+   },
+   {
+    "pair": "0016",
+    "zone": "nave",
+    "lpips": 0.16802456974983215,
+    "absdiff": 8.948161125183105,
+    "detail_walk": 5.664812088012695,
+    "detail_target": 5.650887966156006,
+    "passes": 18
+   },
+   {
+    "pair": "0017",
+    "zone": "nave",
+    "lpips": 0.15460072457790375,
+    "absdiff": 8.013853073120117,
+    "detail_walk": 6.152344703674316,
+    "detail_target": 6.741040229797363,
+    "passes": 18
+   },
+   {
+    "pair": "0018",
+    "zone": "nave",
+    "lpips": 0.19275251030921936,
+    "absdiff": 11.825484275817871,
+    "detail_walk": 5.96031379699707,
+    "detail_target": 6.449765205383301,
+    "passes": 18
+   },
+   {
+    "pair": "0019",
+    "zone": "nave",
+    "lpips": 0.24985501170158386,
+    "absdiff": 12.024456977844238,
+    "detail_walk": 5.288053512573242,
+    "detail_target": 6.692296981811523,
+    "passes": 18
+   },
+   {
+    "pair": "0020",
+    "zone": "nave",
+    "lpips": 0.19674135744571686,
+    "absdiff": 10.611002922058105,
+    "detail_walk": 6.221235275268555,
+    "detail_target": 6.78873348236084,
+    "passes": 18
+   },
+   {
+    "pair": "0021",
+    "zone": "nave",
+    "lpips": 0.22603237628936768,
+    "absdiff": 13.51347827911377,
+    "detail_walk": 6.108067512512207,
+    "detail_target": 7.119917392730713,
+    "passes": 18
+   },
+   {
+    "pair": "0022",
+    "zone": "nave",
+    "lpips": 0.24858495593070984,
+    "absdiff": 11.950103759765625,
+    "detail_walk": 6.000170707702637,
+    "detail_target": 6.69732666015625,
+    "passes": 18
+   },
+   {
+    "pair": "0023",
+    "zone": "nave",
+    "lpips": 0.20608589053153992,
+    "absdiff": 11.124007225036621,
+    "detail_walk": 7.07396936416626,
+    "detail_target": 8.442038536071777,
+    "passes": 18
+   },
+   {
+    "pair": "0024",
+    "zone": "nave",
+    "lpips": 0.2738744020462036,
+    "absdiff": 15.114121437072754,
+    "detail_walk": 6.182441711425781,
+    "detail_target": 7.66806173324585,
+    "passes": 18
+   },
+   {
+    "pair": "0025",
+    "zone": "nave",
+    "lpips": 0.195329949259758,
+    "absdiff": 9.329024314880371,
+    "detail_walk": 6.090132713317871,
+    "detail_target": 6.0737409591674805,
+    "passes": 18
+   },
+   {
+    "pair": "0026",
+    "zone": "nave",
+    "lpips": 0.3152926564216614,
+    "absdiff": 14.670135498046875,
+    "detail_walk": 5.764293670654297,
+    "detail_target": 8.186853408813477,
+    "passes": 18
+   },
+   {
+    "pair": "0027",
+    "zone": "nave",
+    "lpips": 0.25473490357398987,
+    "absdiff": 11.688254356384277,
+    "detail_walk": 5.410061836242676,
+    "detail_target": 6.52847957611084,
+    "passes": 18
+   },
+   {
+    "pair": "0028",
+    "zone": "nave",
+    "lpips": 0.18792970478534698,
+    "absdiff": 9.454837799072266,
+    "detail_walk": 5.8437089920043945,
+    "detail_target": 6.2499871253967285,
+    "passes": 18
+   },
+   {
+    "pair": "0029",
+    "zone": "nave",
+    "lpips": 0.2363498955965042,
+    "absdiff": 13.004630088806152,
+    "detail_walk": 6.34427547454834,
+    "detail_target": 7.079482078552246,
+    "passes": 19
+   },
+   {
+    "pair": "0030",
+    "zone": "nave",
+    "lpips": 0.233538419008255,
+    "absdiff": 10.685564994812012,
+    "detail_walk": 5.766599178314209,
+    "detail_target": 6.409393310546875,
+    "passes": 18
+   },
+   {
+    "pair": "0031",
+    "zone": "nave",
+    "lpips": 0.22094416618347168,
+    "absdiff": 12.654438972473145,
+    "detail_walk": 5.534796237945557,
+    "detail_target": 7.1639251708984375,
+    "passes": 19
+   },
+   {
+    "pair": "0032",
+    "zone": "nave",
+    "lpips": 0.26726463437080383,
+    "absdiff": 13.726957321166992,
+    "detail_walk": 4.863271713256836,
+    "detail_target": 6.0448808670043945,
+    "passes": 18
+   },
+   {
+    "pair": "0033",
+    "zone": "nave",
+    "lpips": 0.280668705701828,
+    "absdiff": 13.011122703552246,
+    "detail_walk": 4.442008972167969,
+    "detail_target": 6.398224830627441,
+    "passes": 18
+   },
+   {
+    "pair": "0034",
+    "zone": "nave",
+    "lpips": 0.2701023817062378,
+    "absdiff": 14.130887985229492,
+    "detail_walk": 3.7355575561523438,
+    "detail_target": 5.146211624145508,
+    "passes": 18
+   },
+   {
+    "pair": "0035",
+    "zone": "nave",
+    "lpips": 0.28673845529556274,
+    "absdiff": 12.692818641662598,
+    "detail_walk": 4.007699966430664,
+    "detail_target": 5.57899284362793,
+    "passes": 18
+   },
+   {
+    "pair": "0036",
+    "zone": "nave",
+    "lpips": 0.30566370487213135,
+    "absdiff": 13.050887107849121,
+    "detail_walk": 5.189897537231445,
+    "detail_target": 6.419963836669922,
+    "passes": 18
+   },
+   {
+    "pair": "0037",
+    "zone": "nave",
+    "lpips": 0.2728182077407837,
+    "absdiff": 12.082830429077148,
+    "detail_walk": 3.475074291229248,
+    "detail_target": 5.720999717712402,
+    "passes": 18
+   },
+   {
+    "pair": "0038",
+    "zone": "nave",
+    "lpips": 0.3690476417541504,
+    "absdiff": 15.998565673828125,
+    "detail_walk": 3.3592538833618164,
+    "detail_target": 6.447521686553955,
+    "passes": 18
+   },
+   {
+    "pair": "0040",
+    "zone": "stacks",
+    "lpips": 0.3508453369140625,
+    "absdiff": 14.31562328338623,
+    "detail_walk": 4.1672563552856445,
+    "detail_target": 9.069905281066895,
+    "passes": 18
+   },
+   {
+    "pair": "0041",
+    "zone": "stacks",
+    "lpips": 0.3176421523094177,
+    "absdiff": 8.94489574432373,
+    "detail_walk": 3.2082929611206055,
+    "detail_target": 6.32345724105835,
+    "passes": 18
+   },
+   {
+    "pair": "0042",
+    "zone": "stacks",
+    "lpips": 0.3356666564941406,
+    "absdiff": 15.223982810974121,
+    "detail_walk": 4.960077285766602,
+    "detail_target": 9.25857925415039,
+    "passes": 19
+   },
+   {
+    "pair": "0043",
+    "zone": "stacks",
+    "lpips": 0.16870589554309845,
+    "absdiff": 5.0331645011901855,
+    "detail_walk": 2.6292874813079834,
+    "detail_target": 3.5448198318481445,
+    "passes": 19
+   },
+   {
+    "pair": "0044",
+    "zone": "stacks",
+    "lpips": 0.2506588101387024,
+    "absdiff": 4.709944725036621,
+    "detail_walk": 2.427976131439209,
+    "detail_target": 3.6965982913970947,
+    "passes": 18
+   },
+   {
+    "pair": "0045",
+    "zone": "stacks",
+    "lpips": 0.12760454416275024,
+    "absdiff": 4.434381008148193,
+    "detail_walk": 2.481520652770996,
+    "detail_target": 3.5135459899902344,
+    "passes": 19
+   },
+   {
+    "pair": "0046",
+    "zone": "stacks",
+    "lpips": 0.29383692145347595,
+    "absdiff": 10.770477294921875,
+    "detail_walk": 3.3658854961395264,
+    "detail_target": 7.157344341278076,
+    "passes": 19
+   },
+   {
+    "pair": "0047",
+    "zone": "stacks",
+    "lpips": 0.2977793514728546,
+    "absdiff": 10.858809471130371,
+    "detail_walk": 3.1563620567321777,
+    "detail_target": 5.056595802307129,
+    "passes": 19
+   },
+   {
+    "pair": "0048",
+    "zone": "stacks",
+    "lpips": 0.37003570795059204,
+    "absdiff": 11.133087158203125,
+    "detail_walk": 2.68820858001709,
+    "detail_target": 5.4053168296813965,
+    "passes": 18
+   },
+   {
+    "pair": "0049",
+    "zone": "stacks",
+    "lpips": 0.34453171491622925,
+    "absdiff": 7.7017292976379395,
+    "detail_walk": 2.936948776245117,
+    "detail_target": 5.453746795654297,
+    "passes": 18
+   },
+   {
+    "pair": "0050",
+    "zone": "stacks",
+    "lpips": 0.34088069200515747,
+    "absdiff": 10.995357513427734,
+    "detail_walk": 2.442265510559082,
+    "detail_target": 7.049466609954834,
+    "passes": 19
+   },
+   {
+    "pair": "0051",
+    "zone": "stacks",
+    "lpips": 0.3791149854660034,
+    "absdiff": 16.10590171813965,
+    "detail_walk": 2.9957897663116455,
+    "detail_target": 7.123082160949707,
+    "passes": 18
+   }
+  ]
+ },
+ "p3-neither": {
+  "all": {
+   "lpips": 0.23369588459340426,
+   "absdiff": 11.392710300592276,
+   "detail_walk": 5.016291943880228,
+   "detail_target": 6.799845282848064,
+   "n": 52
+  },
+  "zones": {
+   "nave": {
+    "lpips": 0.20256924027433762,
+    "absdiff": 10.1472678734706,
+    "detail_walk": 5.328939474545992,
+    "detail_target": 6.734910047971285,
+    "n": 26
+   },
+   "stacks": {
+    "lpips": 0.2780954104203444,
+    "absdiff": 9.15925014936007,
+    "detail_walk": 3.2592093577751746,
+    "detail_target": 5.955299340761625,
+    "n": 13
+   },
+   "vestibule": {
+    "lpips": 0.25154964740459734,
+    "absdiff": 16.117055306067833,
+    "detail_walk": 6.148079468653752,
+    "detail_target": 7.774261694688064,
+    "n": 13
+   }
+  },
+  "passes_median": 28.0,
+  "walk": {
+   "seconds": 44.827,
+   "kept": 52,
+   "results": 334,
+   "dreamsPerSecond": 7.450866665179468
+  },
+  "harvest": {
+   "engine": "torch-sd-turbo",
+   "depth_graft": 0.8,
+   "xframe": true,
+   "held_only": "both",
+   "lora": null,
+   "speed": 3.4,
+   "every": 6,
+   "hold": 5,
+   "params": "look=fresh",
+   "date": "2026-09-30T13:04:39.800Z"
+  },
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.30898141860961914,
+    "absdiff": 23.212350845336914,
+    "detail_walk": 6.535823822021484,
+    "detail_target": 9.94192123413086,
+    "passes": 27
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.28493988513946533,
+    "absdiff": 20.469411849975586,
+    "detail_walk": 7.178223133087158,
+    "detail_target": 8.423707962036133,
+    "passes": 28
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.35755839943885803,
+    "absdiff": 24.663230895996094,
+    "detail_walk": 8.157209396362305,
+    "detail_target": 10.561631202697754,
+    "passes": 29
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.29541489481925964,
+    "absdiff": 20.890722274780273,
+    "detail_walk": 6.611719131469727,
+    "detail_target": 8.829486846923828,
+    "passes": 28
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.20120559632778168,
+    "absdiff": 16.829065322875977,
+    "detail_walk": 7.315595626831055,
+    "detail_target": 6.258228302001953,
+    "passes": 28
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.18610332906246185,
+    "absdiff": 14.738866806030273,
+    "detail_walk": 5.559927940368652,
+    "detail_target": 7.319150924682617,
+    "passes": 28
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.2126525640487671,
+    "absdiff": 12.612326622009277,
+    "detail_walk": 5.741602897644043,
+    "detail_target": 6.982531547546387,
+    "passes": 27
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.21703994274139404,
+    "absdiff": 12.144775390625,
+    "detail_walk": 6.6390275955200195,
+    "detail_target": 6.294244766235352,
+    "passes": 27
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.20195424556732178,
+    "absdiff": 11.41632080078125,
+    "detail_walk": 5.568729400634766,
+    "detail_target": 7.961347579956055,
+    "passes": 29
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.2240944355726242,
+    "absdiff": 13.737317085266113,
+    "detail_walk": 6.014910697937012,
+    "detail_target": 7.83540153503418,
+    "passes": 27
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.2149425446987152,
+    "absdiff": 14.018245697021484,
+    "detail_walk": 5.43150520324707,
+    "detail_target": 7.948655128479004,
+    "passes": 28
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.3502159118652344,
+    "absdiff": 13.358209609985352,
+    "detail_walk": 5.082057952880859,
+    "detail_target": 7.590709686279297,
+    "passes": 29
+   },
+   {
+    "pair": "0012",
+    "zone": "vestibule",
+    "lpips": 0.21504224836826324,
+    "absdiff": 11.430875778198242,
+    "detail_walk": 4.088700294494629,
+    "detail_target": 5.118385314941406,
+    "passes": 29
+   },
+   {
+    "pair": "0013",
+    "zone": "nave",
+    "lpips": 0.14005576074123383,
+    "absdiff": 8.982423782348633,
+    "detail_walk": 5.669393539428711,
+    "detail_target": 6.93029260635376,
+    "passes": 29
+   },
+   {
+    "pair": "0014",
+    "zone": "nave",
+    "lpips": 0.15915164351463318,
+    "absdiff": 9.662443161010742,
+    "detail_walk": 6.336760520935059,
+    "detail_target": 7.4297637939453125,
+    "passes": 29
+   },
+   {
+    "pair": "0015",
+    "zone": "nave",
+    "lpips": 0.11413121968507767,
+    "absdiff": 6.676179885864258,
+    "detail_walk": 5.522233009338379,
+    "detail_target": 5.714212417602539,
+    "passes": 28
+   },
+   {
+    "pair": "0016",
+    "zone": "nave",
+    "lpips": 0.09594380855560303,
+    "absdiff": 6.9874958992004395,
+    "detail_walk": 5.430448532104492,
+    "detail_target": 6.527551651000977,
+    "passes": 28
+   },
+   {
+    "pair": "0017",
+    "zone": "nave",
+    "lpips": 0.1306448131799698,
+    "absdiff": 6.522678852081299,
+    "detail_walk": 5.635120391845703,
+    "detail_target": 6.714831352233887,
+    "passes": 28
+   },
+   {
+    "pair": "0018",
+    "zone": "nave",
+    "lpips": 0.2363726645708084,
+    "absdiff": 12.885331153869629,
+    "detail_walk": 5.828753471374512,
+    "detail_target": 6.860574722290039,
+    "passes": 28
+   },
+   {
+    "pair": "0019",
+    "zone": "nave",
+    "lpips": 0.2140231728553772,
+    "absdiff": 10.792223930358887,
+    "detail_walk": 5.454291343688965,
+    "detail_target": 6.379404067993164,
+    "passes": 28
+   },
+   {
+    "pair": "0020",
+    "zone": "nave",
+    "lpips": 0.13989605009555817,
+    "absdiff": 7.642401218414307,
+    "detail_walk": 6.159761428833008,
+    "detail_target": 6.834603309631348,
+    "passes": 28
+   },
+   {
+    "pair": "0021",
+    "zone": "nave",
+    "lpips": 0.24833405017852783,
+    "absdiff": 13.847661972045898,
+    "detail_walk": 5.667042255401611,
+    "detail_target": 7.116877555847168,
+    "passes": 28
+   },
+   {
+    "pair": "0022",
+    "zone": "nave",
+    "lpips": 0.21547317504882812,
+    "absdiff": 10.380080223083496,
+    "detail_walk": 5.510497093200684,
+    "detail_target": 7.311774253845215,
+    "passes": 29
+   },
+   {
+    "pair": "0023",
+    "zone": "nave",
+    "lpips": 0.23283874988555908,
+    "absdiff": 12.786337852478027,
+    "detail_walk": 6.7077412605285645,
+    "detail_target": 8.591386795043945,
+    "passes": 27
+   },
+   {
+    "pair": "0024",
+    "zone": "nave",
+    "lpips": 0.18547794222831726,
+    "absdiff": 10.70278549194336,
+    "detail_walk": 6.255461692810059,
+    "detail_target": 7.156196594238281,
+    "passes": 28
+   },
+   {
+    "pair": "0025",
+    "zone": "nave",
+    "lpips": 0.16340017318725586,
+    "absdiff": 8.15203857421875,
+    "detail_walk": 6.359617233276367,
+    "detail_target": 6.321338653564453,
+    "passes": 28
+   },
+   {
+    "pair": "0026",
+    "zone": "nave",
+    "lpips": 0.1750335395336151,
+    "absdiff": 8.64427661895752,
+    "detail_walk": 5.760498046875,
+    "detail_target": 7.62746524810791,
+    "passes": 29
+   },
+   {
+    "pair": "0027",
+    "zone": "nave",
+    "lpips": 0.2350633293390274,
+    "absdiff": 9.778151512145996,
+    "detail_walk": 5.257805824279785,
+    "detail_target": 7.001304626464844,
+    "passes": 28
+   },
+   {
+    "pair": "0028",
+    "zone": "nave",
+    "lpips": 0.20079752802848816,
+    "absdiff": 9.496447563171387,
+    "detail_walk": 5.875890731811523,
+    "detail_target": 6.433608055114746,
+    "passes": 29
+   },
+   {
+    "pair": "0029",
+    "zone": "nave",
+    "lpips": 0.27336084842681885,
+    "absdiff": 15.785425186157227,
+    "detail_walk": 5.772703170776367,
+    "detail_target": 7.701048851013184,
+    "passes": 28
+   },
+   {
+    "pair": "0030",
+    "zone": "nave",
+    "lpips": 0.21081504225730896,
+    "absdiff": 9.05392837524414,
+    "detail_walk": 5.182319641113281,
+    "detail_target": 6.459550380706787,
+    "passes": 28
+   },
+   {
+    "pair": "0031",
+    "zone": "nave",
+    "lpips": 0.22128081321716309,
+    "absdiff": 11.148520469665527,
+    "detail_walk": 5.34264612197876,
+    "detail_target": 7.271676540374756,
+    "passes": 29
+   },
+   {
+    "pair": "0032",
+    "zone": "nave",
+    "lpips": 0.2208247035741806,
+    "absdiff": 10.69522476196289,
+    "detail_walk": 4.639245986938477,
+    "detail_target": 5.983374118804932,
+    "passes": 28
+   },
+   {
+    "pair": "0033",
+    "zone": "nave",
+    "lpips": 0.24626734852790833,
+    "absdiff": 10.004225730895996,
+    "detail_walk": 4.20753812789917,
+    "detail_target": 6.270425796508789,
+    "passes": 27
+   },
+   {
+    "pair": "0034",
+    "zone": "nave",
+    "lpips": 0.2120015174150467,
+    "absdiff": 10.400004386901855,
+    "detail_walk": 3.601193904876709,
+    "detail_target": 5.283729553222656,
+    "passes": 29
+   },
+   {
+    "pair": "0035",
+    "zone": "nave",
+    "lpips": 0.20393259823322296,
+    "absdiff": 9.508187294006348,
+    "detail_walk": 4.444057464599609,
+    "detail_target": 5.958920478820801,
+    "passes": 28
+   },
+   {
+    "pair": "0036",
+    "zone": "nave",
+    "lpips": 0.3078139126300812,
+    "absdiff": 14.030259132385254,
+    "detail_walk": 4.840391159057617,
+    "detail_target": 6.710939884185791,
+    "passes": 29
+   },
+   {
+    "pair": "0037",
+    "zone": "nave",
+    "lpips": 0.19415442645549774,
+    "absdiff": 10.373716354370117,
+    "detail_walk": 3.6173901557922363,
+    "detail_target": 6.181851863861084,
+    "passes": 29
+   },
+   {
+    "pair": "0038",
+    "zone": "nave",
+    "lpips": 0.2897114157676697,
+    "absdiff": 8.890515327453613,
+    "detail_walk": 3.4736242294311523,
+    "detail_target": 6.334958076477051,
+    "passes": 29
+   },
+   {
+    "pair": "0039",
+    "zone": "stacks",
+    "lpips": 0.40074002742767334,
+    "absdiff": 11.460061073303223,
+    "detail_walk": 3.450039863586426,
+    "detail_target": 8.441278457641602,
+    "passes": 28
+   },
+   {
+    "pair": "0040",
+    "zone": "stacks",
+    "lpips": 0.3141685426235199,
+    "absdiff": 12.696824073791504,
+    "detail_walk": 4.257353782653809,
+    "detail_target": 8.194572448730469,
+    "passes": 27
+   },
+   {
+    "pair": "0041",
+    "zone": "stacks",
+    "lpips": 0.3025338351726532,
+    "absdiff": 7.454097270965576,
+    "detail_walk": 3.154510259628296,
+    "detail_target": 5.952048301696777,
+    "passes": 28
+   },
+   {
+    "pair": "0042",
+    "zone": "stacks",
+    "lpips": 0.26604026556015015,
+    "absdiff": 10.957781791687012,
+    "detail_walk": 5.194892883300781,
+    "detail_target": 8.509201049804688,
+    "passes": 28
+   },
+   {
+    "pair": "0043",
+    "zone": "stacks",
+    "lpips": 0.1334049254655838,
+    "absdiff": 4.0961222648620605,
+    "detail_walk": 2.5347352027893066,
+    "detail_target": 3.365042209625244,
+    "passes": 28
+   },
+   {
+    "pair": "0044",
+    "zone": "stacks",
+    "lpips": 0.2315976917743683,
+    "absdiff": 4.422287940979004,
+    "detail_walk": 2.46987247467041,
+    "detail_target": 3.7676496505737305,
+    "passes": 29
+   },
+   {
+    "pair": "0045",
+    "zone": "stacks",
+    "lpips": 0.11180588603019714,
+    "absdiff": 4.099261283874512,
+    "detail_walk": 2.874131679534912,
+    "detail_target": 3.922882080078125,
+    "passes": 29
+   },
+   {
+    "pair": "0046",
+    "zone": "stacks",
+    "lpips": 0.2563781142234802,
+    "absdiff": 6.535638332366943,
+    "detail_walk": 3.444823741912842,
+    "detail_target": 5.269126892089844,
+    "passes": 29
+   },
+   {
+    "pair": "0047",
+    "zone": "stacks",
+    "lpips": 0.21525026857852936,
+    "absdiff": 8.065268516540527,
+    "detail_walk": 3.136490821838379,
+    "detail_target": 5.145989894866943,
+    "passes": 29
+   },
+   {
+    "pair": "0048",
+    "zone": "stacks",
+    "lpips": 0.29433995485305786,
+    "absdiff": 8.22221851348877,
+    "detail_walk": 2.9062342643737793,
+    "detail_target": 4.59847354888916,
+    "passes": 28
+   },
+   {
+    "pair": "0049",
+    "zone": "stacks",
+    "lpips": 0.44920653104782104,
+    "absdiff": 15.651627540588379,
+    "detail_walk": 2.5101675987243652,
+    "detail_target": 5.192422866821289,
+    "passes": 28
+   },
+   {
+    "pair": "0050",
+    "zone": "stacks",
+    "lpips": 0.32958295941352844,
+    "absdiff": 12.054520606994629,
+    "detail_walk": 3.0590782165527344,
+    "detail_target": 7.279673099517822,
+    "passes": 29
+   },
+   {
+    "pair": "0051",
+    "zone": "stacks",
+    "lpips": 0.3101913332939148,
+    "absdiff": 13.35454273223877,
+    "detail_walk": 3.3773908615112305,
+    "detail_target": 7.78053092956543,
+    "passes": 29
+   }
+  ]
+ },
+ "p4-fresh": {
+  "all": {
+   "lpips": 0.2813683924626331,
+   "absdiff": 13.785608096998565,
+   "detail_walk": 5.20939530645098,
+   "detail_target": 6.806181727623453,
+   "n": 49
+  },
+  "zones": {
+   "nave": {
+    "lpips": 0.24404561817646026,
+    "absdiff": 12.008094177246093,
+    "detail_walk": 5.4969403934478756,
+    "detail_target": 6.5473426246643065,
+    "n": 25
+   },
+   "stacks": {
+    "lpips": 0.3283817445238431,
+    "absdiff": 10.37405832608541,
+    "detail_walk": 3.298222780227661,
+    "detail_target": 6.312463382879893,
+    "n": 12
+   },
+   "vestibule": {
+    "lpips": 0.3121108201642831,
+    "absdiff": 20.900311867396038,
+    "detail_walk": 6.521515568097432,
+    "detail_target": 7.839148203531901,
+    "n": 12
+   }
+  },
+  "passes_median": 28.0,
+  "walk": {
+   "seconds": 44.867,
+   "kept": 50,
+   "results": 327,
+   "dreamsPerSecond": 7.288207368444514
+  },
+  "harvest": {
+   "engine": "torch-sd-turbo",
+   "depth_graft": 0.8,
+   "xframe": true,
+   "held_only": "deepcache",
+   "lora": null,
+   "speed": 3.4,
+   "every": 6,
+   "hold": 5,
+   "params": "look=fresh",
+   "date": "2026-09-30T12:53:24.083Z"
+  },
+  "pairs": [
+   {
+    "pair": "0000",
+    "zone": "vestibule",
+    "lpips": 0.2335928976535797,
+    "absdiff": 22.580965042114258,
+    "detail_walk": 7.388318061828613,
+    "detail_target": 8.557408332824707,
+    "passes": 28
+   },
+   {
+    "pair": "0001",
+    "zone": "vestibule",
+    "lpips": 0.325999915599823,
+    "absdiff": 25.43558692932129,
+    "detail_walk": 7.328216552734375,
+    "detail_target": 8.502874374389648,
+    "passes": 28
+   },
+   {
+    "pair": "0002",
+    "zone": "vestibule",
+    "lpips": 0.39821770787239075,
+    "absdiff": 29.123485565185547,
+    "detail_walk": 8.666015625,
+    "detail_target": 10.17700481414795,
+    "passes": 28
+   },
+   {
+    "pair": "0003",
+    "zone": "vestibule",
+    "lpips": 0.27982082962989807,
+    "absdiff": 22.84209442138672,
+    "detail_walk": 8.200573921203613,
+    "detail_target": 7.038369178771973,
+    "passes": 26
+   },
+   {
+    "pair": "0004",
+    "zone": "vestibule",
+    "lpips": 0.34766846895217896,
+    "absdiff": 21.95865249633789,
+    "detail_walk": 6.400668144226074,
+    "detail_target": 6.463746547698975,
+    "passes": 27
+   },
+   {
+    "pair": "0005",
+    "zone": "vestibule",
+    "lpips": 0.24371092021465302,
+    "absdiff": 16.639232635498047,
+    "detail_walk": 6.378079414367676,
+    "detail_target": 6.425057888031006,
+    "passes": 28
+   },
+   {
+    "pair": "0006",
+    "zone": "vestibule",
+    "lpips": 0.3757022023200989,
+    "absdiff": 20.44577407836914,
+    "detail_walk": 6.259258270263672,
+    "detail_target": 8.910131454467773,
+    "passes": 28
+   },
+   {
+    "pair": "0007",
+    "zone": "vestibule",
+    "lpips": 0.22513407468795776,
+    "absdiff": 13.116320610046387,
+    "detail_walk": 5.802915573120117,
+    "detail_target": 5.689413070678711,
+    "passes": 28
+   },
+   {
+    "pair": "0008",
+    "zone": "vestibule",
+    "lpips": 0.23494595289230347,
+    "absdiff": 18.357337951660156,
+    "detail_walk": 5.234715461730957,
+    "detail_target": 8.345512390136719,
+    "passes": 29
+   },
+   {
+    "pair": "0009",
+    "zone": "vestibule",
+    "lpips": 0.28328514099121094,
+    "absdiff": 19.96819305419922,
+    "detail_walk": 5.8158745765686035,
+    "detail_target": 8.388956069946289,
+    "passes": 27
+   },
+   {
+    "pair": "0010",
+    "zone": "vestibule",
+    "lpips": 0.4119230806827545,
+    "absdiff": 21.065448760986328,
+    "detail_walk": 5.278728485107422,
+    "detail_target": 7.804718971252441,
+    "passes": 26
+   },
+   {
+    "pair": "0011",
+    "zone": "vestibule",
+    "lpips": 0.38532865047454834,
+    "absdiff": 19.27065086364746,
+    "detail_walk": 5.504822731018066,
+    "detail_target": 7.766585350036621,
+    "passes": 29
+   },
+   {
+    "pair": "0013",
+    "zone": "nave",
+    "lpips": 0.18017016351222992,
+    "absdiff": 10.755067825317383,
+    "detail_walk": 7.063197135925293,
+    "detail_target": 7.745063781738281,
+    "passes": 28
+   },
+   {
+    "pair": "0014",
+    "zone": "nave",
+    "lpips": 0.24324332177639008,
+    "absdiff": 14.466497421264648,
+    "detail_walk": 6.593142509460449,
+    "detail_target": 6.526532173156738,
+    "passes": 29
+   },
+   {
+    "pair": "0015",
+    "zone": "nave",
+    "lpips": 0.17578727006912231,
+    "absdiff": 10.590044975280762,
+    "detail_walk": 5.703646183013916,
+    "detail_target": 5.771365165710449,
+    "passes": 29
+   },
+   {
+    "pair": "0016",
+    "zone": "nave",
+    "lpips": 0.20821541547775269,
+    "absdiff": 13.816210746765137,
+    "detail_walk": 5.691837310791016,
+    "detail_target": 6.990832328796387,
+    "passes": 28
+   },
+   {
+    "pair": "0017",
+    "zone": "nave",
+    "lpips": 0.17288218438625336,
+    "absdiff": 10.103948593139648,
+    "detail_walk": 5.854849338531494,
+    "detail_target": 5.974953651428223,
+    "passes": 29
+   },
+   {
+    "pair": "0018",
+    "zone": "nave",
+    "lpips": 0.2423066347837448,
+    "absdiff": 12.262937545776367,
+    "detail_walk": 6.295527458190918,
+    "detail_target": 5.875848293304443,
+    "passes": 26
+   },
+   {
+    "pair": "0019",
+    "zone": "nave",
+    "lpips": 0.26838669180870056,
+    "absdiff": 14.410894393920898,
+    "detail_walk": 6.021178245544434,
+    "detail_target": 6.691186428070068,
+    "passes": 25
+   },
+   {
+    "pair": "0020",
+    "zone": "nave",
+    "lpips": 0.24580779671669006,
+    "absdiff": 15.062972068786621,
+    "detail_walk": 6.480779647827148,
+    "detail_target": 9.083879470825195,
+    "passes": 27
+   },
+   {
+    "pair": "0021",
+    "zone": "nave",
+    "lpips": 0.24320076406002045,
+    "absdiff": 10.782118797302246,
+    "detail_walk": 5.984334468841553,
+    "detail_target": 6.384486198425293,
+    "passes": 28
+   },
+   {
+    "pair": "0022",
+    "zone": "nave",
+    "lpips": 0.2557275593280792,
+    "absdiff": 13.509564399719238,
+    "detail_walk": 6.0673322677612305,
+    "detail_target": 7.383049964904785,
+    "passes": 27
+   },
+   {
+    "pair": "0023",
+    "zone": "nave",
+    "lpips": 0.2581717073917389,
+    "absdiff": 14.28648853302002,
+    "detail_walk": 6.248793601989746,
+    "detail_target": 6.90655517578125,
+    "passes": 28
+   },
+   {
+    "pair": "0024",
+    "zone": "nave",
+    "lpips": 0.23129573464393616,
+    "absdiff": 12.607477188110352,
+    "detail_walk": 5.869375228881836,
+    "detail_target": 6.253811836242676,
+    "passes": 28
+   },
+   {
+    "pair": "0025",
+    "zone": "nave",
+    "lpips": 0.19116495549678802,
+    "absdiff": 10.316000938415527,
+    "detail_walk": 6.096257209777832,
+    "detail_target": 7.720945358276367,
+    "passes": 28
+   },
+   {
+    "pair": "0026",
+    "zone": "nave",
+    "lpips": 0.22435763478279114,
+    "absdiff": 10.708151817321777,
+    "detail_walk": 6.219663619995117,
+    "detail_target": 6.993474960327148,
+    "passes": 29
+   },
+   {
+    "pair": "0027",
+    "zone": "nave",
+    "lpips": 0.22277307510375977,
+    "absdiff": 11.032167434692383,
+    "detail_walk": 6.188406467437744,
+    "detail_target": 6.739083766937256,
+    "passes": 26
+   },
+   {
+    "pair": "0028",
+    "zone": "nave",
+    "lpips": 0.23938623070716858,
+    "absdiff": 11.235721588134766,
+    "detail_walk": 6.2821455001831055,
+    "detail_target": 6.91160249710083,
+    "passes": 26
+   },
+   {
+    "pair": "0029",
+    "zone": "nave",
+    "lpips": 0.24035626649856567,
+    "absdiff": 10.693184852600098,
+    "detail_walk": 5.716422080993652,
+    "detail_target": 6.336795806884766,
+    "passes": 28
+   },
+   {
+    "pair": "0030",
+    "zone": "nave",
+    "lpips": 0.21734945476055145,
+    "absdiff": 12.421435356140137,
+    "detail_walk": 5.4564008712768555,
+    "detail_target": 7.0322651863098145,
+    "passes": 27
+   },
+   {
+    "pair": "0031",
+    "zone": "nave",
+    "lpips": 0.26144829392433167,
+    "absdiff": 10.353937149047852,
+    "detail_walk": 4.787023544311523,
+    "detail_target": 5.615412712097168,
+    "passes": 29
+   },
+   {
+    "pair": "0032",
+    "zone": "nave",
+    "lpips": 0.25885260105133057,
+    "absdiff": 10.72584056854248,
+    "detail_walk": 4.189087867736816,
+    "detail_target": 6.350115776062012,
+    "passes": 28
+   },
+   {
+    "pair": "0033",
+    "zone": "nave",
+    "lpips": 0.2686450481414795,
+    "absdiff": 11.03741455078125,
+    "detail_walk": 3.617365598678589,
+    "detail_target": 5.790386199951172,
+    "passes": 29
+   },
+   {
+    "pair": "0034",
+    "zone": "nave",
+    "lpips": 0.313206285238266,
+    "absdiff": 12.672121047973633,
+    "detail_walk": 4.1382060050964355,
+    "detail_target": 6.4694085121154785,
+    "passes": 25
+   },
+   {
+    "pair": "0035",
+    "zone": "nave",
+    "lpips": 0.3236449956893921,
+    "absdiff": 14.337526321411133,
+    "detail_walk": 4.4857940673828125,
+    "detail_target": 5.27360725402832,
+    "passes": 27
+   },
+   {
+    "pair": "0036",
+    "zone": "nave",
+    "lpips": 0.2151273488998413,
+    "absdiff": 10.507814407348633,
+    "detail_walk": 2.832853078842163,
+    "detail_target": 4.399532794952393,
+    "passes": 27
+   },
+   {
+    "pair": "0037",
+    "zone": "nave",
+    "lpips": 0.3996330201625824,
+    "absdiff": 11.506815910339355,
+    "detail_walk": 3.5398905277252197,
+    "detail_target": 6.463370323181152,
+    "passes": 28
+   },
+   {
+    "pair": "0038",
+    "zone": "stacks",
+    "lpips": 0.38847097754478455,
+    "absdiff": 11.295045852661133,
+    "detail_walk": 3.480623960494995,
+    "detail_target": 9.056841850280762,
+    "passes": 28
+   },
+   {
+    "pair": "0039",
+    "zone": "stacks",
+    "lpips": 0.3075476884841919,
+    "absdiff": 11.710695266723633,
+    "detail_walk": 3.7432701587677,
+    "detail_target": 6.544397354125977,
+    "passes": 28
+   },
+   {
+    "pair": "0040",
+    "zone": "stacks",
+    "lpips": 0.4804650843143463,
+    "absdiff": 16.524173736572266,
+    "detail_walk": 5.060718536376953,
+    "detail_target": 9.303886413574219,
+    "passes": 28
+   },
+   {
+    "pair": "0041",
+    "zone": "stacks",
+    "lpips": 0.3161422908306122,
+    "absdiff": 9.878342628479004,
+    "detail_walk": 4.632996559143066,
+    "detail_target": 8.014278411865234,
+    "passes": 27
+   },
+   {
+    "pair": "0042",
+    "zone": "stacks",
+    "lpips": 0.2593875229358673,
+    "absdiff": 5.218976020812988,
+    "detail_walk": 2.4667296409606934,
+    "detail_target": 3.892075777053833,
+    "passes": 28
+   },
+   {
+    "pair": "0043",
+    "zone": "stacks",
+    "lpips": 0.1677846610546112,
+    "absdiff": 7.357450485229492,
+    "detail_walk": 2.372770309448242,
+    "detail_target": 3.3937368392944336,
+    "passes": 27
+   },
+   {
+    "pair": "0044",
+    "zone": "stacks",
+    "lpips": 0.22675424814224243,
+    "absdiff": 8.445723533630371,
+    "detail_walk": 4.008947372436523,
+    "detail_target": 5.066690444946289,
+    "passes": 28
+   },
+   {
+    "pair": "0045",
+    "zone": "stacks",
+    "lpips": 0.18853390216827393,
+    "absdiff": 5.581298828125,
+    "detail_walk": 3.145319938659668,
+    "detail_target": 4.624737739562988,
+    "passes": 29
+   },
+   {
+    "pair": "0046",
+    "zone": "stacks",
+    "lpips": 0.35496634244918823,
+    "absdiff": 9.544205665588379,
+    "detail_walk": 2.6738076210021973,
+    "detail_target": 4.889686584472656,
+    "passes": 28
+   },
+   {
+    "pair": "0047",
+    "zone": "stacks",
+    "lpips": 0.4324304461479187,
+    "absdiff": 11.90105152130127,
+    "detail_walk": 2.861705780029297,
+    "detail_target": 5.397408485412598,
+    "passes": 28
+   },
+   {
+    "pair": "0048",
+    "zone": "stacks",
+    "lpips": 0.412773072719574,
+    "absdiff": 11.116497993469238,
+    "detail_walk": 2.386045455932617,
+    "detail_target": 7.117880821228027,
+    "passes": 28
+   },
+   {
+    "pair": "0049",
+    "zone": "stacks",
+    "lpips": 0.40532469749450684,
+    "absdiff": 15.915238380432129,
+    "detail_walk": 2.7457380294799805,
+    "detail_target": 8.4479398727417,
+    "passes": 28
+   }
+  ]
+ }
+}

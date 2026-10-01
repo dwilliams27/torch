@@ -23,6 +23,22 @@ Speed tricks, all measured on MPS:
     fine structure tracks the current frame; only deep semantics lag <= N-1 frames -- which
     measurably *reduces* frame-to-frame flicker (bench/temporal.py).
   * lean UNet forward (no diffusers bookkeeping), cross-attn K/V cached per conditioning.
+  * Cross-frame attention (xframe, on by default, +2% at 512x320): self-attention also sees
+    the previous frame's K/V at each layer, per prompt + seed, so the dream keeps what it
+    just painted instead of re-inventing it while the camera moves (the client gives narrow
+    and wide captures their own seed, so each follows its own last picture). Frames from
+    two clients in the same zone share the anchor.
+  * Depth graft (depth_graft, 0.8 by default): the UNet becomes SD-Turbo + 0.8 x (SD2-depth -
+    SD2-base), with SD2-depth's fifth conv_in channel taking the game's depth (relative inverse
+    depth at latent size, [-1, 1], near = 1; the client sends it with each frame). Stock
+    SD-Turbo at strength 0.6 paints over geometry whose tone matches its background (a pillar
+    in front of a stone wall vanished); with the graft it paints the pillar, and flipped depth
+    moves it (bench/depth_graft.py). Nothing is trained, and the frame cost is one more input
+    channel in the first convolution (~7M multiply-adds at 512x320, against ~200 billion for
+    the UNet). DeepCache's cheap passes run conv_in and the top level, so those see each
+    frame's depth; the deep levels lag up to N-1 frames as usual. A frame without depth
+    reuses its stream's last depth (a failed readback), else gets flat depth, which paints
+    muddier than stock.
   * Tried and rejected: channels_last (+33%), torch.compile/inductor-MPS (+43%), SDXS (fast
     but its 1-step UNet can't do img2img), linear patch encoder (free but blurs structure).
 
@@ -64,7 +80,18 @@ cfg keys: model, width, height, device, dtype('fp16'|'fp32'|'bf16'),
                     which a full pass is forced -- fast look-around recomputes; default 3),
           dc_motion(bool, translate the cached deep features by that shift instead; better edge alignment
                     but smears newly revealed borders -- off by default),
-          encoder('taesd' | 'linear' = least-squares 8x8-patch encoder, ~free, see bench/fit_linear_encoder.py)
+          encoder('taesd' | 'linear' = least-squares 8x8-patch encoder, ~free, see bench/fit_linear_encoder.py),
+          xframe(int, cross-frame attention to the previous frame of the same prompt + seed; default 1; 0 = off),
+          xframe_bias(float, logit bias on the previous frame's tokens; default 0; negative = lean on it less),
+          depth_graft(float lambda for SD2-depth's difference, sd-turbo only; default 0.8; 0 = off; first use
+                      downloads two 1.7 GB fp16 UNets into the Hugging Face cache),
+          lora(path to a .safetensors LoRA from bench/one_pass.py, merged into the UNet at load: no cost
+               per frame; default none), lora_scale(float, default 1),
+          held_only(1 = a frame that doesn't repeat the last framing painted on its stream (process(held=False),
+                    from the header's framing id `kf`) gets a plain full pass, without DeepCache reuse or
+                    cross-frame attention; "xframe" or "deepcache" = only that one; 0 = off. Default
+                    "deepcache", acting only on frames whose client sends framing ids as `kf` (the fresh look):
+                    it keeps cross-frame attention, which holds walking flicker where it was)
 """
 from __future__ import annotations
 
@@ -90,6 +117,11 @@ PRESETS = {
     "sd-turbo": dict(repo="stabilityai/sd-turbo", vae="taesd", native=512, variant="fp16"),
 }
 TAESD_REPO = "madebyollin/taesd"
+# depth graft sources: SD2-depth, and the base it was resumed from (Stability's SD 2.x repos are
+# deprecated; these are community mirrors of the same weights, pinned to the revisions tested)
+DEPTH_REPO, DEPTH_REV = "sd2-community/stable-diffusion-2-depth", "6cb92dd9430a7f6da8d9e99d7b60acdebcc348b7"
+DEPTH_BASE_REPO, DEPTH_BASE_REV = "sd2-community/stable-diffusion-2-base", "f5bc1bd97485577aa0b946fa8a9004e2ec147402"
+DEPTH_KEEP = 12        # engine frames (all streams) a stream's last depth stands in for a frame without one
 
 
 def _pick_device(req: str | None) -> str:
@@ -129,6 +161,44 @@ def _sync(device: str):
         torch.cuda.synchronize()
 
 
+def graft_depth(unet, lam: float) -> None:
+    """In place: an SD-Turbo UNet becomes SD-Turbo + lam x (SD2-depth - SD2-base), and conv_in gains
+    SD2-depth's fifth (depth) input channel. Every merged tensor is built (on the CPU, one at a
+    time from the files) and checked before any parameter changes, so a failure (raised) leaves
+    the UNet intact. Shared with bench/coreml/convert.py, so both engines graft the same weights."""
+    import torch
+    from huggingface_hub import hf_hub_download
+    from safetensors import safe_open
+
+    f = "unet/diffusion_pytorch_model.fp16.safetensors"
+    pd, pb = hf_hub_download(DEPTH_REPO, f, revision=DEPTH_REV), hf_hub_download(DEPTH_BASE_REPO, f, revision=DEPTH_BASE_REV)
+    with torch.no_grad():
+        sd = unet.state_dict()   # tensors share the parameters' storage
+        merged = {}
+        with safe_open(pd, "pt") as dep, safe_open(pb, "pt") as base:
+            if set(dep.keys()) != set(sd) or set(base.keys()) != set(sd):
+                raise ValueError("SD2 UNet keys differ from SD-Turbo's")
+            for k, v in sd.items():
+                d, b, s = dep.get_tensor(k).float(), base.get_tensor(k).float(), v.detach().float().cpu()
+                if k == "conv_in.weight":
+                    if tuple(d.shape) != (s.shape[0], s.shape[1] + 1, *s.shape[2:]) or b.shape != s.shape:
+                        raise ValueError(f"conv_in shapes {tuple(d.shape)}, {tuple(b.shape)}")
+                    merged[k] = torch.cat([s + lam * (d[:, :-1] - b), d[:, -1:]], 1).to(v.dtype)
+                elif d.shape == s.shape == b.shape:
+                    merged[k] = (s + lam * (d - b)).to(v.dtype)
+                else:
+                    raise ValueError(f"{k}: shapes differ")
+        old = unet.conv_in
+        conv = torch.nn.Conv2d(old.in_channels + 1, old.out_channels, old.kernel_size, padding=old.padding)
+        conv = conv.to(old.weight.device, old.weight.dtype).eval().requires_grad_(False)
+        conv.weight.copy_(merged.pop("conv_in.weight"))
+        conv.bias.copy_(merged.pop("conv_in.bias"))
+        for k, t in merged.items():
+            sd[k].copy_(t)
+        unet.conv_in = conv
+        unet.register_to_config(in_channels=conv.in_channels)
+
+
 class _FastAttn:
     """Attention processor for UNet transformer blocks.
 
@@ -137,12 +207,21 @@ class _FastAttn:
       so the 4096x4096 attention at 64x64 latents becomes 4096x1024. Queries keep
       full resolution, so structure/alignment is untouched.
     * cross-attention K/V (77 text tokens) are cached per conditioning tensor.
+    * cross-frame attention (shape_ref["xframe"]): self-attention also attends to the
+      K/V this layer computed for the last frame of the same stream (as video-editing work
+      does with an anchor frame), so the model carries its last picture's appearance
+      forward instead of re-inventing it. A stream is (conditioning tensor, seed, timestep
+      bucket): a client gives each capture kind its own seed, so the streams interleave and
+      each follows its own last frame. A few streams are kept per layer, each for at most
+      ANCHOR_MAX_AGE frames. SD's self-attention has no positional encoding, so frames of
+      other sizes or fields of view still match by content.
     """
 
     def __init__(self, shape_ref: dict, mode: str = "todo", levels: int = 1, factor: int = 2):
         self.shape_ref, self.mode, self.levels, self.factor = shape_ref, mode, levels, factor
         self._ehs = None
         self._kv = None
+        self._anchors = []    # [(key, frame, k, v)]: the last K/V per stream, newest last
 
     def __call__(self, attn, hidden_states, encoder_hidden_states=None, attention_mask=None, temb=None, *a, **kw):
         if hidden_states.ndim != 3 or attention_mask is not None or attn.group_norm is not None \
@@ -150,6 +229,7 @@ class _FastAttn:
             raise RuntimeError("_FastAttn: unsupported attention configuration")
         B, N, C = hidden_states.shape
         heads = attn.heads
+        n_anchor = 0
         q = attn.to_q(hidden_states)
         if encoder_hidden_states is not None:
             if self._ehs is encoder_hidden_states:
@@ -169,18 +249,45 @@ class _FastAttn:
                 x = hidden_states.transpose(1, 2).reshape(B, C, h, w)
                 src = F.avg_pool2d(x, self.factor).flatten(2).transpose(1, 2)
             k, v = attn.to_k(src), attn.to_v(src)
+            key = self.shape_ref.get("xkey")
+            if self.shape_ref.get("xframe") and key is not None:
+                n0 = k.shape[1]
+                k, v = self._cross_frame(key, self.shape_ref["frame"], k, v, self.shape_ref.get("fence", {}).get(key[1], -1))
+                n_anchor = k.shape[1] - n0
         hd = q.shape[-1] // heads
         q = q.view(B, -1, heads, hd).transpose(1, 2)
         k = k.view(k.shape[0], -1, heads, hd).transpose(1, 2)
         v = v.view(v.shape[0], -1, heads, hd).transpose(1, 2)
         if k.shape[0] != B:
             k, v = k.expand(B, -1, -1, -1), v.expand(B, -1, -1, -1)
-        o = F.scaled_dot_product_attention(q, k, v, scale=attn.scale)
+        mask = None
+        bias = self.shape_ref.get("xbias", 0.0)
+        if n_anchor and bias:   # lean on the last frame less: a logit bias on its tokens
+            mask = torch.zeros(1, 1, 1, k.shape[2], dtype=q.dtype, device=q.device)
+            mask[..., -n_anchor:] = bias
+        o = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, scale=attn.scale)
         o = o.transpose(1, 2).reshape(B, -1, heads * hd)
         o = attn.to_out[1](attn.to_out[0](o))
         if attn.residual_connection:
             raise RuntimeError("_FastAttn: residual_connection unsupported")
         return o / attn.rescale_output_factor
+
+
+    def _cross_frame(self, key, frame, k, v, fence=-1):
+        same = lambda a, b: a[0] is b[0] and a[1:] == b[1:]   # the cond tensor by identity
+        prev = next((a for a in self._anchors if same(a[0], key)), None)
+        self._anchors = [a for a in self._anchors if not same(a[0], key) and frame - a[1] <= ANCHOR_MAX_AGE]
+        self._anchors = (self._anchors + [(key, frame, k, v)])[-ANCHOR_STREAMS:]
+        # (an anchor from before the stream's last new framing shows another view: not used)
+        if prev is not None and prev[1] >= fence and frame - prev[1] <= ANCHOR_MAX_AGE and prev[2].shape[0] == k.shape[0]:
+            return torch.cat([k, prev[2]], 1), torch.cat([v, prev[3]], 1)
+        return k, v
+
+
+ANCHOR_STREAMS = 4    # streams remembered per layer (narrow, wide, two side glances)
+ANCHOR_MAX_AGE = 18   # frames (~1.5 s at 12 dreams/s); deep layers refresh only on full passes,
+                      # every deepcache x streams frames, so this must stay above 3 x 4
+DC_STREAMS = 8        # DeepCache states kept (two clients x four capture kinds; ~3-5 MiB each)
 
 
 def install_fast_attention(unet, latent_hw, mode: str = "todo", levels: int = 1, factor: int = 2) -> dict:
@@ -326,7 +433,8 @@ class TorchTurboEngine:
                  t_snap: bool = False, max_prompts: int = 64, attn: str = "todo", attn_levels: int = 1,
                  deepcache: int = 3, dc_branch: int = 1, dc_thresh: float = 0.06, dc_max_shift: int = 3,
                  dc_motion: bool = False,
-                 encoder: str = "taesd",
+                 encoder: str = "taesd", xframe: int = 1, xframe_bias: float = 0.0, held_only: int | str = "deepcache",
+                 depth_graft: float = 0.8, lora: str | None = None, lora_scale: float = 1.0,
                  **_ignored):
         if torch is None:
             raise RuntimeError("torch not installed")
@@ -349,6 +457,7 @@ class TorchTurboEngine:
         size = _machine_default_size()
         self.width = int(width or size)
         self.height = int(height or width or size)
+        self.flexible = True   # any frame size works (padded to 64 per call); see app.takes_size
         self.channels_last = bool(channels_last)
         self.morph = float(morph)
         self.t_snap = bool(t_snap)
@@ -362,6 +471,8 @@ class TorchTurboEngine:
         self.tokenizer = CLIPTokenizer.from_pretrained(self.repo, subfolder="tokenizer")
         self.text_encoder = _from_pretrained(CLIPTextModel, self.repo, self.dtype, subfolder="text_encoder", **kw).to(dev).eval()
         self.unet = _from_pretrained(UNet2DConditionModel, self.repo, self.dtype, subfolder="unet", **kw).to(dev).eval()
+        self._graft_depth(float(depth_graft or 0.0))
+        self._merge_lora(lora, float(lora_scale))
         vae_kind = preset["vae"] if vae == "auto" else vae
         _lite_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "taesd_lite.safetensors")
         if vae == "auto" and vae_kind == "taesd" and os.path.exists(_lite_path):
@@ -426,6 +537,10 @@ class TorchTurboEngine:
         if attn in ("todo", "fast", "skip"):
             self._attn_ref = install_fast_attention(self.unet, (self.height // 8, self.width // 8),
                                                     mode={"fast": "none"}.get(attn, attn), levels=int(attn_levels))
+            self._attn_ref["xframe"] = bool(int(xframe))
+            self._attn_ref["xbias"] = float(xframe_bias)
+            self._attn_ref["frame"] = 0
+        self.xframe = bool(self._attn_ref and self._attn_ref.get("xframe"))   # reported in /api/info
         c = self.unet.config
         self._lean_ok = not (c.get("addition_embed_type") or c.get("class_embed_type") or c.get("center_input_sample")
                              or c.get("time_cond_proj_dim") or c.get("encoder_hid_dim_type"))
@@ -436,8 +551,26 @@ class TorchTurboEngine:
         self.dc_max_shift = int(dc_max_shift)
         self.last_dc_shift = (0, 0)
         self.last_dc_diff = 0.0
-        self._dc: dict = {}
+        self._dcs: dict = {}   # DeepCache state per stream (seed, frame size), least recent first
+        self._depths: dict = {}   # last depth channel per stream: (frame, tensor)
+        self.dc_reuse = 0.0    # running share of frames that took the cheap DeepCache pass (/api/info)
+        self._frame = 0        # frames processed (ages DeepCache state)
         self._unet_call = lean_unet_forward if self._lean_ok else None
+        # held_only: a frame of a new framing (held=False: the server saw its framing id `kf`
+        # change on this client and seed) gets a plain full pass: no DeepCache reuse, no attention
+        # to anchors from before it (another view); a held framing refines with both, as always
+        # (M116). "xframe" or "deepcache" limits it to one of the two.
+        # (both halves act per seed, and every client's streams share seeds: under "both" or "xframe"
+        # one walking client's new framings also fence a resting client's anchors on that seed)
+        mode = str(held_only).strip().lower()
+        if mode not in ("", "0", "off", "none", "false", "1", "true", "both", "xframe", "deepcache"):
+            raise ValueError(f"held_only={held_only!r}: 0, 1 (both), xframe or deepcache")
+        # only what can act here: cross-frame attention may be off, DeepCache may be off
+        self._held_xframe = mode in ("1", "true", "both", "xframe") and self.xframe
+        self._held_dc = mode in ("1", "true", "both", "deepcache") and self.deepcache >= 2
+        self.held_only = "both" if self._held_xframe and self._held_dc else "xframe" if self._held_xframe \
+            else "deepcache" if self._held_dc else ""
+        self.takes_held = True
         if compile:
             try:
                 self._unet_call = torch.compile(lean_unet_forward) if self._lean_ok else None
@@ -451,6 +584,85 @@ class TorchTurboEngine:
         self._t_cache: dict = {}
         self._morph_state: dict = {}   # seed -> dict(key, emb, t)
         self.fps_estimate = None
+
+    def _graft_depth(self, lam: float) -> None:
+        """SD-Turbo + lam x (SD2-depth - SD2-base), with SD2-depth's depth input channel (see the
+        module notes). Leaves stock SD-Turbo in place if the weights can't be had."""
+        self.takes_cut = True      # process(cut=True): switch prompts at once (app.py, header `cut`)
+        self.wants_depth = False   # app.py sends a frame's depth only to engines that want it
+        self.depth_graft = 0.0
+        if lam <= 0 or self.repo != PRESETS["sd-turbo"]["repo"]:
+            return
+        try:
+            t0 = time.time()
+            graft_depth(self.unet, lam)
+            self.wants_depth, self.depth_graft = True, lam
+            print(f"[torch_turbo] depth graft {lam:g} in {time.time() - t0:.1f}s")
+        except Exception as e:  # noqa: BLE001  (offline, no disk, changed files: stock SD-Turbo)
+            print(f"[torch_turbo] depth graft unavailable ({type(e).__name__}: {e}); stock SD-Turbo")
+
+    @torch.no_grad()
+    def _merge_lora(self, path: str | None, scale: float) -> None:
+        """Merge a LoRA from bench/one_pass.py into the UNet: W += scale x B @ A for each linear
+        layer it names (`<module>.A`, `<module>.B`). Merged once, so a frame costs nothing more.
+        Every delta is built and checked before a weight changes; a bad file raises."""
+        self.lora, self.lora_scale = None, 0.0
+        if not path or scale == 0:
+            return
+        from safetensors import safe_open
+
+        mods = dict(self.unet.named_modules())
+        deltas = {}
+        with safe_open(path, "pt") as f:
+            meta = f.metadata() or {}
+            names = sorted({k.rsplit(".", 1)[0] for k in f.keys()})
+            if not names or {k for n in names for k in (n + ".A", n + ".B")} != set(f.keys()):
+                raise ValueError(f"{path}: not a LoRA file (expected <module>.A and <module>.B pairs)")
+            for n in names:
+                m, A, B = mods.get(n), f.get_tensor(n + ".A").float(), f.get_tensor(n + ".B").float()
+                if not isinstance(m, torch.nn.Linear) or A.ndim != 2 or B.ndim != 2 or A.shape[0] != B.shape[1] \
+                        or A.shape[1] != m.in_features or B.shape[0] != m.out_features:
+                    raise ValueError(f"{path}: {n} doesn't fit this UNet")
+                d = (B @ A) * scale
+                if not torch.isfinite(d).all():
+                    raise ValueError(f"{path}: {n} is not finite")
+                deltas[n] = d
+        trained = float(meta.get("depth_graft", self.depth_graft))
+        if trained != self.depth_graft:
+            print(f"[torch_turbo] warning: the LoRA was trained with depth graft {trained:g}, this UNet has {self.depth_graft:g}")
+        for n, d in deltas.items():
+            w = mods[n].weight
+            w.copy_((w.float() + d.to(w.device)).to(w.dtype))
+        import hashlib
+        with open(path, "rb") as fh:
+            digest = hashlib.sha256(fh.read()).hexdigest()[:8]
+        # reported in /api/info: which file (its run directory, name and hash) at what scale
+        self.lora = f"{os.path.basename(path)}@{digest}" + (f" x{scale:g}" if scale != 1 else "")   # (no directory: it may name a home)
+        self.lora_scale = scale
+        print(f"[torch_turbo] LoRA {self.lora}: {len(deltas)} layers merged")
+
+    def _depth_latent(self, depth, shape, hw, stream) -> "torch.Tensor":
+        """The depth channel at latent size `hw`, padded to `shape` as the image was: the client's
+        relative inverse depth in [-1, 1], near = 1. No depth: the stream's last one if it is
+        recent (a failed readback), else flat."""
+        n, _, h, w = shape
+        if depth is None:
+            last = self._depths.get(stream)
+            if last is None or self._frame - last[0] > DEPTH_KEEP:
+                return torch.zeros((n, 1, h, w), device=self.device, dtype=self.dtype)
+            return last[1]
+        d = torch.from_numpy(np.ascontiguousarray(depth, dtype=np.float32))[None, None].to(self.device)
+        if tuple(d.shape[2:]) != tuple(hw):   # (a resized frame) area mean going down, as the client does
+            big = d.shape[2] >= hw[0] and d.shape[3] >= hw[1]
+            d = F.interpolate(d, size=hw, mode="area") if big else F.interpolate(d, size=hw, mode="bilinear", align_corners=False)
+        if tuple(hw) != (h, w):
+            ph, pw = h - hw[0], w - hw[1]
+            d = F.pad(d, (0, pw, 0, ph), mode="reflect" if (ph < hw[0] and pw < hw[1]) else "replicate")
+        d = d.clamp_(-1.0, 1.0).to(self.dtype)
+        self._depths[stream] = (self._frame, d)
+        while len(self._depths) > DC_STREAMS:
+            self._depths.pop(next(iter(self._depths)))
+        return d
 
     # ------------------------------------------------------------------ caches
     @torch.inference_mode()
@@ -467,9 +679,16 @@ class TorchTurboEngine:
             self._emb_cache.popitem(last=False)
         return e
 
-    def _conditioning(self, prompt: str, seed: int) -> "torch.Tensor":
+    def _conditioning(self, prompt: str, seed: int, cut: bool = False) -> "torch.Tensor":
+        """The prompt embedding, gliding from the stream's last one over `morph` s; `cut` (a change
+        nobody sees, e.g. behind closed eyes) switches at once."""
         target = self._embed(prompt)
         if self.morph <= 0:
+            return target
+        if cut:
+            self._morph_state[seed] = dict(key=prompt, emb=target, t=time.monotonic(), settled=True)
+            while len(self._morph_state) > 16:
+                self._morph_state.pop(next(iter(self._morph_state)))
             return target
         now = time.monotonic()
         st = self._morph_state.get(seed)
@@ -531,11 +750,12 @@ class TorchTurboEngine:
         return now
 
     @torch.inference_mode()
-    def process(self, image, prompt: str, strength: float, seed: int, negative: str | None = None):
+    def process(self, image, prompt: str, strength: float, seed: int, negative: str | None = None, depth=None, cut=False,
+                held=None):
         with self._lock:
-            return self._process(image, prompt, strength, seed)
+            return self._process(image, prompt, strength, seed, depth, cut, held)
 
-    def _process(self, image, prompt, strength, seed):
+    def _process(self, image, prompt, strength, seed, depth=None, cut=False, held=None):
         dev, dt = self.device, self.dtype
         t0 = time.perf_counter()
         tp = t0
@@ -547,7 +767,7 @@ class TorchTurboEngine:
         if not img.flags.writeable:  # torch.from_numpy warns on read-only arrays (e.g. np.asarray(PIL))
             img = img.copy()
         H, W = img.shape[:2]
-        cond = self._conditioning(prompt, seed)
+        cond = self._conditioning(prompt, seed, cut)
         tp = self._mark("prompt", tp)
 
         thumb = _thumb(img) if self.deepcache >= 2 else None  # CPU-side motion/cut guard input
@@ -573,17 +793,34 @@ class TorchTurboEngine:
         tt, sa, s1a, t_int = self._timestep(strength)
         if self._attn_ref is not None:
             self._attn_ref["hw"] = (z0.shape[2], z0.shape[3])
+            self._attn_ref["xkey"] = (cond, int(seed), t_int // 50)
+            self._attn_ref["frame"] += 1
+            if self._held_xframe and held is False:   # a new framing: no earlier anchor of this seed counts,
+                # whatever its prompt or strength bucket, nor a deep layer's that a cheap pass skipped
+                self._attn_ref.setdefault("fence", {})[int(seed)] = self._attn_ref["frame"]
         noise = self._noise(seed, z0.shape)
         zt = z0 * sa + noise * s1a
+        # the UNet's input: the noised latent, plus the depth channel on a grafted UNet
+        zin = torch.cat([zt, self._depth_latent(depth, zt.shape, ((H + 7) // 8, (W + 7) // 8), (int(seed), H, W))], 1) if self.wants_depth else zt
         if self._unet_call is None:
-            out = (getattr(self, "_compiled_unet", None) or self.unet)(zt, tt, encoder_hidden_states=cond, return_dict=False)[0]
+            out = (getattr(self, "_compiled_unet", None) or self.unet)(zin, tt, encoder_hidden_states=cond, return_dict=False)[0]
         else:
             reuse, shift = False, (0, 0)
+            st = None
             if self.deepcache >= 2:
-                st, key = self._dc, (int(seed), tuple(z0.shape))
-                # strength may be animated by the client: deep features stay reusable within +-0.04 strength
-                if st.get("key") == key and st.get("cond") is cond and st.get("age", 1 << 30) < self.deepcache - 1 \
-                        and abs(t_int - st["t"]) <= 40:
+                # one cache per stream: a client interleaves capture kinds (wide, narrow, glances)
+                # on their own seeds, and a single slot would be cleared by every switch
+                key = (int(seed), H, W)
+                st = self._dcs.pop(key, None) or {}
+                self._dcs[key] = st
+                while len(self._dcs) > DC_STREAMS:
+                    self._dcs.pop(next(iter(self._dcs)))
+                # strength may be animated by the client: deep features stay reusable within +-0.04
+                # strength; they are only reused while fresh (a stream left idle, e.g. side glances
+                # during a walk, restarts with a full pass) and only if the full pass completed
+                if not (self._held_dc and held is False) and st.get("cond") is cond and st.get("age", 1 << 30) < self.deepcache - 1 \
+                        and abs(t_int - st["t"]) <= 40 and "deep" in st \
+                        and self._frame - st["f0"] <= self.deepcache * ANCHOR_STREAMS:
                     # motion / scene-cut guards, computed on CPU thumbnails (no GPU sync): global shift
                     # since the full pass (phase correlation, latent px) and low-frequency change.
                     dy, dx = _phase_shift(st["thumb"], thumb)
@@ -595,11 +832,14 @@ class TorchTurboEngine:
                     st["age"] += 1
                 else:
                     st.clear()
-                    st.update(key=key, cond=cond, age=0, t=t_int, thumb=thumb, thumb4=_pool4(thumb))
+                    st.update(cond=cond, age=0, t=t_int, f0=self._frame, thumb=thumb, thumb4=_pool4(thumb))
+            if self.deepcache >= 2:
+                self.dc_reuse = 0.95 * self.dc_reuse + 0.05 * float(reuse)
+            self._frame += 1
             if self.profile:
                 self.last_timings["dc_reuse"] = float(reuse)
             self.last_dc_shift = shift
-            out = self._unet_call(self.unet, zt, tt, cond, cache=self._dc if self.deepcache >= 2 else None,
+            out = self._unet_call(self.unet, zin, tt, cond, cache=st,
                                   reuse=reuse, branch=self.dc_branch, shift=shift)
         if self.prediction_type == "epsilon":
             z0h = (zt - out * s1a) / sa
@@ -629,6 +869,15 @@ class TorchTurboEngine:
         self.fps_estimate = 1000.0 / ms if self.fps_estimate is None else 0.9 * self.fps_estimate + 100.0 / ms
         return res
 
+    def reset_temporal(self) -> None:
+        """Forget everything carried between frames (DeepCache features, cross-frame anchors)."""
+        self._dcs.clear()
+        self.last_dc_diff = 0.0
+        self.dc_reuse = 0.0
+        for proc in self.unet.attn_processors.values():
+            if isinstance(proc, _FastAttn):
+                proc._anchors = []
+
     def warmup(self, iters: int = 4) -> None:
         """Compile/cache MPS kernels for this size: full + cheap (DeepCache) UNet paths."""
         rng = np.random.default_rng(0)
@@ -636,13 +885,13 @@ class TorchTurboEngine:
         for _ in range(max(iters, self.deepcache)):
             self.process(img, "warmup", 0.5, 0)
         self._morph_state.clear()
-        self._dc.clear()
+        self.reset_temporal()
         self.fps_estimate = None
 
     def close(self) -> None:
         """Drop model weights so the server can swap engines without leaking GPU memory."""
         with self._lock:
-            self._dc.clear()
+            self._dcs.clear()
             self._emb_cache.clear()
             self._noise_cache.clear()
             self._morph_state.clear()

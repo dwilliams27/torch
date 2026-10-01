@@ -1,0 +1,121 @@
+{
+ "date": "2026-09-29T09:36:48.893Z",
+ "results": [
+  {
+   "name": "chromium: dreams",
+   "ok": true,
+   "detail": "0.7 s to 3 results"
+  },
+  {
+   "name": "chromium: frame is painted, not blank",
+   "ok": true,
+   "detail": "luma mean 74, spread 27"
+  },
+  {
+   "name": "chromium: entering click starts the sound",
+   "ok": true,
+   "detail": "context running"
+  },
+  {
+   "name": "chromium: W walks",
+   "ok": true,
+   "detail": "8.0 m in 2.5 s"
+  },
+  {
+   "name": "chromium: footsteps",
+   "ok": true,
+   "detail": "6 steps"
+  },
+  {
+   "name": "chromium: the dream survives a reload",
+   "ok": true,
+   "detail": "70 tiles saved, 64 restored"
+  },
+  {
+   "name": "chromium: forget clears the stored dream",
+   "ok": true,
+   "detail": "0 tiles after forget"
+  },
+  {
+   "name": "chromium: no page or console errors",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "webkit: dreams",
+   "ok": true,
+   "detail": "0.3 s to 3 results"
+  },
+  {
+   "name": "webkit: frame is painted, not blank",
+   "ok": true,
+   "detail": "luma mean 75, spread 28"
+  },
+  {
+   "name": "webkit: entering click starts the sound",
+   "ok": true,
+   "detail": "context running"
+  },
+  {
+   "name": "webkit: W walks",
+   "ok": true,
+   "detail": "8.2 m in 2.5 s"
+  },
+  {
+   "name": "webkit: footsteps",
+   "ok": true,
+   "detail": "6 steps"
+  },
+  {
+   "name": "webkit: the dream survives a reload",
+   "ok": true,
+   "detail": "70 tiles saved, 64 restored"
+  },
+  {
+   "name": "webkit: forget clears the stored dream",
+   "ok": true,
+   "detail": "0 tiles after forget"
+  },
+  {
+   "name": "webkit: no page or console errors",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "iphone: title says tap",
+   "ok": true,
+   "detail": "\"tap to enter\""
+  },
+  {
+   "name": "iphone: tap enters and starts the sound",
+   "ok": true,
+   "detail": "{\"entered\":true,\"started\":true,\"context\":\"running\"}"
+  },
+  {
+   "name": "iphone: left thumb walks",
+   "ok": true,
+   "detail": "11.2 m"
+  },
+  {
+   "name": "iphone: right thumb looks",
+   "ok": true,
+   "detail": "yaw -0.44 rad"
+  },
+  {
+   "name": "iphone: frame is painted, not blank",
+   "ok": true,
+   "detail": "luma mean 71, spread 28"
+  },
+  {
+   "name": "iphone: phone settings (2048 atlas, 3 live views, upright capture)",
+   "ok": true,
+   "detail": "{\"atlas\":2048,\"live\":3,\"capture\":[320,512],\"flexible\":true,\"res\":[786,1318]}"
+  },
+  {
+   "name": "iphone: no page or console errors",
+   "ok": true,
+   "detail": ""
+  }
+ ],
+ "note": "client at d2d27404"
+}

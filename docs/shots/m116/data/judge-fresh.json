@@ -1,0 +1,80 @@
+{
+ "date": "2026-09-30",
+ "reviewer": "a fresh-context Claude Opus 5.5 session, blind to which build was which and to what had changed",
+ "method": "per zone, the undreamt blueprint (dream=off) beside three walking frames (2, 4 and 6 s into the same walk at 3.4 m/s) and the rest frame of each build (tools/shoot.mjs, WebKit 1280x720, same poses, one filmstrip per build and zone), builds shuffled A/B per zone with a fixed seed. Builds, one client (3ec870db20a0) and one server: waking = the default look; fresh = the fresh look (framing ids, held_only=deepcache). The key is judge-fresh-key.json.",
+ "zones": {
+  "vestibule": {
+   "finished": "A",
+   "finished_why": "A's frames are saturated gold with crisp wood grain all the way down the tunnel, while B's outer frames are washed out to a grey-olive haze and look like a thinner, less resolved pass.",
+   "geometry": "even",
+   "rest": "even",
+   "preferred": "A",
+   "artifacts_A": "Noisy speckled strip down the left edge of the first frame; the post beside the rail is a cream smear.",
+   "artifacts_B": "Outer frames desaturated and hazy; pale ghostly blobs where the wall windows and posts sit; a few glowing smudges in the third walking frame."
+  },
+  "nave": {
+   "finished": "even",
+   "finished_why": "Both are equally hazy and soft in the same places (the blueprint itself is foggy), and I can't find a consistent difference in finish between them.",
+   "geometry": "even",
+   "rest": "even",
+   "preferred": "even",
+   "artifacts_A": "Foreground columns soft and streaky; general haze; a small stray pale figure on the floor in the first frame.",
+   "artifacts_B": "Same haze and soft, streaky columns; a small stray figure in the water in the first frame."
+  },
+  "stacks": {
+   "finished": "A",
+   "finished_why": "Only slightly: in the second frame A's globe has a clean engraved surface while B's is mottled and blotchy; the other two frames are nearly identical.",
+   "geometry": "even",
+   "rest": "even",
+   "preferred": "even",
+   "artifacts_A": "Invents two pillars and a lamp stand that the blueprint doesn't have (B does too); the globe wears an odd lid or collar; shelves at the edges are smeared.",
+   "artifacts_B": "Globe surface mottled and blotchy in the second frame; same invented pillars, lamp stand and odd collar as A; the floor disc is a flat bright blob in the first frame."
+  },
+  "geode": {
+   "finished": "even",
+   "finished_why": "Both give a blank black first frame, then near-identical vivid crystal scenes in the second and third frames.",
+   "geometry": "even",
+   "rest": "B",
+   "preferred": "B",
+   "artifacts_A": "First walking frame is solid black where the blueprint shows a brick wall; at rest a stray twisted spiral ribbon floats in the middle of the wall.",
+   "artifacts_B": "First walking frame is solid black too; otherwise clean."
+  },
+  "baths": {
+   "finished": "A",
+   "finished_why": "The first two frames are about equal, but in the third B's walls dissolve into a magenta wash with green blotches at the arch bases while A stays clean and legible.",
+   "geometry": "even",
+   "rest": "A",
+   "preferred": "A",
+   "artifacts_A": "Thin dark crack line at the top of the first frame; blurry, streaky water near the pool edge in the second frame; a stray blob in the pool at rest.",
+   "artifacts_B": "Same crack line at the top of the first frame; magenta wash and green blotches on the walls in the third frame; blurry near water; rest view softer and pinker, with less detail."
+  },
+  "garden": {
+   "finished": "B",
+   "finished_why": "A's first frame has a smeared, motion-blurred canopy and wall across the top and its third frame has muddy smudges in the sunken bed, while B's frames stay crisp throughout.",
+   "geometry": "B",
+   "rest": "A",
+   "preferred": "B",
+   "artifacts_A": "Smeared canopy and wall along the top of the first frame; slightly see-through fountain; a cream wall or building painted where the blueprint has open sky; dark smudges in the sunken bed in the third frame.",
+   "artifacts_B": "At rest the back wall is a flat grey panel with a tree that looks pasted on, and a faint horizontal seam runs across the hedges."
+  },
+  "atrium": {
+   "finished": "B",
+   "finished_why": "Only slightly: in the first frame A's right third is a tilted, streaky ghost slab while B's is cleaner and its arched far doorway reads clearly; the second and third frames are nearly identical.",
+   "geometry": "B",
+   "rest": "even",
+   "preferred": "B",
+   "artifacts_A": "Tilted, streaky ghost slab with a smear at its foot on the right of the first frame; the far door is a plain rectangle where the blueprint has an arch; the doorway in the far wall is missing in the third frame.",
+   "artifacts_B": "Layered, semi-transparent wall panels on the right of the first frame (ghosting, milder than A's); the doorway in the far wall is missing in the third frame."
+  },
+  "desert": {
+   "finished": "even",
+   "finished_why": "The walking frames are nearly identical; both paint the long stair as the same finely striped pink ramp.",
+   "geometry": "even",
+   "rest": "even",
+   "preferred": "even",
+   "artifacts_A": "Stairs read as a striped ramp rather than distinct steps; small dark smudges along the bottom of the first frame; odd vertical plank texture on the right wall at rest.",
+   "artifacts_B": "Stairs read as a striped ramp rather than distinct steps."
+  }
+ },
+ "summary": "The two builds are very close. While walking, neither is consistently more finished: A has richer, crisper paint in the vestibule and baths, B is cleaner and follows the blueprint a bit better in the garden and atrium, and the remaining zones look nearly the same. Standing still, they mostly settle on the same picture, so I see no systematic winner."
+}

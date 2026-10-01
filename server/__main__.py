@@ -31,6 +31,11 @@ def parse_args(argv=None):
                    help="auto/bench: a later candidate must be this much faster to displace an earlier one")
     p.add_argument("--pool-slack", type=float, default=2.5,
                    help="pool: drop engines slower than this factor x the fastest")
+    p.add_argument("--pool-held", choices=["any", "carry"], default="carry",
+                   help="pool: 'carry' (default) keeps a frame that repeats its stream's last framing (header fid, "
+                        "or kf from older fresh-look clients) off engines that don't carry a stream from frame to "
+                        "frame (no takes_held, e.g. coreml_turbo), so a view held still is painted by one engine; "
+                        "'any' lets every engine take every frame")
     p.add_argument("--bench-runs", type=int, default=12, help="timed runs per candidate for auto selection")
     p.add_argument("--isolate", choices=["auto", "always", "never"], default="auto",
                    help="run engines in their own processes (no GIL sharing). auto = only for pools")

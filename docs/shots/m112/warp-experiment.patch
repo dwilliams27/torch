@@ -1,0 +1,268 @@
+diff --git a/projects/hypnagogia/client/src/dream/dream.js b/projects/hypnagogia/client/src/dream/dream.js
+index 963dadae..877f1c7f 100644
+--- a/projects/hypnagogia/client/src/dream/dream.js
++++ b/projects/hypnagogia/client/src/dream/dream.js
+@@ -496,7 +496,15 @@ export class Dream {
+       if (ask.cut) header.cut = true;
+       // the framing id (header `kf`, the fresh look): the server tells an engine whether a frame
+       // repeats the last framing it painted on this stream, so a new framing gets a plain pass
+-      if (S.kfDist > 0 && S.plainWalk) header.kf = slot.kfId;
++      if (S.kfDist > 0 && S.plainWalk) {
++        header.kf = slot.kfId;
++        // the capture camera, for an engine that carries its caches across framings by
++        // reprojecting them (not with the foveal warp, whose projection isn't a matrix)
++        if (slot.warp <= 1) {
++          header.view = Array.from(slot.camera.matrixWorld.elements, (x) => +x.toPrecision(7));
++          header.proj = Array.from(slot.camera.projectionMatrix.elements, (x) => +x.toPrecision(7));
++        }
++      }
+       if (this.link.send(header, jpeg)) {
+         slot.state = 'sent'; slot.sentAt = performance.now();
+         this.stats.captures++;
+@@ -535,7 +543,8 @@ function packDepth(px, w, h) {
+   const k = 255 / Math.max(hi - lo, 1e-9);
+   let str = '';
+   for (let i = 0; i < n; i++) str += String.fromCharCode(Math.max(0, Math.min(255, Math.round((iz[i] - lo) * k))));
+-  return { w, h, data: btoa(str) };
++  // lo/hi: the metric inverse-depth range (1/m), so an engine can reproject (M112)
++  return { w, h, data: btoa(str), lo: +lo.toPrecision(6), hi: +hi.toPrecision(6) };
+ }
+ 
+ // RGBA (bottom-up, from readPixels) -> JPEG bytes. Uses OffscreenCanvas when
+diff --git a/projects/hypnagogia/docs/DESIGN.md b/projects/hypnagogia/docs/DESIGN.md
+index a1ccb089..c79b0c8d 100644
+--- a/projects/hypnagogia/docs/DESIGN.md
++++ b/projects/hypnagogia/docs/DESIGN.md
+@@ -149,7 +149,12 @@ the prompt changed where nobody sees it, so an engine that glides between prompt
+ id; captures on one seed with equal `kf` show the same framing. The server's GPU worker tells
+ an engine with `takes_held` whether a frame repeats the last framing it painted for that
+ client and seed (`held`); `torch_turbo`'s `held_only` (default "deepcache") then skips
+-DeepCache reuse on a new framing, and "both" skips cross-frame attention too)
++DeepCache reuse on a new framing, and "both" skips cross-frame attention too. With the
++framing id the fresh look also sends `"view"` and `"proj"` (16 numbers each: the capture
++camera's camera-to-world and projection matrices, column-major as three.js) and the depth
++object carries `"lo"`, `"hi"` (its metric inverse-depth range, 1/m), so `held_only=warp`
++can reuse DeepCache on a new framing by reprojecting the cached deep features through the
++depth to the new view (M112))
+ 
+ Server → client **binary** result, same framing:
+ header = `{"type":"result","id":int,"width":int,"height":int,
+@@ -207,6 +212,8 @@ class Engine:
+     takes_cut: bool      # optional: process() also takes cut= (the header's `cut`)
+     takes_held: bool     # optional: process() also takes held= (bool: the frame repeats the last
+                          # framing this engine painted on its client and seed; from header `kf`)
++    takes_pose: bool     # optional: process() also takes pose= ({view, proj: 4x4, lo, hi}: the
++                         # capture camera and depth range, from `view`, `proj` and depth lo/hi)
+ ```
+ 
+ `torch_turbo`'s depth graft (`depth_graft`, 0.8; `--engine-arg depth_graft=0` for stock)
+diff --git a/projects/hypnagogia/server/app.py b/projects/hypnagogia/server/app.py
+index edb62b07..d9cd9ed8 100644
+--- a/projects/hypnagogia/server/app.py
++++ b/projects/hypnagogia/server/app.py
+@@ -26,6 +26,7 @@ import io
+ import itertools
+ import json
+ import logging
++import math
+ import mimetypes
+ import os
+ import struct
+@@ -136,6 +137,22 @@ def _depth_field(d) -> np.ndarray:
+     return np.frombuffer(raw, np.uint8).reshape(h, w).astype(np.float32) / 127.5 - 1.0
+ 
+ 
++def _pose_field(hdr: dict) -> dict | None:
++    """Headers `view` and `proj` (16 finite numbers each, column-major 4x4: camera-to-world and
++    projection, as three.js) and the depth's `lo`/`hi` (its metric inverse-depth range) -> a
++    pose for an engine that reprojects (torch_turbo held_only=warp), or None."""
++    v, p, d = hdr.get("view"), hdr.get("proj"), hdr.get("depth")
++    ok = lambda a: isinstance(a, list) and len(a) == 16 and all(isinstance(x, (int, float)) and not isinstance(x, bool)
++                                                                and math.isfinite(x) for x in a)
++    if not (ok(v) and ok(p) and isinstance(d, dict)):
++        return None
++    lo, hi = d.get("lo"), d.get("hi")
++    if not all(isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x) for x in (lo, hi)) or not 0 < lo < hi:
++        return None
++    return {"view": np.asarray(v, np.float32).reshape(4, 4).T, "proj": np.asarray(p, np.float32).reshape(4, 4).T,
++            "lo": float(lo), "hi": float(hi)}
++
++
+ def pack(header: dict, payload: bytes = b"") -> bytes:
+     hb = json.dumps(header, separators=(",", ":")).encode()
+     return struct.pack("<I", len(hb)) + hb + payload
+@@ -321,7 +338,7 @@ def _engine_child(conn, name: str, cfg: dict, level: int):
+         logging.getLogger(noisy).setLevel(logging.WARNING)
+     try:
+         eng = engines_pkg.load(name, **cfg)
+-        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device", "flexible", "xframe", "wants_depth", "depth_graft", "takes_cut", "takes_held", "held_only", "lora")}
++        meta = {k: getattr(eng, k, None) for k in ("name", "model", "width", "height", "device", "flexible", "xframe", "wants_depth", "depth_graft", "takes_cut", "takes_held", "takes_pose", "held_only", "lora")}
+         conn.send(("ok", meta))
+     except BaseException as e:  # noqa: BLE001
+         conn.send(("err", f"{type(e).__name__}: {e}"))
+@@ -466,6 +483,7 @@ class Frame:
+     depth: np.ndarray | None = None   # the capture's relative inverse depth in [-1, 1] (header `depth`)
+     cut: bool = False                 # the prompt changed where nobody sees: no morph (header `cut`)
+     kf: int | None = None             # the capture's framing id (header `kf`)
++    pose: dict | None = None          # the capture's camera and depth range (headers `view`, `proj`, depth `lo`/`hi`)
+     held: bool | None = None          # set by the worker: it repeats the last framing this engine painted on its stream
+ 
+ 
+@@ -865,6 +883,8 @@ class DreamServer:
+             kw["cut"] = True
+         if frame.held is not None and getattr(engine, "takes_held", False):
+             kw["held"] = frame.held
++        if frame.pose is not None and getattr(engine, "takes_pose", False):
++            kw["pose"] = frame.pose
+         out = engine.process(img, frame.prompt, frame.strength, frame.seed, frame.negative, **kw)
+         if not isinstance(out, np.ndarray):
+             out = np.asarray(out.convert("RGB") if hasattr(out, "convert") else out)
+@@ -924,6 +944,7 @@ class DreamServer:
+             frame.cut = hdr.get("cut") is True
+             kf = hdr.get("kf")
+             frame.kf = kf if isinstance(kf, int) and not isinstance(kf, bool) else None
++            frame.pose = _pose_field(hdr)
+             if hdr.get("depth") is not None and self.wants_depth:
+                 try:
+                     frame.depth = _depth_field(hdr["depth"])
+diff --git a/projects/hypnagogia/server/engines/torch_turbo.py b/projects/hypnagogia/server/engines/torch_turbo.py
+index a27b3f50..71fdae34 100644
+--- a/projects/hypnagogia/server/engines/torch_turbo.py
++++ b/projects/hypnagogia/server/engines/torch_turbo.py
+@@ -91,7 +91,9 @@ cfg keys: model, width, height, device, dtype('fp16'|'fp32'|'bf16'),
+                     from the header's framing id `kf`) gets a plain full pass, without DeepCache reuse or
+                     cross-frame attention; "xframe" or "deepcache" = only that one; 0 = off. Default
+                     "deepcache", acting only on frames whose client sends framing ids (the fresh look):
+-                    it keeps cross-frame attention, which holds walking flicker where it was)
++                    it keeps cross-frame attention, which holds walking flicker where it was. "warp"
++                    (M112) keeps DeepCache's reuse on a new framing that carries its camera, with the
++                    cached deep features reprojected through the frame's depth to the new view)
+ """
+ from __future__ import annotations
+ 
+@@ -246,6 +248,24 @@ class _FastAttn:
+         return k, v
+ 
+ 
++def reproject_grid(inv_depth, view_cur, proj_cur, view_old, proj_old) -> "torch.Tensor":
++    """A backward-warp grid for F.grid_sample on an earlier frame's features: for each pixel of
++    the current frame, where its surface point was in the earlier frame. inv_depth: (h, w) metric
++    inverse depth (1/m), rows top first; view_*: 4x4 camera-to-world, proj_*: 4x4 perspective
++    projections (column vectors, as three.js). Returns (1, h, w, 2) in [-1, 1], x right, y down."""
++    iz = torch.as_tensor(np.asarray(inv_depth, np.float32))
++    h, w = iz.shape
++    y_ndc = (1 - 2 * (torch.arange(h, dtype=torch.float32) + 0.5) / h)[:, None].expand(h, w)
++    x_ndc = (2 * (torch.arange(w, dtype=torch.float32) + 0.5) / w - 1)[None, :].expand(h, w)
++    z = 1.0 / iz.clamp(min=1e-4)
++    Pc, Po = (torch.as_tensor(np.asarray(m, np.float32)) for m in (proj_cur, proj_old))
++    pts = torch.stack([x_ndc * z / Pc[0, 0], y_ndc * z / Pc[1, 1], -z, torch.ones_like(z)], -1).reshape(-1, 4)
++    world = pts @ torch.as_tensor(np.asarray(view_cur, np.float32)).T
++    old = world @ torch.linalg.inv(torch.as_tensor(np.asarray(view_old, np.float32))).T
++    zo = (-old[:, 2]).clamp(min=1e-4)
++    return torch.stack([Po[0, 0] * old[:, 0] / zo, -(Po[1, 1] * old[:, 1] / zo)], -1).reshape(1, h, w, 2)
++
++
+ ANCHOR_STREAMS = 4    # streams remembered per layer (narrow, wide, two side glances)
+ ANCHOR_MAX_AGE = 18   # frames (~1.5 s at 12 dreams/s); deep layers refresh only on full passes,
+                       # every deepcache x streams frames, so this must stay above 3 x 4
+@@ -273,7 +293,7 @@ def _down_no_ds(blk, h, emb, ehs):
+ 
+ 
+ def lean_unet_forward(unet, sample, timestep, ehs, cache: dict | None = None, reuse: bool = False,
+-                      branch: int = 1, shift: tuple[int, int] = (0, 0)):
++                      branch: int = 1, shift: tuple[int, int] = (0, 0), warp=None):
+     """Minimal UNet2DConditionModel forward for SD1/SD2-family configs (no CFG, masks,
+     adapters, ...), with temporal DeepCache (Ma et al. 2023, applied across video frames):
+ 
+@@ -303,7 +323,13 @@ def lean_unet_forward(unet, sample, timestep, ehs, cache: dict | None = None, re
+         res += r
+     if reuse:
+         h = cache["deep"]
+-        if shift != (0, 0):  # motion-compensate the stale deep features (global translation)
++        if warp is not None:  # move the stale deep features to where their surfaces are now (M112)
++            g = warp
++            if tuple(g.shape[1:3]) != tuple(h.shape[-2:]):
++                g = F.interpolate(g.permute(0, 3, 1, 2), size=h.shape[-2:], mode="bilinear", align_corners=False).permute(0, 2, 3, 1)
++            h = F.grid_sample(h.float(), g.expand(h.shape[0], -1, -1, -1), mode="bilinear", padding_mode="border",
++                              align_corners=False).to(h.dtype)
++        elif shift != (0, 0):  # motion-compensate the stale deep features (global translation)
+             f = h.shape[-1] // sample.shape[-1] if h.shape[-1] >= sample.shape[-1] else 0
+             if f:
+                 h = _shift2d(h, shift[0] * f, shift[1] * f)
+@@ -525,14 +551,19 @@ class TorchTurboEngine:
+         # (both halves act per seed, and every client's streams share seeds: under "both" or "xframe"
+         # one walking client's new framings also fence a resting client's anchors on that seed)
+         mode = str(held_only).strip().lower()
+-        if mode not in ("", "0", "off", "none", "false", "1", "true", "both", "xframe", "deepcache"):
+-            raise ValueError(f"held_only={held_only!r}: 0, 1 (both), xframe or deepcache")
++        if mode not in ("", "0", "off", "none", "false", "1", "true", "both", "xframe", "deepcache", "warp"):
++            raise ValueError(f"held_only={held_only!r}: 0, 1 (both), xframe, deepcache or warp")
+         # only what can act here: cross-frame attention may be off, DeepCache may be off
+         self._held_xframe = mode in ("1", "true", "both", "xframe") and self.xframe
+-        self._held_dc = mode in ("1", "true", "both", "deepcache") and self.deepcache >= 2
+-        self.held_only = "both" if self._held_xframe and self._held_dc else "xframe" if self._held_xframe \
+-            else "deepcache" if self._held_dc else ""
++        self._held_dc = mode in ("1", "true", "both", "deepcache", "warp") and self.deepcache >= 2
++        # warp (M112): a new framing that carries its camera (headers `view`, `proj`, depth `lo`/`hi`)
++        # keeps DeepCache's reuse, with the cached deep features reprojected through the depth to
++        # the new view; one without a camera gets a full pass, as with "deepcache"
++        self._held_warp = mode == "warp" and self._held_dc
++        self.held_only = "warp" if self._held_warp else "both" if self._held_xframe and self._held_dc \
++            else "xframe" if self._held_xframe else "deepcache" if self._held_dc else ""
+         self.takes_held = True
++        self.takes_pose = True
+         if compile:
+             try:
+                 self._unet_call = torch.compile(lean_unet_forward) if self._lean_ok else None
+@@ -744,11 +775,11 @@ class TorchTurboEngine:
+ 
+     @torch.inference_mode()
+     def process(self, image, prompt: str, strength: float, seed: int, negative: str | None = None, depth=None, cut=False,
+-                held=None):
++                held=None, pose=None):
+         with self._lock:
+-            return self._process(image, prompt, strength, seed, depth, cut, held)
++            return self._process(image, prompt, strength, seed, depth, cut, held, pose)
+ 
+-    def _process(self, image, prompt, strength, seed, depth=None, cut=False, held=None):
++    def _process(self, image, prompt, strength, seed, depth=None, cut=False, held=None, pose=None):
+         dev, dt = self.device, self.dtype
+         t0 = time.perf_counter()
+         tp = t0
+@@ -811,7 +842,9 @@ class TorchTurboEngine:
+                 # strength may be animated by the client: deep features stay reusable within +-0.04
+                 # strength; they are only reused while fresh (a stream left idle, e.g. side glances
+                 # during a walk, restarts with a full pass) and only if the full pass completed
+-                if not (self._held_dc and held is False) and st.get("cond") is cond and st.get("age", 1 << 30) < self.deepcache - 1 \
++                # a new framing may reuse only through the warp: its camera and the cache's are known
++                warp_ok = self._held_warp and pose is not None and depth is not None and st.get("pose") is not None
++                if not (self._held_dc and held is False and not warp_ok) and st.get("cond") is cond and st.get("age", 1 << 30) < self.deepcache - 1 \
+                         and abs(t_int - st["t"]) <= 40 and "deep" in st \
+                         and self._frame - st["f0"] <= self.deepcache * ANCHOR_STREAMS:
+                     # motion / scene-cut guards, computed on CPU thumbnails (no GPU sync): global shift
+@@ -825,15 +858,23 @@ class TorchTurboEngine:
+                     st["age"] += 1
+                 else:
+                     st.clear()
+-                    st.update(cond=cond, age=0, t=t_int, f0=self._frame, thumb=thumb, thumb4=_pool4(thumb))
++                    st.update(cond=cond, age=0, t=t_int, f0=self._frame, thumb=thumb, thumb4=_pool4(thumb),
++                              pose=(pose["view"], pose["proj"]) if pose is not None else None)
+             if self.deepcache >= 2:
+                 self.dc_reuse = 0.95 * self.dc_reuse + 0.05 * float(reuse)
+             self._frame += 1
+             if self.profile:
+                 self.last_timings["dc_reuse"] = float(reuse)
+             self.last_dc_shift = shift
++            warp = None
++            if reuse and self._held_warp and held is False and pose is not None and depth is not None and st.get("pose") is not None:
++                d = np.asarray(depth, np.float32)
++                inv = pose["lo"] + (d + 1.0) * 0.5 * (pose["hi"] - pose["lo"])   # metric inverse depth, 1/m
++                warp = reproject_grid(inv, pose["view"], pose["proj"], *st["pose"]).to(self.device)
++                shift = (0, 0)
++            self.last_warp = warp is not None
+             out = self._unet_call(self.unet, zin, tt, cond, cache=st,
+-                                  reuse=reuse, branch=self.dc_branch, shift=shift)
++                                  reuse=reuse, branch=self.dc_branch, shift=shift, warp=warp)
+         if self.prediction_type == "epsilon":
+             z0h = (zt - out * s1a) / sa
+         elif self.prediction_type == "v_prediction":

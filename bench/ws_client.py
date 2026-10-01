@@ -300,7 +300,7 @@ async def main_async(args):
         for k, v in c.by_engine.items():
             by_engine.setdefault(k, []).extend(v)
     summary = {
-        "url": args.url, "engine": info.get("engine"), "model": info.get("model"),
+        "date": time.strftime("%Y-%m-%d %H:%M"), "url": args.url, "engine": info.get("engine"), "model": info.get("model"),
         "size": [args.width or info.get("width"), args.height or info.get("height")],
         "connections": args.connections, "inflight": args.inflight, "rate": args.rate, "jit": args.jit, "duration_s": round(dur, 2),
         "results": res, "dropped": sum(c.dropped for c in clients), "errors": sum(c.errors for c in clients),

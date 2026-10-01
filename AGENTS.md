@@ -13,6 +13,6 @@ Engine interface, and the client contracts. `README.md` is the public face.
   `CHARTER.md`, `docs/STATUS.md` and `docs/journal/`. Never put secrets, private
   hostnames or personal details anywhere else in it.
 
-Quick checks: `./run.sh --engine mock --host 127.0.0.1`, then open
-`http://127.0.0.1:8765/?autopilot=1`. World invariants:
+Quick checks: `./run.sh --engine mock --port PORT` (binds 127.0.0.1), then open
+`http://127.0.0.1:PORT/?autopilot=1`. World invariants:
 `node client/src/world/tools/stats.mjs 1 --all`.

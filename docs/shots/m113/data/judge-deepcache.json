@@ -1,0 +1,96 @@
+{
+ "date": "2026-09-29",
+ "method": "blind: X = DeepCache off (server --engine-arg deepcache=0, the effective behaviour before per-stream DeepCache), Y = per-stream DeepCache (7240b54a); walking filmstrips, 8 frames 0.15 s apart, all 8 zones, headless WebKit",
+ "reviewer": "a fresh-context Claude Opus 5.5 session",
+ "steadier": {
+  "vestibule": "on",
+  "nave": "on",
+  "stacks": "on",
+  "geode": "on (slightly)",
+  "baths": "tie",
+  "garden": "tie",
+  "atrium": "on, clearly",
+  "desert": "on (slightly)"
+ },
+ "sharper": {
+  "vestibule": "off (slightly)",
+  "nave": "tie",
+  "stacks": "on",
+  "geode": "tie",
+  "baths": "tie",
+  "garden": "off (slightly)",
+  "atrium": "off (slightly)",
+  "desert": "tie"
+ },
+ "grades_steadiness_sharpness_1_to_5": {
+  "off": {
+   "vestibule": [
+    2,
+    3
+   ],
+   "nave": [
+    3,
+    3
+   ],
+   "stacks": [
+    3,
+    2
+   ],
+   "geode": [
+    3,
+    4
+   ],
+   "baths": [
+    4,
+    3
+   ],
+   "garden": [
+    3,
+    3
+   ],
+   "atrium": [
+    2,
+    3
+   ],
+   "desert": [
+    3,
+    3
+   ]
+  },
+  "on": {
+   "vestibule": [
+    3,
+    3
+   ],
+   "nave": [
+    4,
+    3
+   ],
+   "stacks": [
+    4,
+    3
+   ],
+   "geode": [
+    3,
+    4
+   ],
+   "baths": [
+    4,
+    3
+   ],
+   "garden": [
+    3,
+    3
+   ],
+   "atrium": [
+    3,
+    3
+   ],
+   "desert": [
+    4,
+    3
+   ]
+  }
+ },
+ "summary": "I'd rather walk through Y [on]: it keeps its landmarks (sconces, windows, relief panel, light slit) and shows far less unpainted geometry, with little loss of detail. The difference is small overall: clear in the atrium and vestibule, slight in the nave, stacks and desert, and negligible in the baths, garden and geode."
+}

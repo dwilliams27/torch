@@ -8,7 +8,7 @@ export const MAX_ZONES = 12;
 
 export const PATTERN_IDS = {
   stone: 0, tile: 1, brick: 2, metal: 3, wood: 4, crystal: 5,
-  plaster: 6, water: 7, sky: 8, glow: 9,
+  plaster: 6, water: 7, sky: 8, glow: 9, formwork: 10,
 };
 
 export const GLSL_COMMON = /* glsl */ `
@@ -132,6 +132,17 @@ vec4 surfacePattern(int pat, vec2 uv, vec3 wp, vec3 n, float t){
     emis = 0.6 + 0.9 * b * b;
     line = b;
     alb = 1.0;
+  } else if (pat == 10) { // board-formed concrete: panel joints, tie holes, board grain.
+    // Big plain slabs gave the model nothing to hold on to (it invented beams that drifted
+    // as you walked); these marks are fixed to the surface, so its paint follows them.
+    vec2 s = vec2(2.4, 1.2);
+    vec2 g = abs(fract(uv / s - 0.5) - 0.5) * s;
+    line = aaLine(min(g.x, g.y), 0.012, fw);
+    vec2 th = abs(fract(uv / (s * 0.5) - 0.5) - 0.5) * s * 0.5;
+    float hole = 1.0 - smoothstep(0.035, 0.035 + fw, length(th));
+    float board = 0.035 * sin(uv.y * 20.9) * (1.0 - smoothstep(0.03, 0.1, fw));
+    alb = 0.8 + 0.14 * (fbm2(uv * 0.5) - 0.5) + 0.1 * (hash12(floor(uv / s)) - 0.5) + board;
+    alb *= 1.0 - 0.4 * hole;
   }
   return vec4(alb, line, emis, gloss);
 }

@@ -1,0 +1,340 @@
+{
+ "date": "2026-09-30",
+ "machine": "Apple M4 Pro, 48GB",
+ "torch": "2.14.0",
+ "by": {
+  "stock": "bench/bench_engines.py --engine torch_turbo --sizes 384,512x320 --iters 40 --cfg '{\"deepcache\":0,\"attn\":\"sdpa\",\"vae\":\"taesd\",\"xframe\":0}'",
+  "defaults": "bench/bench_engines.py --engine torch_turbo --sizes 384,512x320 --iters 40",
+  "served": "bench/bench_engines.py --engine torch_turbo --sizes 384,512x320 --iters 40 --cfg '{\"depth_graft\":0.8}' (flat depth)"
+ },
+ "rows": [
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 123.86,
+   "fps": 8.07,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 0.95,
+    "encode": 12.75,
+    "dc_reuse": 0.0,
+    "unet": 104.18,
+    "decode": 17.92,
+    "readback": 1.31,
+    "total": 137.21
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "deepcache": 0,
+    "attn": "sdpa",
+    "vae": "taesd",
+    "xframe": 0,
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:27",
+   "tag": "stock"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 131.66,
+   "fps": 7.6,
+   "stages": {
+    "prompt": 0.13,
+    "upload": 0.92,
+    "encode": 13.68,
+    "dc_reuse": 0.0,
+    "unet": 109.12,
+    "decode": 17.94,
+    "readback": 0.65,
+    "total": 142.43
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "deepcache": 0,
+    "attn": "sdpa",
+    "vae": "taesd",
+    "xframe": 0,
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:27",
+   "tag": "stock"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 75.25,
+   "fps": 13.29,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 4.63,
+    "encode": 7.22,
+    "dc_reuse": 0.54,
+    "unet": 62.49,
+    "decode": 9.85,
+    "readback": 0.63,
+    "total": 84.92
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:28",
+   "tag": "defaults"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 81.45,
+   "fps": 12.28,
+   "stages": {
+    "prompt": 0.12,
+    "upload": 5.01,
+    "encode": 7.74,
+    "dc_reuse": 0.54,
+    "unet": 65.86,
+    "decode": 9.9,
+    "readback": 0.63,
+    "total": 89.26
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:28",
+   "tag": "defaults"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 74.76,
+   "fps": 13.38,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 3.56,
+    "encode": 7.05,
+    "dc_reuse": 0.54,
+    "unet": 62.07,
+    "decode": 9.09,
+    "readback": 0.64,
+    "total": 82.51
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0.8
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:29",
+   "tag": "served"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 79.84,
+   "fps": 12.52,
+   "stages": {
+    "prompt": 0.09,
+    "upload": 5.03,
+    "encode": 7.7,
+    "dc_reuse": 0.54,
+    "unet": 66.17,
+    "decode": 10.02,
+    "readback": 0.67,
+    "total": 89.69
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0.8
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:29",
+   "tag": "served"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 123.64,
+   "fps": 8.09,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 0.83,
+    "encode": 12.84,
+    "dc_reuse": 0.0,
+    "unet": 103.81,
+    "decode": 16.53,
+    "readback": 0.73,
+    "total": 134.85
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "deepcache": 0,
+    "attn": "sdpa",
+    "vae": "taesd",
+    "xframe": 0,
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:30",
+   "tag": "stock"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 132.45,
+   "fps": 7.55,
+   "stages": {
+    "prompt": 0.11,
+    "upload": 0.86,
+    "encode": 14.18,
+    "dc_reuse": 0.0,
+    "unet": 108.41,
+    "decode": 18.09,
+    "readback": 0.75,
+    "total": 142.41
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "deepcache": 0,
+    "attn": "sdpa",
+    "vae": "taesd",
+    "xframe": 0,
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:30",
+   "tag": "stock"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 75.09,
+   "fps": 13.32,
+   "stages": {
+    "prompt": 0.09,
+    "upload": 4.4,
+    "encode": 7.26,
+    "dc_reuse": 0.54,
+    "unet": 62.51,
+    "decode": 9.7,
+    "readback": 0.68,
+    "total": 84.65
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:31",
+   "tag": "defaults"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 80.64,
+   "fps": 12.4,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 5.14,
+    "encode": 7.74,
+    "dc_reuse": 0.54,
+    "unet": 65.38,
+    "decode": 10.5,
+    "readback": 0.66,
+    "total": 89.51
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:31",
+   "tag": "defaults"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": 384,
+   "e2e_ms": 74.93,
+   "fps": 13.35,
+   "stages": {
+    "prompt": 0.08,
+    "upload": 3.36,
+    "encode": 6.97,
+    "dc_reuse": 0.54,
+    "unet": 61.21,
+    "decode": 9.32,
+    "readback": 0.67,
+    "total": 81.61
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0.8
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:32",
+   "tag": "served"
+  },
+  {
+   "engine": "torch-sd-turbo",
+   "model": "stabilityai/sd-turbo",
+   "size": "512x320",
+   "e2e_ms": 80.54,
+   "fps": 12.42,
+   "stages": {
+    "prompt": 0.1,
+    "upload": 4.88,
+    "encode": 7.58,
+    "dc_reuse": 0.54,
+    "unet": 65.5,
+    "decode": 10.26,
+    "readback": 0.68,
+    "total": 89.0
+   },
+   "machine": "Apple M4 Pro, 48GB",
+   "device": "mps",
+   "cfg": {
+    "depth_graft": 0.8
+   },
+   "strength": 0.5,
+   "torch": "2.14.0",
+   "when": "2026-09-30 09:32",
+   "tag": "served"
+  }
+ ]
+}

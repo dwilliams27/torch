@@ -181,7 +181,8 @@ export class MockLink extends Emitter {
     this.queue = null;      // latest-wins pending job
     this.busy = null;       // running job
     this.done = [];
-    this.pool = Array.from({ length: 4 }, () => new THREE.WebGLRenderTarget(width, height, { depthBuffer: false }));
+    // results stay alive while painting and as live views (dream/live.js): keep the pool deep
+    this.pool = Array.from({ length: 10 }, () => new THREE.WebGLRenderTarget(width, height, { depthBuffer: false }));
     this.poolIdx = 0;
     this.inTex = new THREE.Texture();
     this.inTex.flipY = false;

@@ -72,7 +72,7 @@ def main():
 
     from server.engines import torch_turbo as tt
 
-    eng = tt.create_engine(width=512, height=512, morph=0, deepcache=0, vae="taesd")
+    eng = tt.create_engine(width=512, height=512, morph=0, deepcache=0, vae="taesd", depth_graft=0)
     dev = eng.device
     t0 = time.time()
     data = make_data(eng)

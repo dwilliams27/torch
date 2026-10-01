@@ -1,0 +1,50 @@
+{
+ "date": "2026-09-30",
+ "cut": "bk",
+ "skip": [
+  "d0.1",
+  "d1.1",
+  "d2.1",
+  "d3.1",
+  "mid",
+  "u1.2a",
+  "u2.2a",
+  "u3.2a"
+ ],
+ "sources": [
+  "pairs"
+ ],
+ "train_captures": 752,
+ "held_out_captures": 168,
+ "steps": 800,
+ "lr": 2e-05,
+ "trainable_m": 514.2,
+ "step_s_median": 1.499,
+ "loss_first100": 0.19085,
+ "loss_last100": 0.09054,
+ "psnr_untrained": 14.64,
+ "psnr_trained": 21.21,
+ "curve": [
+  [
+   0,
+   15.01
+  ],
+  [
+   200,
+   20.19
+  ],
+  [
+   400,
+   20.69
+  ],
+  [
+   600,
+   21.24
+  ],
+  [
+   799,
+   21.21
+  ]
+ ],
+ "note": "teacher and student on the plain forward (no DeepCache, no cross-frame attention); PSNR of decoded images, held-out stretches"
+}
