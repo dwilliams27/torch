@@ -1,13 +1,9 @@
 # Hypnagogia
 
-*A place that is being dreamt as you look at it.*
-
 ![Eight zones, dreamt by SD-Turbo on a Mac mini](docs/shots/m111/hero.jpg)
 
-A first-person walk through impossible architecture: a drowned cathedral, a library
-shaft of spiral stairs, a geode, neon baths, a sunken garden under a painted sky, an
-atrium of floating monoliths, a desert of two moons. What you see is painted, live, by
-a diffusion model running on your own Mac.
+An experimental benchmark to see how good AI models are at making visually and
+technically interesting experiences that leverage local diffusion models.
 
 ## How it works
 
